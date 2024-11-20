@@ -1,57 +1,62 @@
-<div class="container mt-4">
-    <h2 class="text-center mb-4">Gestión de Puntos de Interés</h2>
-    <button class="btn btn-primary mb-3" (click)="mostrarFormulario()">Nuevo Punto de Interés</button>
+<div class="container mx-auto mt-4 px-4">
+    <h2 class="text-center mb-4 text-2xl font-semibold">Gestión de Puntos de Interés</h2>
+    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">Nuevo Punto de Interés</button>
 
-    <table class="table table-bordered">
-        <thead>
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <thead class="bg-gray-200">
             <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Coordenadas</th>
-                <th>Orden</th>
-                <th>Acciones</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Nombre</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Descripción</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Coordenadas</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Orden</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let punto of puntos">
-                <td>{{ punto.nombre }}</td>
-                <td>{{ punto.descripcion }}</td>
-                <td>{{ punto.coordenadas }}</td>
-                <td>{{ punto.orden }}</td>
-                <td>
-                    <button class="btn btn-warning btn-sm" (click)="mostrarFormulario(punto)">Editar</button>
-                    <button class="btn btn-danger btn-sm" (click)="eliminarPunto(punto.idPunto)">Eliminar</button>
+            <tr *ngFor="let punto of puntos" class="hover:bg-gray-100">
+                <td class="py-2 px-4">{{ punto.nombre }}</td>
+                <td class="py-2 px-4">{{ punto.descripcion }}</td>
+                <td class="py-2 px-4">{{ punto.coordenadas }}</td>
+                <td class="py-2 px-4">{{ punto.orden }}</td>
+                <td class="py-2 px-4">
+                    <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm mr-2" (click)="mostrarFormulario(punto)">Editar</button>
+                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm" (click)="eliminarPunto(punto.idPunto)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <div *ngIf="modoFormulario">
-        <h3 *ngIf="puntoSeleccionado.idPunto">Editar Punto de Interés</h3>
-        <h3 *ngIf="!puntoSeleccionado.idPunto">Nuevo Punto de Interés</h3>
-        <form (ngSubmit)="guardarPunto()">
+    <div *ngIf="modoFormulario" class="mt-6">
+        <h3 *ngIf="puntoSeleccionado.idPunto" class="text-xl font-semibold mb-4">Editar Punto de Interés</h3>
+        <h3 *ngIf="!puntoSeleccionado.idPunto" class="text-xl font-semibold mb-4">Nuevo Punto de Interés</h3>
+
+        <form (ngSubmit)="guardarPunto()" class="space-y-4 bg-gray-700 p-6 rounded-lg">
             <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" [(ngModel)]="puntoSeleccionado.nombre" name="nombre" class="form-control"
+                <label for="nombre" class="block text-white">Nombre</label>
+                <input type="text" id="nombre" [(ngModel)]="puntoSeleccionado.nombre" name="nombre" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
                     required />
             </div>
             <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <textarea id="descripcion" [(ngModel)]="puntoSeleccionado.descripcion" name="descripcion"
-                    class="form-control" required></textarea>
+                <label for="descripcion" class="block text-white">Descripción</label>
+                <textarea id="descripcion" [(ngModel)]="puntoSeleccionado.descripcion" name="descripcion" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                    required></textarea>
             </div>
             <div class="form-group">
-                <label for="coordenadas">Coordenadas</label>
-                <input type="text" id="coordenadas" [(ngModel)]="puntoSeleccionado.coordenadas" name="coordenadas"
-                    class="form-control" />
+                <label for="coordenadas" class="block text-white">Coordenadas</label>
+                <input type="text" id="coordenadas" [(ngModel)]="puntoSeleccionado.coordenadas" name="coordenadas" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
             <div class="form-group">
-                <label for="orden">Orden</label>
-                <input type="number" id="orden" [(ngModel)]="puntoSeleccionado.orden" name="orden"
-                    class="form-control" />
+                <label for="orden" class="block text-white">Orden</label>
+                <input type="number" id="orden" [(ngModel)]="puntoSeleccionado.orden" name="orden" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <button type="button" class="btn btn-secondary" (click)="cancelarFormulario()">Cancelar</button>
+            <div class="flex space-x-4">
+                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Guardar</button>
+                <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600" (click)="cancelarFormulario()">Cancelar</button>
+            </div>
         </form>
     </div>
 </div>

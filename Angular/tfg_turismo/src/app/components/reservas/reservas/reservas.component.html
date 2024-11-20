@@ -1,49 +1,48 @@
-<div class="container">
-    <h2>Gestión de Reservas</h2>
-    <button class="btn btn-primary" (click)="mostrarFormulario()">Crear Reserva</button>
+<div class="container mx-auto px-4 mt-4">
+    <h2 class="text-2xl font-semibold mb-4">Gestión de Reservas</h2>
+    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">Crear Reserva</button>
 
-    <table class="table mt-3" *ngIf="reservas.length > 0">
-        <thead>
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg" *ngIf="reservas.length > 0">
+        <thead class="bg-gray-200">
             <tr>
-                <th>ID</th>
-                <th>Usuario</th>
-                <th>Alojamiento</th>
-                <th>Restaurante</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Número de Personas</th>
-                <th>Estado</th>
-                <th>Acciones</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">ID</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Usuario</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Alojamiento</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Restaurante</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Fecha</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Hora</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Número de Personas</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Estado</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let reserva of reservas">
-                <td>{{ reserva.idReserva }}</td>
-                <td>{{ reserva.usuario?.nombre }}</td>
-                <td>{{ reserva.alojamiento?.nombre }}</td>
-                <td>{{ reserva.restaurante?.nombre }}</td>
-                <td>{{ reserva.fechaReserva }}</td>
-                <td>{{ reserva.horaReserva }}</td>
-                <td>{{ reserva.numPersonas }}</td>
-                <td>{{ reserva.estado }}</td>
-                <td>
-                    <button class="btn btn-warning" (click)="mostrarFormulario(reserva)">Editar</button>
-                    <button class="btn btn-danger" (click)="eliminarReserva(reserva.idReserva!)">Eliminar</button>
+            <tr *ngFor="let reserva of reservas" class="hover:bg-gray-100">
+                <td class="py-2 px-4">{{ reserva.idReserva }}</td>
+                <td class="py-2 px-4">{{ reserva.usuario?.nombre }}</td>
+                <td class="py-2 px-4">{{ reserva.alojamiento?.nombre }}</td>
+                <td class="py-2 px-4">{{ reserva.restaurante?.nombre }}</td>
+                <td class="py-2 px-4">{{ reserva.fechaReserva }}</td>
+                <td class="py-2 px-4">{{ reserva.horaReserva }}</td>
+                <td class="py-2 px-4">{{ reserva.numPersonas }}</td>
+                <td class="py-2 px-4">{{ reserva.estado }}</td>
+                <td class="py-2 px-4">
+                    <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm mr-2" (click)="mostrarFormulario(reserva)">Editar</button>
+                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm" (click)="eliminarReserva(reserva.idReserva!)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
     <!-- Formulario de Reserva -->
-    <div *ngIf="modoFormulario" class="mt-4">
-        <h3>{{ reservaSeleccionada?.idReserva ? 'Editar Reserva' : 'Nueva Reserva' }}</h3>
+    <div *ngIf="modoFormulario" class="mt-6">
+        <h3 class="text-xl font-semibold mb-4">{{ reservaSeleccionada?.idReserva ? 'Editar Reserva' : 'Nueva Reserva' }}</h3>
 
-        <form (ngSubmit)="guardarReserva()">
+        <form (ngSubmit)="guardarReserva()" class="space-y-6 bg-gray-700 p-6 rounded-lg">
             <!-- Usuario -->
-            <div class="mb-3">
-                <label for="usuario" class="form-label">Usuario</label>
-                <select id="usuario" class="form-select" [(ngModel)]="reservaSeleccionada.usuario.id" name="usuario"
-                    required>
+            <div class="mb-4">
+                <label for="usuario" class="block text-white">Usuario</label>
+                <select id="usuario" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.usuario.id" name="usuario" required>
                     <option *ngFor="let usuario of usuarios" [value]="usuario.id">
                         {{ usuario.nombre }} {{ usuario.apellidos }}
                     </option>
@@ -51,10 +50,9 @@
             </div>
 
             <!-- Alojamiento -->
-            <div class="mb-3">
-                <label for="alojamiento" class="form-label">Alojamiento</label>
-                <select id="alojamiento" class="form-select" [(ngModel)]="reservaSeleccionada.alojamiento.idAlojamiento"
-                    name="alojamiento" required>
+            <div class="mb-4">
+                <label for="alojamiento" class="block text-white">Alojamiento</label>
+                <select id="alojamiento" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.alojamiento.idAlojamiento" name="alojamiento" required>
                     <option *ngFor="let alojamiento of alojamientos" [value]="alojamiento.idAlojamiento">
                         {{ alojamiento.nombre }}
                     </option>
@@ -62,10 +60,9 @@
             </div>
 
             <!-- Restaurante -->
-            <div class="mb-3">
-                <label for="restaurante" class="form-label">Restaurante</label>
-                <select id="restaurante" class="form-select" [(ngModel)]="reservaSeleccionada.restaurante.idRestaurante"
-                    name="restaurante" required>
+            <div class="mb-4">
+                <label for="restaurante" class="block text-white">Restaurante</label>
+                <select id="restaurante" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.restaurante.idRestaurante" name="restaurante" required>
                     <option *ngFor="let restaurante of restaurantes" [value]="restaurante.idRestaurante">
                         {{ restaurante.nombre }}
                     </option>
@@ -73,35 +70,33 @@
             </div>
 
             <!-- Fecha de Reserva -->
-            <div class="mb-3">
-                <label for="fecha" class="form-label">Fecha de Reserva</label>
-                <input id="fecha" type="date" class="form-control" [(ngModel)]="reservaSeleccionada.fechaReserva"
-                    name="fechaReserva" required />
+            <div class="mb-4">
+                <label for="fecha" class="block text-white">Fecha de Reserva</label>
+                <input id="fecha" type="date" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.fechaReserva" name="fechaReserva" required />
             </div>
 
             <!-- Hora de Reserva -->
-            <div class="mb-3">
-                <label for="hora" class="form-label">Hora de Reserva</label>
-                <input id="hora" type="time" class="form-control" [(ngModel)]="reservaSeleccionada.horaReserva"
-                    name="horaReserva" required />
+            <div class="mb-4">
+                <label for="hora" class="block text-white">Hora de Reserva</label>
+                <input id="hora" type="time" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.horaReserva" name="horaReserva" required />
             </div>
 
             <!-- Número de Personas -->
-            <div class="mb-3">
-                <label for="numPersonas" class="form-label">Número de Personas</label>
-                <input id="numPersonas" type="number" class="form-control" [(ngModel)]="reservaSeleccionada.numPersonas"
-                    name="numPersonas" required />
+            <div class="mb-4">
+                <label for="numPersonas" class="block text-white">Número de Personas</label>
+                <input id="numPersonas" type="number" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.numPersonas" name="numPersonas" required />
             </div>
 
             <!-- Estado -->
-            <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <input id="estado" type="text" class="form-control" [(ngModel)]="reservaSeleccionada.estado"
-                    name="estado" required />
+            <div class="mb-4">
+                <label for="estado" class="block text-white">Estado</label>
+                <input id="estado" type="text" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.estado" name="estado" required />
             </div>
 
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <button type="button" class="btn btn-secondary" (click)="cancelarFormulario()">Cancelar</button>
+            <div class="flex space-x-4">
+                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Guardar</button>
+                <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600" (click)="cancelarFormulario()">Cancelar</button>
+            </div>
         </form>
     </div>
 </div>

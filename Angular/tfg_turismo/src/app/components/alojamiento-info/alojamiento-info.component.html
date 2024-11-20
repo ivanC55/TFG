@@ -1,9 +1,10 @@
-<div class="container mt-4" *ngIf="alojamiento">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h2>{{ alojamiento.nombre }}</h2>
+<div class="container mx-auto mt-4" *ngIf="alojamiento">
+    <!-- Información del Alojamiento -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="bg-blue-600 text-white px-6 py-4">
+            <h2 class="text-2xl font-bold">{{ alojamiento.nombre }}</h2>
         </div>
-        <div class="card-body">
+        <div class="px-6 py-4">
             <p><strong>Tipo:</strong> {{ alojamiento.tipo }}</p>
             <p><strong>Ubicación:</strong> {{ alojamiento.ubicacion }}</p>
             <p><strong>Precio por noche:</strong> ${{ alojamiento.precioNoche }}</p>
@@ -12,23 +13,51 @@
         </div>
     </div>
 
-    <!-- Formulario de reserva -->
-    <div class="mt-4">
-        <h3>Realizar Reserva</h3>
-        <form #reservaForm="ngForm">
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre Completo</label>
-                <input type="text" id="nombre" class="form-control" placeholder="Tu nombre" required />
+    <!-- Formulario de Reserva -->
+    <div class="mt-6">
+        <h3 class="text-xl font-semibold mb-4">Realizar Reserva</h3>
+        <form #reservaForm="ngForm" class="space-y-4">
+            <!-- Nombre Completo -->
+            <div>
+                <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre Completo</label>
+                <input 
+                    type="text" 
+                    id="nombre" 
+                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                    placeholder="Tu nombre" 
+                    required 
+                />
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Correo Electrónico</label>
-                <input type="email" id="email" class="form-control" placeholder="Tu correo electrónico" required />
+            <!-- Correo Electrónico -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                    placeholder="Tu correo electrónico" 
+                    required 
+                />
             </div>
-            <div class="mb-3">
-                <label for="fecha" class="form-label">Fecha de Reserva</label>
-                <input type="date" id="fecha" class="form-control" required />
+            <!-- Fecha de Reserva -->
+            <div>
+                <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha de Reserva</label>
+                <input 
+                    type="date" 
+                    id="fecha" 
+                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                    required 
+                />
             </div>
-            <button type="submit" class="btn btn-success">Reservar</button>
+            <!-- Botón de Reservar -->
+            <div>
+                <button 
+                    type="submit" 
+                    class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+                >
+                    Reservar
+                </button>
+            </div>
         </form>
     </div>
 </div>

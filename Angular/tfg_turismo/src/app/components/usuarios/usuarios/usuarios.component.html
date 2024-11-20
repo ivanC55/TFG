@@ -1,68 +1,84 @@
-<div class="container mt-4">
-    <h2 class="text-center mb-4">Gestión de Usuarios</h2>
-    <button class="btn btn-primary mb-3" (click)="mostrarFormulario()">Nuevo Usuario</button>
+<div class="container mx-auto px-4 mt-4">
+    <h2 class="text-2xl font-semibold text-center mb-4">Gestión de Usuarios</h2>
+    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">Nuevo Usuario</button>
 
-    <table class="table table-bordered">
-        <thead>
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <thead class="bg-gray-200">
             <tr>
-                <th>Username</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Rol</th>
-                <th>Acciones</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Username</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Nombre</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Email</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Teléfono</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Rol</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let usuario of usuarios">
-                <td>{{ usuario.username }}</td>
-                <td>{{ usuario.nombre }} {{ usuario.apellidos }}</td>
-                <td>{{ usuario.email }}</td>
-                <td>{{ usuario.telefono }}</td>
-                <td>{{ usuario.rol }}</td>
-                <td>
-                    <button class="btn btn-info btn-sm" (click)="mostrarFormulario(usuario)">Editar</button>
-                    <button class="btn btn-danger btn-sm" (click)="eliminarUsuario(usuario.id!)">Eliminar</button>
+            <tr *ngFor="let usuario of usuarios" class="hover:bg-gray-100">
+                <td class="py-2 px-4">{{ usuario.username }}</td>
+                <td class="py-2 px-4">{{ usuario.nombre }} {{ usuario.apellidos }}</td>
+                <td class="py-2 px-4">{{ usuario.email }}</td>
+                <td class="py-2 px-4">{{ usuario.telefono }}</td>
+                <td class="py-2 px-4">{{ usuario.rol }}</td>
+                <td class="py-2 px-4">
+                    <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 text-sm mr-2" (click)="mostrarFormulario(usuario)">Editar</button>
+                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm" (click)="eliminarUsuario(usuario.id!)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <div *ngIf="modoFormulario">
-        <h3 *ngIf="usuarioSeleccionado?.id">Editar Usuario</h3>
-        <h3 *ngIf="!usuarioSeleccionado?.id">Nuevo Usuario</h3>
-        <form (ngSubmit)="guardarUsuario()">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input id="username" type="text" [(ngModel)]="usuarioSeleccionado.username" name="username"
-                    class="form-control" required />
+    <!-- Formulario de Usuario -->
+    <div *ngIf="modoFormulario" class="mt-6">
+        <h3 class="text-xl font-semibold mb-4">{{ usuarioSeleccionado?.id ? 'Editar Usuario' : 'Nuevo Usuario' }}</h3>
+
+        <form (ngSubmit)="guardarUsuario()" class="space-y-6 bg-gray-700 p-6 rounded-lg">
+            <!-- Username -->
+            <div class="mb-4">
+                <label for="username" class="block text-white">Username</label>
+                <input id="username" type="text" [(ngModel)]="usuarioSeleccionado.username" name="username" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input id="nombre" type="text" [(ngModel)]="usuarioSeleccionado.nombre" name="nombre"
-                    class="form-control" required />
+
+            <!-- Nombre -->
+            <div class="mb-4">
+                <label for="nombre" class="block text-white">Nombre</label>
+                <input id="nombre" type="text" [(ngModel)]="usuarioSeleccionado.nombre" name="nombre" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <div class="form-group">
-                <label for="apellidos">Apellidos</label>
-                <input id="apellidos" type="text" [(ngModel)]="usuarioSeleccionado.apellidos" name="apellidos"
-                    class="form-control" required />
+
+            <!-- Apellidos -->
+            <div class="mb-4">
+                <label for="apellidos" class="block text-white">Apellidos</label>
+                <input id="apellidos" type="text" [(ngModel)]="usuarioSeleccionado.apellidos" name="apellidos" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input id="email" type="email" [(ngModel)]="usuarioSeleccionado.email" name="email"
-                    class="form-control" required />
+
+            <!-- Email -->
+            <div class="mb-4">
+                <label for="email" class="block text-white">Email</label>
+                <input id="email" type="email" [(ngModel)]="usuarioSeleccionado.email" name="email" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <div class="form-group">
-                <label for="telefono">Teléfono</label>
-                <input id="telefono" type="text" [(ngModel)]="usuarioSeleccionado.telefono" name="telefono"
-                    class="form-control" />
+
+            <!-- Teléfono -->
+            <div class="mb-4">
+                <label for="telefono" class="block text-white">Teléfono</label>
+                <input id="telefono" type="text" [(ngModel)]="usuarioSeleccionado.telefono" name="telefono" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
-            <div class="form-group">
-                <label for="rol">Rol</label>
-                <input id="rol" type="text" [(ngModel)]="usuarioSeleccionado.rol" name="rol" class="form-control" />
+
+            <!-- Rol -->
+            <div class="mb-4">
+                <label for="rol" class="block text-white">Rol</label>
+                <input id="rol" type="text" [(ngModel)]="usuarioSeleccionado.rol" name="rol" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <button type="button" class="btn btn-secondary" (click)="cancelarFormulario()">Cancelar</button>
+
+            <div class="flex space-x-4">
+                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Guardar</button>
+                <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600" (click)="cancelarFormulario()">Cancelar</button>
+            </div>
         </form>
     </div>
 </div>

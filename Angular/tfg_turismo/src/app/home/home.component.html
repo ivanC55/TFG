@@ -1,90 +1,72 @@
-<div class="container mt-4">
+<div class="container mx-auto mt-4 px-4">
     <!-- Sección de bienvenida -->
-    <div class="jumbotron bg-primary text-white text-center p-5">
-        <h1 class="display-4">Bienvenidos a nuestra plataforma</h1>
-        <p class="lead">Explora nuestras ofertas y servicios de alojamiento. ¡Tu próxima aventura comienza aquí!</p>
+    <div class="bg-blue-600 text-white text-center p-10 rounded-lg shadow-lg">
+        <h1 class="text-4xl font-bold">Bienvenidos a nuestra plataforma</h1>
+        <p class="text-lg mt-2">Explora nuestras ofertas y servicios de alojamiento. ¡Tu próxima aventura comienza aquí!
+        </p>
     </div>
 
-    <!-- Sección de Galería de Alojamiento con Carrusel -->
-    <div class="my-5">
-        <h2 class="text-center mb-4">Galería de Alojamiento</h2>
-        <div id="alojamientoCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <!-- Iterar sobre los alojamientos para crear los ítems del carrusel -->
-                <div class="carousel-item" *ngFor="let alojamiento of alojamientos; let i = index"
-                    [class.active]="i === 0"> <!-- El primer elemento debe tener la clase "active" -->
-                    <div class="card text-center mx-auto" style="max-width: 18rem;">
-                        <img [src]="" class="card-img-top" alt="Imagen de {{ alojamiento.nombre }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ alojamiento.nombre }}</h5>
-                            <p class="card-text">{{ alojamiento.tipo }} - {{ alojamiento.ubicacion }}</p>
-                            <p class="card-text">Precio por noche: ${{ alojamiento.precioNoche }}</p>
-                            <a [routerLink]="['/alojamiento', alojamiento.idAlojamiento]" class="btn btn-primary">Ver
-                                más</a>
+    <!-- Sección de Galería de Alojamiento -->
+    <div class="my-10">
+        <h2 class="text-2xl font-bold text-center mb-6">Galería de Alojamiento</h2>
+        <div class="relative">
+            <!-- Contenedor del carrusel -->
+            <div class="flex overflow-x-scroll space-x-4 pb-4">
+                <!-- Iterar sobre los alojamientos -->
+                <div *ngFor="let alojamiento of alojamientos" class="flex-none w-64">
+                    <div class="bg-white rounded-lg shadow-lg text-center p-4">
+                        <img [src]="" alt="Imagen de {{ alojamiento.nombre }}"
+                            class="rounded-t-lg h-40 w-full object-cover">
+                        <div class="p-4">
+                            <h5 class="font-semibold text-lg">{{ alojamiento.nombre }}</h5>
+                            <p class="text-gray-600">{{ alojamiento.tipo }} - {{ alojamiento.ubicacion }}</p>
+                            <p class="text-gray-700 mt-2">Precio por noche: ${{ alojamiento.precioNoche }}</p>
+                            <a [routerLink]="['/alojamiento', alojamiento.idAlojamiento]"
+                                class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                Ver más
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Controles del carrusel -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#alojamientoCarousel"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#alojamientoCarousel"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Siguiente</span>
-            </button>
         </div>
     </div>
 
-    <!-- Últimas Noticias o Información adicional (si lo deseas) -->
-    <div class="my-5">
-        <h2 class="text-center mb-4">Últimas Noticias</h2>
+    <!-- Últimas Noticias -->
+    <div class="my-10">
+        <h2 class="text-2xl font-bold text-center mb-6">Últimas Noticias</h2>
         <!-- Aquí va tu código de noticias -->
     </div>
 
     <!-- Carrusel de Monumentos Destacados -->
-    <div class="container-fluid mt-5">
-        <h2 class="text-center mb-4">Monumentos Destacados</h2>
-
-        <div id="monumentosCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <!-- Iterar sobre los monumentos para crear ítems -->
-                <div class="carousel-item" *ngFor="let monumento of monumentos; let i = index" [class.active]="i === 0">
-                    <div class="d-flex flex-row align-items-center justify-content-center">
+    <div class="mt-10">
+        <h2 class="text-2xl font-bold text-center mb-6">Monumentos Destacados</h2>
+        <div class="relative">
+            <div class="flex overflow-x-scroll space-x-4 pb-4">
+                <!-- Iterar sobre los monumentos -->
+                <div *ngFor="let monumento of monumentos"
+                    class="flex-none w-full lg:w-4/5 bg-white shadow-lg rounded-lg overflow-hidden">
+                    <div class="flex flex-col lg:flex-row">
                         <!-- Imagen del monumento -->
-                        <div class="col-lg-6 p-0">
-                            <img [src]="" class="d-block w-100" [alt]="monumento.nombre">
+                        <div class="lg:w-1/2">
+                            <img [src]="" alt="{{ monumento.nombre }}" class="w-full h-64 object-cover">
                         </div>
                         <!-- Descripción y mapa -->
-                        <div class="col-lg-6 bg-light p-4">
-                            <h3>{{ monumento.nombre }}</h3>
+                        <div class="lg:w-1/2 p-6 bg-gray-100">
+                            <h3 class="text-lg font-bold mb-4">{{ monumento.nombre }}</h3>
                             <p><strong>Tipo:</strong> hola</p>
                             <p><strong>Historia:</strong> {{ monumento.historia }}</p>
                             <p><strong>Horario:</strong> {{ monumento.horario }}</p>
                             <p><strong>Precio entrada:</strong> ${{ monumento.precio_entrada }}</p>
                             <p><strong>Ubicación:</strong> {{ monumento.ubicacion }}</p>
-                            <hr>
+                            <hr class="my-4">
                             <!-- Aquí irá el mapa -->
-                            <p class="text-center"><strong>Mapa</strong></p>
-                            <p class="border border-secondary p-3 text-center">mapa</p>
+                            <p class="text-center font-semibold">Mapa</p>
+                            <p class="border border-gray-400 p-4 text-center">mapa</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Controles del carrusel -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#monumentosCarousel"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#monumentosCarousel"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Siguiente</span>
-            </button>
         </div>
     </div>
 </div>

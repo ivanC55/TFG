@@ -1,34 +1,34 @@
-<div class="container mt-4">
-    <h2 class="text-center mb-4">Gestión de Eventos Culturales</h2>
+<div class="container mx-auto mt-4 px-4">
+    <h2 class="text-center mb-4 text-2xl font-semibold">Gestión de Eventos Culturales</h2>
 
     <!-- Botón para crear un nuevo evento -->
-    <button class="btn btn-primary mb-3" (click)="mostrarFormulario()">Nuevo Evento</button>
+    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">Nuevo Evento</button>
 
     <!-- Tabla de eventos culturales -->
-    <table class="table table-bordered">
-        <thead class="thead-light">
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <thead class="bg-gray-200">
             <tr>
-                <th>Nombre</th>
-                <th>Ubicación</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Fin</th>
-                <th>Acciones</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Nombre</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Ubicación</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Fecha Inicio</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Fecha Fin</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let evento of eventos">
-                <td>{{ evento.nombre }}</td>
-                <td>{{ evento.ubicacion }}</td>
-                <td>{{ evento.fecha_inicio | date }}</td>
-                <td>{{ evento.fecha_fin | date }}</td>
-                <td>
-                    <button class="btn btn-info btn-sm" (click)="verDetalles(evento.idEvento)">
+            <tr *ngFor="let evento of eventos" class="hover:bg-gray-100">
+                <td class="py-2 px-4">{{ evento.nombre }}</td>
+                <td class="py-2 px-4">{{ evento.ubicacion }}</td>
+                <td class="py-2 px-4">{{ evento.fecha_inicio | date }}</td>
+                <td class="py-2 px-4">{{ evento.fecha_fin | date }}</td>
+                <td class="py-2 px-4">
+                    <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 text-sm mr-2" (click)="verDetalles(evento.idEvento)">
                         Ver
                     </button>
-                    <button class="btn btn-warning btn-sm" (click)="mostrarFormulario(evento)">
+                    <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm mr-2" (click)="mostrarFormulario(evento)">
                         Editar
                     </button>
-                    <button class="btn btn-danger btn-sm" (click)="eliminarEvento(evento.idEvento)">
+                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm" (click)="eliminarEvento(evento.idEvento)">
                         Eliminar
                     </button>
                 </td>
@@ -37,41 +37,39 @@
     </table>
 
     <!-- Formulario de creación/edición -->
-    <div *ngIf="modoFormulario">
-        <h3 *ngIf="eventoSeleccionado">Editar Evento</h3>
-        <h3 *ngIf="!eventoSeleccionado">Nuevo Evento</h3>
+    <div *ngIf="modoFormulario" class="mt-6">
+        <h3 *ngIf="eventoSeleccionado" class="text-xl font-semibold mb-4">Editar Evento</h3>
+        <h3 *ngIf="!eventoSeleccionado" class="text-xl font-semibold mb-4">Nuevo Evento</h3>
 
-        <form #eventoForm="ngForm" (ngSubmit)="guardarEvento(eventoSeleccionado)">
+        <form #eventoForm="ngForm" (ngSubmit)="guardarEvento(eventoSeleccionado)" class="space-y-4 bg-gray-700 p-6 rounded-lg">
             <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" class="form-control" [(ngModel)]="eventoSeleccionado.nombre"
+                <label for="nombre" class="block text-white">Nombre</label>
+                <input type="text" id="nombre" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="eventoSeleccionado.nombre"
                     name="nombre" required />
             </div>
             <div class="form-group">
-                <label for="ubicacion">Ubicación</label>
-                <input type="text" id="ubicacion" class="form-control" [(ngModel)]="eventoSeleccionado.ubicacion"
+                <label for="ubicacion" class="block text-white">Ubicación</label>
+                <input type="text" id="ubicacion" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="eventoSeleccionado.ubicacion"
                     name="ubicacion" required />
             </div>
             <div class="form-group">
-                <label for="fecha_inicio">Fecha Inicio</label>
-                <input type="date" id="fecha_inicio" class="form-control" [(ngModel)]="eventoSeleccionado.fecha_inicio"
+                <label for="fecha_inicio" class="block text-white">Fecha Inicio</label>
+                <input type="date" id="fecha_inicio" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="eventoSeleccionado.fecha_inicio"
                     name="fecha_inicio" required />
             </div>
             <div class="form-group">
-                <label for="fecha_fin">Fecha Fin</label>
-                <input type="date" id="fecha_fin" class="form-control" [(ngModel)]="eventoSeleccionado.fecha_fin"
+                <label for="fecha_fin" class="block text-white">Fecha Fin</label>
+                <input type="date" id="fecha_fin" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="eventoSeleccionado.fecha_fin"
                     name="fecha_fin" required />
             </div>
             <div class="form-group">
-                <label for="precio_entrada">Precio de Entrada</label>
-                <input type="number" id="precio_entrada" class="form-control"
+                <label for="precio_entrada" class="block text-white">Precio de Entrada</label>
+                <input type="number" id="precio_entrada" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     [(ngModel)]="eventoSeleccionado.precio_entrada" name="precio_entrada" required />
             </div>
 
-            <button class="btn btn-success" type="submit">Guardar</button>
-            <button class="btn btn-secondary" type="button" (click)="cancelarFormulario()">
-                Cancelar
-            </button>
+            <button class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" type="submit">Guardar</button>
+            <button class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600" type="button" (click)="cancelarFormulario()">Cancelar</button>
         </form>
     </div>
 </div>

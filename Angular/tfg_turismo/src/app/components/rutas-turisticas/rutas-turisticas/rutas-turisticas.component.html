@@ -1,65 +1,80 @@
-<div class="container mt-4">
-    <h2 class="text-center mb-4">Gestión de Rutas Turísticas</h2>
-    <button class="btn btn-primary mb-3" (click)="mostrarFormulario()">Nueva Ruta Turística</button>
+<div class="container mx-auto px-4 mt-4">
+    <h2 class="text-2xl font-semibold text-center mb-4">Gestión de Rutas Turísticas</h2>
+    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">Nueva Ruta Turística</button>
 
-    <table class="table table-bordered">
-        <thead>
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <thead class="bg-gray-200">
             <tr>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Duración Estimada</th>
-                <th>Acciones</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Nombre</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Tipo</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Duración Estimada</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let ruta of rutas">
-                <td>{{ ruta.nombre }}</td>
-                <td>{{ ruta.tipo }}</td>
-                <td>{{ ruta.duracionEstimada }}</td>
-                <td>
-                    <button class="btn btn-info btn-sm" (click)="mostrarFormulario(ruta)">Editar</button>
-                    <button class="btn btn-danger btn-sm" (click)="eliminarRuta(ruta.idRuta)">Eliminar</button>
+            <tr *ngFor="let ruta of rutas" class="hover:bg-gray-100">
+                <td class="py-2 px-4">{{ ruta.nombre }}</td>
+                <td class="py-2 px-4">{{ ruta.tipo }}</td>
+                <td class="py-2 px-4">{{ ruta.duracionEstimada }}</td>
+                <td class="py-2 px-4">
+                    <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 text-sm mr-2" (click)="mostrarFormulario(ruta)">Editar</button>
+                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm" (click)="eliminarRuta(ruta.idRuta)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <div *ngIf="modoFormulario">
-        <h3 *ngIf="rutaSeleccionada.idRuta">Editar Ruta</h3>
-        <h3 *ngIf="!rutaSeleccionada.idRuta">Nueva Ruta</h3>
-        <form (ngSubmit)="guardarRuta()">
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input id="nombre" type="text" [(ngModel)]="rutaSeleccionada.nombre" name="nombre" class="form-control"
-                    required />
+    <!-- Formulario de Ruta Turística -->
+    <div *ngIf="modoFormulario" class="mt-6">
+        <h3 class="text-xl font-semibold mb-4">{{ rutaSeleccionada?.idRuta ? 'Editar Ruta' : 'Nueva Ruta' }}</h3>
+
+        <form (ngSubmit)="guardarRuta()" class="space-y-6 bg-gray-700 p-6 rounded-lg">
+            <!-- Nombre -->
+            <div class="mb-4">
+                <label for="nombre" class="block text-white">Nombre</label>
+                <input id="nombre" type="text" [(ngModel)]="rutaSeleccionada.nombre" name="nombre" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <div class="form-group">
-                <label for="tipo">Tipo</label>
-                <input id="tipo" type="text" [(ngModel)]="rutaSeleccionada.tipo" name="tipo" class="form-control"
-                    required />
+
+            <!-- Tipo -->
+            <div class="mb-4">
+                <label for="tipo" class="block text-white">Tipo</label>
+                <input id="tipo" type="text" [(ngModel)]="rutaSeleccionada.tipo" name="tipo" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <textarea id="descripcion" [(ngModel)]="rutaSeleccionada.descripcion" name="descripcion"
-                    class="form-control" required></textarea>
+
+            <!-- Descripción -->
+            <div class="mb-4">
+                <label for="descripcion" class="block text-white">Descripción</label>
+                <textarea id="descripcion" [(ngModel)]="rutaSeleccionada.descripcion" name="descripcion" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
             </div>
-            <div class="form-group">
-                <label for="duracionEstimada">Duración Estimada</label>
-                <input id="duracionEstimada" type="text" [(ngModel)]="rutaSeleccionada.duracionEstimada"
-                    name="duracionEstimada" class="form-control" required />
+
+            <!-- Duración Estimada -->
+            <div class="mb-4">
+                <label for="duracionEstimada" class="block text-white">Duración Estimada</label>
+                <input id="duracionEstimada" type="text" [(ngModel)]="rutaSeleccionada.duracionEstimada" name="duracionEstimada" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <div class="form-group">
-                <label for="puntosInteres">Puntos de Interés (JSON)</label>
-                <textarea id="puntosInteres" [(ngModel)]="rutaSeleccionada.puntosInteres" name="puntosInteres"
-                    class="form-control"></textarea>
+
+            <!-- Puntos de Interés -->
+            <div class="mb-4">
+                <label for="puntosInteres" class="block text-white">Puntos de Interés (JSON)</label>
+                <textarea id="puntosInteres" [(ngModel)]="rutaSeleccionada.puntosInteres" name="puntosInteres" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
             </div>
-            <div class="form-group">
-                <label for="mapaRuta">Mapa Ruta</label>
-                <input id="mapaRuta" type="text" [(ngModel)]="rutaSeleccionada.mapaRuta" name="mapaRuta"
-                    class="form-control" />
+
+            <!-- Mapa Ruta -->
+            <div class="mb-4">
+                <label for="mapaRuta" class="block text-white">Mapa Ruta</label>
+                <input id="mapaRuta" type="text" [(ngModel)]="rutaSeleccionada.mapaRuta" name="mapaRuta" 
+                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <button type="button" class="btn btn-secondary" (click)="cancelarFormulario()">Cancelar</button>
+
+            <div class="flex space-x-4">
+                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Guardar</button>
+                <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600" (click)="cancelarFormulario()">Cancelar</button>
+            </div>
         </form>
     </div>
 </div>
