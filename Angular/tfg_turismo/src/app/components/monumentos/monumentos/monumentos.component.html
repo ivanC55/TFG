@@ -1,0 +1,65 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Gestión de Monumentos Históricos</h2>
+    <button class="btn btn-primary mb-3" (click)="mostrarFormulario()">Nuevo Monumento</button>
+
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Ubicación</th>
+                <th>Horario</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let monumento of monumentos">
+                <td>{{ monumento.nombre }}</td>
+                <td>{{ monumento.tipo }}</td>
+                <td>{{ monumento.ubicacion }}</td>
+                <td>{{ monumento.horario }}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" (click)="verDetalles(monumento.idMonumento)">Ver</button>
+                    <button class="btn btn-warning btn-sm" (click)="mostrarFormulario(monumento)">Editar</button>
+                    <button class="btn btn-danger btn-sm"
+                        (click)="eliminarMonumento(monumento.idMonumento)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Formulario de creación o edición -->
+    <div *ngIf="modoFormulario">
+        <h3 *ngIf="monumentoSeleccionado.idMonumento">Editar Monumento</h3>
+        <h3 *ngIf="!monumentoSeleccionado.idMonumento">Nuevo Monumento</h3>
+        <form (ngSubmit)="guardarMonumento()">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" [(ngModel)]="monumentoSeleccionado.nombre" name="nombre"
+                    class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="tipo">Tipo</label>
+                <input type="text" id="tipo" [(ngModel)]="monumentoSeleccionado.tipo" name="tipo" class="form-control"
+                    required />
+            </div>
+            <div class="form-group">
+                <label for="ubicacion">Ubicación</label>
+                <input type="text" id="ubicacion" [(ngModel)]="monumentoSeleccionado.ubicacion" name="ubicacion"
+                    class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="horario">Horario</label>
+                <input type="text" id="horario" [(ngModel)]="monumentoSeleccionado.horario" name="horario"
+                    class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="precio_entrada">Precio</label>
+                <input type="number" id="precio_entrada" [(ngModel)]="monumentoSeleccionado.precio_entrada"
+                    name="precio_entrada" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarFormulario()">Cancelar</button>
+        </form>
+    </div>
+</div>

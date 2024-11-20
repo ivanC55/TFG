@@ -1,0 +1,80 @@
+<div class="container mt-4">
+    <h2 class="text-center text-success">Gestión de Alojamientos</h2>
+
+    <!-- Botón para mostrar/ocultar el formulario -->
+    <button class="btn btn-primary mb-3" (click)="toggleAddForm()">
+        {{ showAddForm ? 'Cerrar Formulario' : 'Añadir Nuevo Alojamiento' }}
+    </button>
+
+    <!-- Formulario para añadir o editar alojamiento -->
+    <div *ngIf="showAddForm" class="card p-3 mb-3">
+        <h3>{{ isEditing ? 'Editar Alojamiento' : 'Añadir Nuevo Alojamiento' }}</h3>
+        <form (ngSubmit)="addAlojamiento()" #alojamientoForm="ngForm" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" id="nombre" class="form-control" [(ngModel)]="alojamiento.nombre" name="nombre"
+                    required />
+            </div>
+            <div class="mb-3">
+                <label for="tipo" class="form-label">Tipo</label>
+                <input type="text" id="tipo" class="form-control" [(ngModel)]="alojamiento.tipo" name="tipo" required />
+            </div>
+            <div class="mb-3">
+                <label for="ubicacion" class="form-label">Ubicación</label>
+                <input type="text" id="ubicacion" class="form-control" [(ngModel)]="alojamiento.ubicacion"
+                    name="ubicacion" required />
+            </div>
+            <div class="mb-3">
+                <label for="precioNoche" class="form-label">Precio/Noche</label>
+                <input type="number" id="precioNoche" class="form-control" [(ngModel)]="alojamiento.precioNoche"
+                    name="precioNoche" required />
+            </div>
+            <div class="mb-3">
+                <label for="servicios" class="form-label">Servicios</label>
+                <input type="text" id="servicios" class="form-control" [(ngModel)]="alojamiento.servicios"
+                    name="servicios" required />
+            </div>
+            <div class="mb-3">
+                <label for="puntuacion" class="form-label">Puntuación</label>
+                <input type="number" id="puntuacion" class="form-control" [(ngModel)]="alojamiento.puntuacion"
+                    name="puntuacion" min="0" max="5" required />
+            </div>
+            <button type="submit" class="btn btn-success">
+                {{ isEditing ? 'Actualizar Alojamiento' : 'Añadir Alojamiento' }}
+            </button>
+        </form>
+    </div>
+
+    <!-- Tabla de alojamientos -->
+    <h3>Lista de Alojamientos</h3>
+    <table class="table table-striped table-hover">
+        <thead class="table-success">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Ubicación</th>
+                <th>Precio/Noche</th>
+                <th>Servicios</th>
+                <th>Puntuación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let alojamiento of alojamientos; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ alojamiento.nombre }}</td>
+                <td>{{ alojamiento.tipo }}</td>
+                <td>{{ alojamiento.ubicacion }}</td>
+                <td>{{ alojamiento.precioNoche }}</td>
+                <td>{{ alojamiento.servicios }}</td>
+                <td>{{ alojamiento.puntuacion }}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" (click)="editAlojamiento(alojamiento)">Editar</button>
+                    <button class="btn btn-danger btn-sm"
+                        (click)="deleteAlojamiento(alojamiento.idAlojamiento!)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

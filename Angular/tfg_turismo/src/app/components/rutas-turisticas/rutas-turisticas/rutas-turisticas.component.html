@@ -1,0 +1,65 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Gestión de Rutas Turísticas</h2>
+    <button class="btn btn-primary mb-3" (click)="mostrarFormulario()">Nueva Ruta Turística</button>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Duración Estimada</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ruta of rutas">
+                <td>{{ ruta.nombre }}</td>
+                <td>{{ ruta.tipo }}</td>
+                <td>{{ ruta.duracionEstimada }}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" (click)="mostrarFormulario(ruta)">Editar</button>
+                    <button class="btn btn-danger btn-sm" (click)="eliminarRuta(ruta.idRuta)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="modoFormulario">
+        <h3 *ngIf="rutaSeleccionada.idRuta">Editar Ruta</h3>
+        <h3 *ngIf="!rutaSeleccionada.idRuta">Nueva Ruta</h3>
+        <form (ngSubmit)="guardarRuta()">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" type="text" [(ngModel)]="rutaSeleccionada.nombre" name="nombre" class="form-control"
+                    required />
+            </div>
+            <div class="form-group">
+                <label for="tipo">Tipo</label>
+                <input id="tipo" type="text" [(ngModel)]="rutaSeleccionada.tipo" name="tipo" class="form-control"
+                    required />
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" [(ngModel)]="rutaSeleccionada.descripcion" name="descripcion"
+                    class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="duracionEstimada">Duración Estimada</label>
+                <input id="duracionEstimada" type="text" [(ngModel)]="rutaSeleccionada.duracionEstimada"
+                    name="duracionEstimada" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="puntosInteres">Puntos de Interés (JSON)</label>
+                <textarea id="puntosInteres" [(ngModel)]="rutaSeleccionada.puntosInteres" name="puntosInteres"
+                    class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="mapaRuta">Mapa Ruta</label>
+                <input id="mapaRuta" type="text" [(ngModel)]="rutaSeleccionada.mapaRuta" name="mapaRuta"
+                    class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarFormulario()">Cancelar</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Gestión de Puntos de Interés</h2>
+    <button class="btn btn-primary mb-3" (click)="mostrarFormulario()">Nuevo Punto de Interés</button>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Coordenadas</th>
+                <th>Orden</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let punto of puntos">
+                <td>{{ punto.nombre }}</td>
+                <td>{{ punto.descripcion }}</td>
+                <td>{{ punto.coordenadas }}</td>
+                <td>{{ punto.orden }}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" (click)="mostrarFormulario(punto)">Editar</button>
+                    <button class="btn btn-danger btn-sm" (click)="eliminarPunto(punto.idPunto)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="modoFormulario">
+        <h3 *ngIf="puntoSeleccionado.idPunto">Editar Punto de Interés</h3>
+        <h3 *ngIf="!puntoSeleccionado.idPunto">Nuevo Punto de Interés</h3>
+        <form (ngSubmit)="guardarPunto()">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" [(ngModel)]="puntoSeleccionado.nombre" name="nombre" class="form-control"
+                    required />
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" [(ngModel)]="puntoSeleccionado.descripcion" name="descripcion"
+                    class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="coordenadas">Coordenadas</label>
+                <input type="text" id="coordenadas" [(ngModel)]="puntoSeleccionado.coordenadas" name="coordenadas"
+                    class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="orden">Orden</label>
+                <input type="number" id="orden" [(ngModel)]="puntoSeleccionado.orden" name="orden"
+                    class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarFormulario()">Cancelar</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+<div class="container">
+    <h2>Gestión de Reservas</h2>
+    <button class="btn btn-primary" (click)="mostrarFormulario()">Crear Reserva</button>
+
+    <table class="table mt-3" *ngIf="reservas.length > 0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Alojamiento</th>
+                <th>Restaurante</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Número de Personas</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reserva of reservas">
+                <td>{{ reserva.idReserva }}</td>
+                <td>{{ reserva.usuario?.nombre }}</td>
+                <td>{{ reserva.alojamiento?.nombre }}</td>
+                <td>{{ reserva.restaurante?.nombre }}</td>
+                <td>{{ reserva.fechaReserva }}</td>
+                <td>{{ reserva.horaReserva }}</td>
+                <td>{{ reserva.numPersonas }}</td>
+                <td>{{ reserva.estado }}</td>
+                <td>
+                    <button class="btn btn-warning" (click)="mostrarFormulario(reserva)">Editar</button>
+                    <button class="btn btn-danger" (click)="eliminarReserva(reserva.idReserva!)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Formulario de Reserva -->
+    <div *ngIf="modoFormulario" class="mt-4">
+        <h3>{{ reservaSeleccionada?.idReserva ? 'Editar Reserva' : 'Nueva Reserva' }}</h3>
+
+        <form (ngSubmit)="guardarReserva()">
+            <!-- Usuario -->
+            <div class="mb-3">
+                <label for="usuario" class="form-label">Usuario</label>
+                <select id="usuario" class="form-select" [(ngModel)]="reservaSeleccionada.usuario.id" name="usuario"
+                    required>
+                    <option *ngFor="let usuario of usuarios" [value]="usuario.id">
+                        {{ usuario.nombre }} {{ usuario.apellidos }}
+                    </option>
+                </select>
+            </div>
+
+            <!-- Alojamiento -->
+            <div class="mb-3">
+                <label for="alojamiento" class="form-label">Alojamiento</label>
+                <select id="alojamiento" class="form-select" [(ngModel)]="reservaSeleccionada.alojamiento.idAlojamiento"
+                    name="alojamiento" required>
+                    <option *ngFor="let alojamiento of alojamientos" [value]="alojamiento.idAlojamiento">
+                        {{ alojamiento.nombre }}
+                    </option>
+                </select>
+            </div>
+
+            <!-- Restaurante -->
+            <div class="mb-3">
+                <label for="restaurante" class="form-label">Restaurante</label>
+                <select id="restaurante" class="form-select" [(ngModel)]="reservaSeleccionada.restaurante.idRestaurante"
+                    name="restaurante" required>
+                    <option *ngFor="let restaurante of restaurantes" [value]="restaurante.idRestaurante">
+                        {{ restaurante.nombre }}
+                    </option>
+                </select>
+            </div>
+
+            <!-- Fecha de Reserva -->
+            <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha de Reserva</label>
+                <input id="fecha" type="date" class="form-control" [(ngModel)]="reservaSeleccionada.fechaReserva"
+                    name="fechaReserva" required />
+            </div>
+
+            <!-- Hora de Reserva -->
+            <div class="mb-3">
+                <label for="hora" class="form-label">Hora de Reserva</label>
+                <input id="hora" type="time" class="form-control" [(ngModel)]="reservaSeleccionada.horaReserva"
+                    name="horaReserva" required />
+            </div>
+
+            <!-- Número de Personas -->
+            <div class="mb-3">
+                <label for="numPersonas" class="form-label">Número de Personas</label>
+                <input id="numPersonas" type="number" class="form-control" [(ngModel)]="reservaSeleccionada.numPersonas"
+                    name="numPersonas" required />
+            </div>
+
+            <!-- Estado -->
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <input id="estado" type="text" class="form-control" [(ngModel)]="reservaSeleccionada.estado"
+                    name="estado" required />
+            </div>
+
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarFormulario()">Cancelar</button>
+        </form>
+    </div>
+</div>

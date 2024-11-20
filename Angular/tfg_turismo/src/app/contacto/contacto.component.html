@@ -1,0 +1,64 @@
+<!-- Contacto Page -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="text-center mb-4">Contacto</h2>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Envíanos un mensaje</h5>
+                </div>
+
+                <div class="card-body">
+                    <!-- Formulario de contacto -->
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" placeholder="Tu nombre" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="email" placeholder="Tu correo electrónico"
+                                required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Asunto</label>
+                            <input type="text" class="form-control" id="subject" placeholder="El asunto del mensaje"
+                                required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="message" rows="5" placeholder="Escribe tu mensaje..."
+                                required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">Enviar mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Información de contacto -->
+    <div class="mt-5 text-center">
+        <h3>O también puedes contactarnos en:</h3>
+        <p>
+            <strong>Dirección:</strong> Calle Ficticia 123, Ciudad, País<br>
+            <strong>Teléfono:</strong> +1 234 567 890<br>
+            <strong>Correo electrónico:</strong> info&#64;gmail.com
+        </p>
+    </div>
+</div>
+
+<!-- Mapa (opcional) -->
+<div class="container mt-5">
+    <h3 class="text-center">Visítanos</h3>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item"
+            src="https://www.google.com/maps/embed/v1/place?q=Barcelona&key=YOUR_GOOGLE_MAPS_API_KEY"
+            allowfullscreen></iframe>
+    </div>
+</div>

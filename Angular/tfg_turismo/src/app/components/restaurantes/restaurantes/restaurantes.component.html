@@ -1,0 +1,73 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Gestión de Restaurantes</h2>
+    <button class="btn btn-primary mb-3" (click)="mostrarFormulario()">Nuevo Restaurante</button>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo de Comida</th>
+                <th>Especialidad</th>
+                <th>Ubicación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let restaurante of restaurantes">
+                <td>{{ restaurante.nombre }}</td>
+                <td>{{ restaurante.tipoComida }}</td>
+                <td>{{ restaurante.especialidad }}</td>
+                <td>{{ restaurante.ubicacion }}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" (click)="mostrarFormulario(restaurante)">Editar</button>
+                    <button class="btn btn-danger btn-sm"
+                        (click)="eliminarRestaurante(restaurante.idRestaurante!)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="modoFormulario">
+        <h3 *ngIf="restauranteSeleccionado.idRestaurante">Editar Restaurante</h3>
+        <h3 *ngIf="!restauranteSeleccionado.idRestaurante">Nuevo Restaurante</h3>
+        <form (ngSubmit)="guardarRestaurante()">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" type="text" [(ngModel)]="restauranteSeleccionado.nombre" name="nombre"
+                    class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="tipoComida">Tipo de Comida</label>
+                <input id="tipoComida" type="text" [(ngModel)]="restauranteSeleccionado.tipoComida" name="tipoComida"
+                    class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="especialidad">Especialidad</label>
+                <input id="especialidad" type="text" [(ngModel)]="restauranteSeleccionado.especialidad"
+                    name="especialidad" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="ubicacion">Ubicación</label>
+                <input id="ubicacion" type="text" [(ngModel)]="restauranteSeleccionado.ubicacion" name="ubicacion"
+                    class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="precioPromedio">Precio Promedio</label>
+                <input id="precioPromedio" type="number" [(ngModel)]="restauranteSeleccionado.precioPromedio"
+                    name="precioPromedio" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="horario">Horario</label>
+                <input id="horario" type="text" [(ngModel)]="restauranteSeleccionado.horario" name="horario"
+                    class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="puntuacion">Puntuación</label>
+                <input id="puntuacion" type="number" [(ngModel)]="restauranteSeleccionado.puntuacion" name="puntuacion"
+                    class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarFormulario()">Cancelar</button>
+        </form>
+    </div>
+</div>
