@@ -2,7 +2,9 @@
     <h2 class="text-center mb-4 text-2xl font-semibold">Gestión de Eventos Culturales</h2>
 
     <!-- Botón para crear un nuevo evento -->
-    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">Nuevo Evento</button>
+    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">
+        Nuevo Evento
+    </button>
 
     <!-- Tabla de eventos culturales -->
     <table class="min-w-full bg-white border border-gray-300 rounded-lg">
@@ -22,13 +24,16 @@
                 <td class="py-2 px-4">{{ evento.fecha_inicio | date }}</td>
                 <td class="py-2 px-4">{{ evento.fecha_fin | date }}</td>
                 <td class="py-2 px-4">
-                    <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 text-sm mr-2" (click)="verDetalles(evento.idEvento)">
+                    <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 text-sm mr-2"
+                        (click)="verDetalles(evento.idEvento)">
                         Ver
                     </button>
-                    <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm mr-2" (click)="mostrarFormulario(evento)">
+                    <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm mr-2"
+                        (click)="editarEvento(evento)">
                         Editar
                     </button>
-                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm" (click)="eliminarEvento(evento.idEvento)">
+                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm"
+                        (click)="mostrarModalEliminar(evento)">
                         Eliminar
                     </button>
                 </td>
@@ -36,40 +41,96 @@
         </tbody>
     </table>
 
-    <!-- Formulario de creación/edición -->
-    <div *ngIf="modoFormulario" class="mt-6">
-        <h3 *ngIf="eventoSeleccionado" class="text-xl font-semibold mb-4">Editar Evento</h3>
-        <h3 *ngIf="!eventoSeleccionado" class="text-xl font-semibold mb-4">Nuevo Evento</h3>
+    <!-- Modal de edición para editar un evento -->
+    <div *ngIf="modoEdicion" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+            <!-- Botón para cerrar el modal -->
+            <button (click)="cancelarEdicion()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
 
-        <form #eventoForm="ngForm" (ngSubmit)="guardarEvento(eventoSeleccionado)" class="space-y-4 bg-gray-700 p-6 rounded-lg">
-            <div class="form-group">
-                <label for="nombre" class="block text-white">Nombre</label>
-                <input type="text" id="nombre" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="eventoSeleccionado.nombre"
-                    name="nombre" required />
-            </div>
-            <div class="form-group">
-                <label for="ubicacion" class="block text-white">Ubicación</label>
-                <input type="text" id="ubicacion" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="eventoSeleccionado.ubicacion"
-                    name="ubicacion" required />
-            </div>
-            <div class="form-group">
-                <label for="fecha_inicio" class="block text-white">Fecha Inicio</label>
-                <input type="date" id="fecha_inicio" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="eventoSeleccionado.fecha_inicio"
-                    name="fecha_inicio" required />
-            </div>
-            <div class="form-group">
-                <label for="fecha_fin" class="block text-white">Fecha Fin</label>
-                <input type="date" id="fecha_fin" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="eventoSeleccionado.fecha_fin"
-                    name="fecha_fin" required />
-            </div>
-            <div class="form-group">
-                <label for="precio_entrada" class="block text-white">Precio de Entrada</label>
-                <input type="number" id="precio_entrada" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    [(ngModel)]="eventoSeleccionado.precio_entrada" name="precio_entrada" required />
-            </div>
+            <h3 class="text-center text-lg font-semibold mb-4">Editar Evento</h3>
 
-            <button class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" type="submit">Guardar</button>
-            <button class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600" type="button" (click)="cancelarFormulario()">Cancelar</button>
-        </form>
+            <!-- Formulario de edición de evento -->
+            <form (ngSubmit)="guardarEvento(eventoSeleccionado)">
+                <div class="mb-4">
+                    <label class="block text-gray-700">Nombre</label>
+                    <input [(ngModel)]="eventoSeleccionado.nombre" name="nombre" class="w-full px-4 py-2 border rounded"
+                        required />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Descripción</label>
+                    <textarea [(ngModel)]="eventoSeleccionado.descripcion" name="descripcion"
+                        class="w-full px-4 py-2 border rounded" required></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Ubicación</label>
+                    <input [(ngModel)]="eventoSeleccionado.ubicacion" name="ubicacion"
+                        class="w-full px-4 py-2 border rounded" required />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Fecha Inicio</label>
+                    <input type="date" [(ngModel)]="eventoSeleccionado.fecha_inicio" name="fecha_inicio"
+                        class="w-full px-4 py-2 border rounded" required />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Fecha Fin</label>
+                    <input type="date" [(ngModel)]="eventoSeleccionado.fecha_fin" name="fecha_fin"
+                        class="w-full px-4 py-2 border rounded" required />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Precio Entrada</label>
+                    <input type="number" [(ngModel)]="eventoSeleccionado.precio_entrada" name="precio_entrada"
+                        class="w-full px-4 py-2 border rounded" required />
+                </div>
+
+                <div class="flex justify-between">
+                    <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Guardar</button>
+                    <button type="button" (click)="cancelarEdicion()"
+                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación para eliminar -->
+    <div *ngIf="eventoParaEliminar"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+            <!-- Botón para cerrar el modal -->
+            <button (click)="cancelarEliminar()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <!-- Contenido del modal -->
+            <div class="text-center">
+                <svg class="w-12 h-12 mx-auto mb-4 text-red-500" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13 16h-1v-4h1m0-4h-.01M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"></path>
+                </svg>
+                <h3 class="text-lg font-semibold mb-4">
+                    ¿Estás seguro de eliminar el evento
+                    <span class="font-bold">{{ eventoParaEliminar.nombre }}</span>?
+                </h3>
+                <div class="flex justify-center space-x-4">
+                    <button (click)="confirmarEliminar()"
+                        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                        Sí, eliminar
+                    </button>
+                    <button (click)="cancelarEliminar()"
+                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

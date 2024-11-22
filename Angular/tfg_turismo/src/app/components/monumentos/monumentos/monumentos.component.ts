@@ -20,7 +20,9 @@ export class MonumentosComponent implements OnInit {
     precio_entrada: 0,
     imagen: ''
   };
-  modoFormulario = false;
+  modoFormulario = false;  // Controla si el formulario está visible
+  modoEdicion = false;  // Controla si el modal de edición está visible
+  monumentoParaEliminar: MonumentoHistorico | null = null;  // Monumento seleccionado para eliminación
 
   constructor(private monumentoService: MonumentoHistoricoService, private router: Router) { }
 
@@ -38,9 +40,9 @@ export class MonumentosComponent implements OnInit {
     this.router.navigate(['/monumentos', id]);
   }
 
-  mostrarFormulario(monumento?: MonumentoHistorico): void {
-    // Si no se pasa un monumento, creamos uno vacío para el formulario.
-    this.monumentoSeleccionado = monumento ? { ...monumento } : {
+  mostrarFormulario(): void {
+    this.modoEdicion = true;
+    this.monumentoSeleccionado = {
       idMonumento: 0,
       nombre: '',
       historia: '',
@@ -53,35 +55,57 @@ export class MonumentosComponent implements OnInit {
     this.modoFormulario = true;
   }
 
+  editarMonumento(monumento: MonumentoHistorico): void {
+    this.monumentoSeleccionado = { ...monumento };
+    this.modoEdicion = true;  // Mostrar el modal de edición
+  }
+
+  cancelarEdicion(): void {
+    this.modoEdicion = false;  // Cerrar el modal de edición
+  }
+
   guardarMonumento(): void {
-    if (!this.monumentoSeleccionado) return;
-
-    // Si tiene un id, significa que estamos editando un monumento.
+    if (!this.monumentoSeleccionado.nombre || !this.monumentoSeleccionado.historia || 
+        !this.monumentoSeleccionado.tipo || !this.monumentoSeleccionado.ubicacion || 
+        !this.monumentoSeleccionado.precio_entrada) {
+      alert('Todos los campos son obligatorios');
+      return;
+    }
+  
+    // Si el monumento tiene id, estamos editando un monumento
     if (this.monumentoSeleccionado.idMonumento) {
-      this.monumentoService.updateMonumento(
-        this.monumentoSeleccionado.idMonumento,
-        this.monumentoSeleccionado
-      ).subscribe(() => {
-        this.modoFormulario = false;
-        this.cargarMonumentos();
-      });
+      this.monumentoService.updateMonumento(this.monumentoSeleccionado.idMonumento, this.monumentoSeleccionado)
+        .subscribe(() => {
+          this.modoEdicion = false;
+          this.cargarMonumentos();  // Recargar la lista de monumentos
+        });
     } else {
-      // Si no tiene id, estamos creando un nuevo monumento.
-      this.monumentoService.createMonumento(this.monumentoSeleccionado).subscribe(() => {
-        this.modoFormulario = false;
-        this.cargarMonumentos();
+      // Si no tiene id, estamos creando un nuevo monumento
+      this.monumentoService.createMonumento(this.monumentoSeleccionado)
+        .subscribe(() => {
+          this.modoEdicion = false;
+          this.cargarMonumentos();  // Recargar la lista de monumentos
+        });
+    }
+  }
+  
+  mostrarModalEliminar(monumento: MonumentoHistorico): void {
+    this.monumentoParaEliminar = monumento;  // Seleccionar el monumento para eliminar
+  }
+
+  cancelarEliminar(): void {
+    this.monumentoParaEliminar = null;  // Cerrar el modal de eliminación sin hacer nada
+  }
+
+  confirmarEliminar(): void {
+    if (this.monumentoParaEliminar) {
+      this.monumentoService.deleteMonumento(this.monumentoParaEliminar.idMonumento).subscribe(() => {
+        this.monumentoParaEliminar = null;  // Cerrar el modal de eliminación
+        this.cargarMonumentos();  // Recargar la lista de monumentos
       });
     }
   }
-
-  eliminarMonumento(id: number): void {
-    if (confirm('¿Deseas eliminar este monumento?')) {
-      this.monumentoService.deleteMonumento(id).subscribe(() => {
-        this.cargarMonumentos();
-      });
-    }
-  }
-
+  
   cancelarFormulario(): void {
     this.monumentoSeleccionado = {
       idMonumento: 0,

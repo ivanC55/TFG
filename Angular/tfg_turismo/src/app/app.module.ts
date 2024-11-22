@@ -39,7 +39,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent, // Declarar el componente Header
+    HeaderComponent, 
     HomeComponent,
     AlojamientosComponent,
     ContactoComponent,
@@ -55,7 +55,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),  // Aquí estamos configurando las rutas directamente
+    RouterModule.forRoot(routes),  
     FormsModule,
     HttpClientModule,
   ],

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Reserva } from '../../../interfaces/reservas.model';
+import { Reserva } from '../../../interfaces/reserva.model';
 import { Usuario } from '../../../interfaces/usuario.model';
 import { Alojamiento } from '../../../interfaces/alojamiento.model';
 import { Restaurante } from '../../../interfaces/restaurante.model';

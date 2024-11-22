@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Reserva } from '../interfaces/reservas.model';
+import { Reserva } from '../interfaces/reserva.model';
 
 @Injectable({
     providedIn: 'root'
