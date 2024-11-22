@@ -1,94 +1,106 @@
 <div class="container mx-auto mt-8">
     <h2 class="text-center text-green-600 text-2xl font-bold mb-4">Gestión de Alojamientos</h2>
-
+  
     <!-- Botón para mostrar/ocultar el formulario -->
-    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md mb-4" (click)="toggleAddForm()">
-        {{ showAddForm ? 'Cerrar Formulario' : 'Nuevo Alojamiento' }}
+    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md mb-4" (click)="mostrarFormulario()">
+      {{ isEditing ? 'Cerrar Formulario' : 'Nuevo Alojamiento' }}
     </button>
-
-    <!-- Formulario para añadir o editar alojamiento -->
-    <div *ngIf="showAddForm" class="bg-white shadow-md rounded-md p-6 mb-6">
-        <h3 class="text-lg font-semibold mb-4">
-            {{ isEditing ? 'Editar Alojamiento' : 'Añadir Nuevo Alojamiento' }}
-        </h3>
-        <form (ngSubmit)="addAlojamiento()" #alojamientoForm="ngForm" class="space-y-4" novalidate>
-            <div>
-                <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-                <input type="text" id="nombre"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-300 focus:ring-opacity-50"
-                    [(ngModel)]="alojamiento.nombre" name="nombre" required />
-            </div>
-            <div>
-                <label for="tipo" class="block text-sm font-medium text-gray-700">Tipo</label>
-                <input type="text" id="tipo"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-300 focus:ring-opacity-50"
-                    [(ngModel)]="alojamiento.tipo" name="tipo" required />
-            </div>
-            <div>
-                <label for="ubicacion" class="block text-sm font-medium text-gray-700">Ubicación</label>
-                <input type="text" id="ubicacion"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-300 focus:ring-opacity-50"
-                    [(ngModel)]="alojamiento.ubicacion" name="ubicacion" required />
-            </div>
-            <div>
-                <label for="precioNoche" class="block text-sm font-medium text-gray-700">Precio/Noche</label>
-                <input type="number" id="precioNoche"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-300 focus:ring-opacity-50"
-                    [(ngModel)]="alojamiento.precioNoche" name="precioNoche" required />
-            </div>
-            <div>
-                <label for="servicios" class="block text-sm font-medium text-gray-700">Servicios</label>
-                <input type="text" id="servicios"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-300 focus:ring-opacity-50"
-                    [(ngModel)]="alojamiento.servicios" name="servicios" required />
-            </div>
-            <div>
-                <label for="puntuacion" class="block text-sm font-medium text-gray-700">Puntuación</label>
-                <input type="number" id="puntuacion"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-300 focus:ring-opacity-50"
-                    [(ngModel)]="alojamiento.puntuacion" name="puntuacion" min="0" max="5" required />
-            </div>
-            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md">
-                {{ isEditing ? 'Actualizar Alojamiento' : 'Añadir Alojamiento' }}
-            </button>
+  
+    <!-- Modal de Formulario de Alojamiento -->
+    <div *ngIf="mostrarModalFormulario" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+      <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+        <h3 class="text-center text-lg font-semibold mb-4">{{ isEditing ? 'Editar Alojamiento' : 'Añadir Nuevo Alojamiento' }}</h3>
+  
+        <form (ngSubmit)="guardarAlojamiento()" class="space-y-6">
+          <div class="mb-4">
+            <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+            <input id="nombre" type="text" [(ngModel)]="alojamiento.nombre" name="nombre" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+          </div>
+  
+          <div class="mb-4">
+            <label for="tipo" class="block text-sm font-medium text-gray-700">Tipo</label>
+            <input id="tipo" type="text" [(ngModel)]="alojamiento.tipo" name="tipo" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+          </div>
+  
+          <div class="mb-4">
+            <label for="ubicacion" class="block text-sm font-medium text-gray-700">Ubicación</label>
+            <input id="ubicacion" type="text" [(ngModel)]="alojamiento.ubicacion" name="ubicacion" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+          </div>
+  
+          <div class="mb-4">
+            <label for="precioNoche" class="block text-sm font-medium text-gray-700">Precio/Noche</label>
+            <input id="precioNoche" type="number" [(ngModel)]="alojamiento.precioNoche" name="precioNoche" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+          </div>
+  
+          <div class="mb-4">
+            <label for="servicios" class="block text-sm font-medium text-gray-700">Servicios</label>
+            <input id="servicios" type="text" [(ngModel)]="alojamiento.servicios" name="servicios" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+          </div>
+  
+          <div class="mb-4">
+            <label for="puntuacion" class="block text-sm font-medium text-gray-700">Puntuación</label>
+            <input id="puntuacion" type="number" [(ngModel)]="alojamiento.puntuacion" name="puntuacion" min="0" max="5" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+          </div>
+  
+          <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md">
+            {{ isEditing ? 'Actualizar Alojamiento' : 'Añadir Alojamiento' }}
+          </button>
+          <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md mt-2" (click)="cerrarModalFormulario()">Cancelar</button>
         </form>
+      </div>
     </div>
-
+  
     <!-- Tabla de alojamientos -->
     <h3 class="text-lg font-semibold mb-4">Lista de Alojamientos</h3>
     <table class="min-w-full border-collapse border border-gray-200 shadow-md">
-        <thead class="bg-green-100">
-            <tr>
-                <th class="border border-gray-200 px-4 py-2 text-left">#</th>
-                <th class="border border-gray-200 px-4 py-2 text-left">Nombre</th>
-                <th class="border border-gray-200 px-4 py-2 text-left">Tipo</th>
-                <th class="border border-gray-200 px-4 py-2 text-left">Ubicación</th>
-                <th class="border border-gray-200 px-4 py-2 text-left">Precio/Noche</th>
-                <th class="border border-gray-200 px-4 py-2 text-left">Servicios</th>
-                <th class="border border-gray-200 px-4 py-2 text-left">Puntuación</th>
-                <th class="border border-gray-200 px-4 py-2 text-left">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let alojamiento of alojamientos; let i = index" class="hover:bg-gray-50">
-                <td class="border border-gray-200 px-4 py-2">{{ i + 1 }}</td>
-                <td class="border border-gray-200 px-4 py-2">{{ alojamiento.nombre }}</td>
-                <td class="border border-gray-200 px-4 py-2">{{ alojamiento.tipo }}</td>
-                <td class="border border-gray-200 px-4 py-2">{{ alojamiento.ubicacion }}</td>
-                <td class="border border-gray-200 px-4 py-2">{{ alojamiento.precioNoche }}</td>
-                <td class="border border-gray-200 px-4 py-2">{{ alojamiento.servicios }}</td>
-                <td class="border border-gray-200 px-4 py-2">{{ alojamiento.puntuacion }}</td>
-                <td class="border border-gray-200 px-4 py-2">
-                    <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-md text-sm"
-                        (click)="editAlojamiento(alojamiento)">
-                        Editar
-                    </button>
-                    <button class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md text-sm"
-                        (click)="deleteAlojamiento(alojamiento.idAlojamiento!)">
-                        Eliminar
-                    </button>
-                </td>
-            </tr>
-        </tbody>
+      <thead class="bg-green-100">
+        <tr>
+          <th class="border border-gray-200 px-4 py-2 text-left">#</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Nombre</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Tipo</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Ubicación</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Precio/Noche</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Servicios</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Puntuación</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alojamiento of alojamientos; let i = index" class="hover:bg-gray-50">
+          <td class="border border-gray-200 px-4 py-2">{{ i + 1 }}</td>
+          <td class="border border-gray-200 px-4 py-2">{{ alojamiento.nombre }}</td>
+          <td class="border border-gray-200 px-4 py-2">{{ alojamiento.tipo }}</td>
+          <td class="border border-gray-200 px-4 py-2">{{ alojamiento.ubicacion }}</td>
+          <td class="border border-gray-200 px-4 py-2">{{ alojamiento.precioNoche }}</td>
+          <td class="border border-gray-200 px-4 py-2">{{ alojamiento.servicios }}</td>
+          <td class="border border-gray-200 px-4 py-2">{{ alojamiento.puntuacion }}</td>
+          <td class="border border-gray-200 px-4 py-2">
+            <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-md text-sm" (click)="mostrarFormulario(alojamiento)">
+              Editar
+            </button>
+            <button class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md text-sm" (click)="abrirModalEliminar(alojamiento)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
-</div>
+  
+    <!-- Modal de Confirmación de Eliminación -->
+    <div *ngIf="mostrarModalEliminar" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+      <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+        <h3 class="text-center text-lg font-semibold mb-4">¿Seguro que deseas eliminar este alojamiento?</h3>
+        <div class="flex justify-between">
+          <button (click)="confirmarEliminar()" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">Eliminar</button>
+          <button (click)="cancelarEliminar()" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

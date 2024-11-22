@@ -18,7 +18,8 @@ export class RutasTuristicasComponent implements OnInit {
     puntosInteres: '',
     mapaRuta: ''
   };
-  modoFormulario = false;
+  mostrarModalFormulario: boolean = false; // Controla si el modal de formulario está visible
+  mostrarModalEliminar: boolean = false; // Controla si el modal de eliminación está visible
 
   constructor(private rutaService: RutaTuristicaService) { }
 
@@ -44,21 +45,21 @@ export class RutasTuristicasComponent implements OnInit {
         puntosInteres: '',
         mapaRuta: ''
       };
-    this.modoFormulario = true;
+    this.mostrarModalFormulario = true;
   }
 
   guardarRuta(): void {
-    if (this.rutaSeleccionada.idRuta) {
-      this.rutaService
-        .updateRuta(this.rutaSeleccionada.idRuta, this.rutaSeleccionada)
-        .subscribe(() => {
-          this.cargarRutas();
-          this.modoFormulario = false;
-        });
-    } else {
+    if (this.rutaSeleccionada.idRuta === 0) {
+      // Crear nueva ruta
       this.rutaService.createRuta(this.rutaSeleccionada).subscribe(() => {
         this.cargarRutas();
-        this.modoFormulario = false;
+        this.mostrarModalFormulario = false;
+      });
+    } else {
+      // Actualizar ruta existente
+      this.rutaService.updateRuta(this.rutaSeleccionada.idRuta, this.rutaSeleccionada).subscribe(() => {
+        this.cargarRutas();
+        this.mostrarModalFormulario = false;
       });
     }
   }
@@ -72,6 +73,25 @@ export class RutasTuristicasComponent implements OnInit {
   }
 
   cancelarFormulario(): void {
-    this.modoFormulario = false;
+    this.mostrarModalFormulario = false;
+  }
+
+  // Abre el modal de eliminación de ruta
+  abrirModalEliminar(ruta: RutaTuristica): void {
+    this.rutaSeleccionada = { ...ruta };
+    this.mostrarModalEliminar = true;
+  }
+
+  // Cierra el modal de eliminación de ruta
+  cancelarEliminar(): void {
+    this.mostrarModalEliminar = false;
+  }
+
+  // Confirma la eliminación de la ruta
+  confirmarEliminar(): void {
+    if (this.rutaSeleccionada && this.rutaSeleccionada.idRuta !== undefined) {
+      this.eliminarRuta(this.rutaSeleccionada.idRuta);
+      this.mostrarModalEliminar = false;
+    }
   }
 }

@@ -1,7 +1,12 @@
 <div class="container mx-auto mt-4 px-4">
     <h2 class="text-center mb-4 text-2xl font-semibold">Gestión de Puntos de Interés</h2>
-    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">Nuevo Punto de Interés</button>
 
+    <!-- Botón para crear un nuevo punto de interés -->
+    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">
+        Nuevo Punto de Interés
+    </button>
+
+    <!-- Tabla de puntos de interés -->
     <table class="min-w-full bg-white border border-gray-300 rounded-lg">
         <thead class="bg-gray-200">
             <tr>
@@ -19,44 +24,78 @@
                 <td class="py-2 px-4">{{ punto.coordenadas }}</td>
                 <td class="py-2 px-4">{{ punto.orden }}</td>
                 <td class="py-2 px-4">
-                    <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm mr-2" (click)="mostrarFormulario(punto)">Editar</button>
-                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm" (click)="eliminarPunto(punto.idPunto)">Eliminar</button>
+                    <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm mr-2"
+                        (click)="editarPunto(punto)">
+                        Editar
+                    </button>
+                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm"
+                        (click)="mostrarModalEliminar(punto)">
+                        Eliminar
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <div *ngIf="modoFormulario" class="mt-6">
-        <h3 *ngIf="puntoSeleccionado.idPunto" class="text-xl font-semibold mb-4">Editar Punto de Interés</h3>
-        <h3 *ngIf="!puntoSeleccionado.idPunto" class="text-xl font-semibold mb-4">Nuevo Punto de Interés</h3>
+    <!-- Modal de edición de punto de interés -->
+    <div *ngIf="modoEdicion" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+            <button (click)="cancelarEdicion()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
 
-        <form (ngSubmit)="guardarPunto()" class="space-y-4 bg-gray-700 p-6 rounded-lg">
-            <div class="form-group">
-                <label for="nombre" class="block text-white">Nombre</label>
-                <input type="text" id="nombre" [(ngModel)]="puntoSeleccionado.nombre" name="nombre" 
-                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                    required />
+            <h3 class="text-center text-lg font-semibold mb-4">Editar Punto de Interés</h3>
+
+            <!-- Formulario de edición -->
+            <form (ngSubmit)="guardarPunto(puntoSeleccionado)">
+                <div class="mb-4">
+                    <label class="block text-gray-700">Nombre</label>
+                    <input [(ngModel)]="puntoSeleccionado.nombre" name="nombre" class="w-full px-4 py-2 border rounded"
+                        required />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Descripción</label>
+                    <textarea [(ngModel)]="puntoSeleccionado.descripcion" name="descripcion"
+                        class="w-full px-4 py-2 border rounded" required></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Coordenadas</label>
+                    <input [(ngModel)]="puntoSeleccionado.coordenadas" name="coordenadas"
+                        class="w-full px-4 py-2 border rounded" required />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Orden</label>
+                    <input [(ngModel)]="puntoSeleccionado.orden" name="orden" class="w-full px-4 py-2 border rounded"
+                        type="number" required />
+                </div>
+
+                <div class="flex justify-between">
+                    <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Guardar</button>
+                    <button type="button" (click)="cancelarEdicion()"
+                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación de eliminación -->
+    <div *ngIf="puntoParaEliminar"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+            <h3 class="text-center text-lg font-semibold mb-4">¿Estás seguro de eliminar este punto de interés?</h3>
+            <div class="flex justify-between">
+                <button (click)="confirmarEliminar()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    Sí, eliminar
+                </button>
+                <button (click)="cancelarEliminar()"
+                    class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+                    Cancelar
+                </button>
             </div>
-            <div class="form-group">
-                <label for="descripcion" class="block text-white">Descripción</label>
-                <textarea id="descripcion" [(ngModel)]="puntoSeleccionado.descripcion" name="descripcion" 
-                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                    required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="coordenadas" class="block text-white">Coordenadas</label>
-                <input type="text" id="coordenadas" [(ngModel)]="puntoSeleccionado.coordenadas" name="coordenadas" 
-                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            </div>
-            <div class="form-group">
-                <label for="orden" class="block text-white">Orden</label>
-                <input type="number" id="orden" [(ngModel)]="puntoSeleccionado.orden" name="orden" 
-                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            </div>
-            <div class="flex space-x-4">
-                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Guardar</button>
-                <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600" (click)="cancelarFormulario()">Cancelar</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>

@@ -9,12 +9,8 @@ import { AlojamientoService } from '../../service/alojamiento.service';
 })
 export class AlojamientosComponent implements OnInit {
   alojamientos: Alojamiento[] = [];
-  showAddForm: boolean = false;
-  isEditing: boolean = false;
-
-  // Modelo para el nuevo alojamiento
   alojamiento: Alojamiento = {
-    idAlojamiento: 0, // o puedes omitirlo si no se requiere al crearlo
+    idAlojamiento: 0,
     nombre: '',
     tipo: '',
     ubicacion: '',
@@ -23,7 +19,11 @@ export class AlojamientosComponent implements OnInit {
     puntuacion: 0,
   };
 
-  constructor(private alojamientoService: AlojamientoService) {}
+  mostrarModalFormulario: boolean = false; // Controla la visibilidad del modal
+  mostrarModalEliminar: boolean = false; // Controla la visibilidad del modal de eliminar
+  isEditing: boolean = false; // Define si se está editando o creando un alojamiento
+
+  constructor(private alojamientoService: AlojamientoService) { }
 
   ngOnInit(): void {
     this.listAlojamientos();
@@ -34,7 +34,6 @@ export class AlojamientosComponent implements OnInit {
     this.alojamientoService.getAlojamientosList().subscribe(
       (data) => {
         this.alojamientos = data;
-        console.log(this.alojamientos);
       },
       (error) => {
         console.error('Error fetching alojamientos:', error);
@@ -42,22 +41,32 @@ export class AlojamientosComponent implements OnInit {
     );
   }
 
-  // Mostrar u ocultar el formulario de creación
-  toggleAddForm() {
-    this.showAddForm = !this.showAddForm;
+  // Mostrar el formulario en el modal para agregar o editar alojamiento
+  mostrarFormulario(alojamiento?: Alojamiento): void {
+    this.alojamiento = alojamiento
+      ? { ...alojamiento }
+      : {
+        idAlojamiento: 0,
+        nombre: '',
+        tipo: '',
+        ubicacion: '',
+        precioNoche: 0,
+        servicios: '',
+        puntuacion: 0,
+      };
+    this.isEditing = !!alojamiento;
+    this.mostrarModalFormulario = true;
   }
 
-  // Añadir o actualizar un alojamiento
-  addAlojamiento() {
+  // Guardar un alojamiento nuevo o editar uno existente
+  guardarAlojamiento(): void {
     if (this.isEditing) {
       // Actualizar alojamiento
       this.alojamientoService.updateAlojamiento(this.alojamiento).subscribe(
-        (response) => {
-          console.log('Alojamiento actualizado:', response);
+        () => {
           alert('¡Alojamiento actualizado exitosamente!');
-          this.resetForm();
-          this.showAddForm = false; // Cerrar el formulario
-          this.listAlojamientos(); // Actualizar lista
+          this.cerrarModalFormulario();
+          this.listAlojamientos(); // Actualizar la lista de alojamientos
         },
         (error) => {
           console.error('Error al actualizar el alojamiento:', error);
@@ -65,14 +74,12 @@ export class AlojamientosComponent implements OnInit {
         }
       );
     } else {
-      // Crear nuevo alojamiento
+      // Crear alojamiento nuevo
       this.alojamientoService.createAlojamiento(this.alojamiento).subscribe(
-        (response) => {
-          console.log('Alojamiento añadido:', response);
+        () => {
           alert('¡Alojamiento añadido exitosamente!');
-          this.resetForm();
-          this.showAddForm = false; // Cerrar el formulario
-          this.listAlojamientos(); // Actualizar lista
+          this.cerrarModalFormulario();
+          this.listAlojamientos(); // Actualizar la lista de alojamientos
         },
         (error) => {
           console.error('Error al añadir el alojamiento:', error);
@@ -82,21 +89,13 @@ export class AlojamientosComponent implements OnInit {
     }
   }
 
-    // Preparar alojamiento para edición
-    editAlojamiento(alojamiento: Alojamiento) {
-      this.alojamiento = { ...alojamiento };
-      this.showAddForm = true;
-      this.isEditing = true;
-    }
-
-      // Eliminar alojamiento
-  deleteAlojamiento(id: number) {
+  // Eliminar alojamiento
+  eliminarAlojamiento(id: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este alojamiento?')) {
       this.alojamientoService.deleteAlojamiento(id).subscribe(
         () => {
-          console.log('Alojamiento eliminado');
           alert('Alojamiento eliminado exitosamente');
-          this.listAlojamientos(); // Actualizar lista
+          this.listAlojamientos(); // Actualizar la lista
         },
         (error) => {
           console.error('Error al eliminar el alojamiento:', error);
@@ -105,18 +104,28 @@ export class AlojamientosComponent implements OnInit {
       );
     }
   }
-  
 
-  // Reiniciar el formulario
-  resetForm() {
-    this.alojamiento = {
-      idAlojamiento: 0,
-      nombre: '',
-      tipo: '',
-      ubicacion: '',
-      precioNoche: 0,
-      servicios: '',
-      puntuacion: 0,
-    };
+  // Abrir el modal de confirmación para eliminar alojamiento
+  abrirModalEliminar(alojamiento: Alojamiento): void {
+    this.alojamiento = { ...alojamiento };
+    this.mostrarModalEliminar = true;
+  }
+
+  // Cerrar modal de eliminar
+  cancelarEliminar(): void {
+    this.mostrarModalEliminar = false;
+  }
+
+  // Confirmar eliminación
+  confirmarEliminar(): void {
+    if (this.alojamiento && this.alojamiento.idAlojamiento !== undefined) {
+      this.eliminarAlojamiento(this.alojamiento.idAlojamiento);
+      this.mostrarModalEliminar = false;
+    }
+  }
+
+  // Cerrar formulario de modal
+  cerrarModalFormulario(): void {
+    this.mostrarModalFormulario = false;
   }
 }

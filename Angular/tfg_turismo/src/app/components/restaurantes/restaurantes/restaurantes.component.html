@@ -20,70 +20,62 @@
                 <td class="py-2 px-4">{{ restaurante.ubicacion }}</td>
                 <td class="py-2 px-4">
                     <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 text-sm mr-2" (click)="mostrarFormulario(restaurante)">Editar</button>
-                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm" (click)="eliminarRestaurante(restaurante.idRestaurante!)">Eliminar</button>
+                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm" (click)="mostrarModalEliminar(restaurante)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <!-- Formulario de Restaurante -->
-    <div *ngIf="modoFormulario" class="mt-6">
-        <h3 class="text-xl font-semibold mb-4">{{ restauranteSeleccionado?.idRestaurante ? 'Editar Restaurante' : 'Nuevo Restaurante' }}</h3>
+    <!-- Modal de edición -->
+    <div *ngIf="modoFormulario" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+            <button (click)="cancelarFormulario()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
 
-        <form (ngSubmit)="guardarRestaurante()" class="space-y-6 bg-gray-700 p-6 rounded-lg">
-            <!-- Nombre -->
-            <div class="mb-4">
-                <label for="nombre" class="block text-white">Nombre</label>
-                <input id="nombre" type="text" [(ngModel)]="restauranteSeleccionado.nombre" name="nombre"
-                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-            </div>
+            <h3 class="text-center text-lg font-semibold mb-4">{{ restauranteSeleccionado.idRestaurante ? 'Editar Restaurante' : 'Nuevo Restaurante' }}</h3>
 
-            <!-- Tipo de Comida -->
-            <div class="mb-4">
-                <label for="tipoComida" class="block text-white">Tipo de Comida</label>
-                <input id="tipoComida" type="text" [(ngModel)]="restauranteSeleccionado.tipoComida" name="tipoComida"
-                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-            </div>
+            <form (ngSubmit)="guardarRestaurante()">
+                <div class="mb-4">
+                    <label class="block text-gray-700">Nombre</label>
+                    <input [(ngModel)]="restauranteSeleccionado.nombre" name="nombre" class="w-full px-4 py-2 border rounded" required />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Tipo de Comida</label>
+                    <input [(ngModel)]="restauranteSeleccionado.tipoComida" name="tipoComida" class="w-full px-4 py-2 border rounded" required />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Especialidad</label>
+                    <input [(ngModel)]="restauranteSeleccionado.especialidad" name="especialidad" class="w-full px-4 py-2 border rounded" required />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Ubicación</label>
+                    <input [(ngModel)]="restauranteSeleccionado.ubicacion" name="ubicacion" class="w-full px-4 py-2 border rounded" required />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Precio Promedio</label>
+                    <input type="number" [(ngModel)]="restauranteSeleccionado.precioPromedio" name="precioPromedio" class="w-full px-4 py-2 border rounded" required />
+                </div>
 
-            <!-- Especialidad -->
-            <div class="mb-4">
-                <label for="especialidad" class="block text-white">Especialidad</label>
-                <input id="especialidad" type="text" [(ngModel)]="restauranteSeleccionado.especialidad"
-                    name="especialidad" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-            </div>
+                <div class="flex justify-between">
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Guardar</button>
+                    <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600" (click)="cancelarFormulario()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-            <!-- Ubicación -->
-            <div class="mb-4">
-                <label for="ubicacion" class="block text-white">Ubicación</label>
-                <input id="ubicacion" type="text" [(ngModel)]="restauranteSeleccionado.ubicacion" name="ubicacion"
-                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+    <!-- Modal de confirmación de eliminación -->
+    <div *ngIf="restauranteParaEliminar" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-lg w-96 p-6 text-center relative z-10">
+            <h3 class="text-lg font-semibold mb-4">¿Estás seguro de eliminar este restaurante?</h3>
+            <div class="flex justify-around">
+                <button class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" (click)="confirmarEliminar()">Sí, eliminar</button>
+                <button class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600" (click)="cancelarEliminar()">Cancelar</button>
             </div>
-
-            <!-- Precio Promedio -->
-            <div class="mb-4">
-                <label for="precioPromedio" class="block text-white">Precio Promedio</label>
-                <input id="precioPromedio" type="number" [(ngModel)]="restauranteSeleccionado.precioPromedio"
-                    name="precioPromedio" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-            </div>
-
-            <!-- Horario -->
-            <div class="mb-4">
-                <label for="horario" class="block text-white">Horario</label>
-                <input id="horario" type="text" [(ngModel)]="restauranteSeleccionado.horario" name="horario"
-                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-            </div>
-
-            <!-- Puntuación -->
-            <div class="mb-4">
-                <label for="puntuacion" class="block text-white">Puntuación</label>
-                <input id="puntuacion" type="number" [(ngModel)]="restauranteSeleccionado.puntuacion" name="puntuacion"
-                    class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-            </div>
-
-            <div class="flex space-x-4">
-                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Guardar</button>
-                <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600" (click)="cancelarFormulario()">Cancelar</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
