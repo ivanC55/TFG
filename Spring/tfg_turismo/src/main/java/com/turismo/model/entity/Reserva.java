@@ -26,11 +26,11 @@ public class Reserva {
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "id_alojamiento")
+    @JoinColumn(name = "id_alojamiento" , nullable = true)
     private Alojamiento alojamiento;
 
     @ManyToOne
-    @JoinColumn(name = "id_restaurante")
+    @JoinColumn(name = "id_restaurante" , nullable = true)
     private Restaurante restaurante;
 
     private LocalDate fechaReserva;
