@@ -18,8 +18,15 @@ export class ReservasComponent implements OnInit {
   usuarios: Usuario[] = [];
   alojamientos: Alojamiento[] = [];
   restaurantes: Restaurante[] = [];
-  reservaSeleccionada: Reserva = this.inicializarReserva();  // Cambiado a reservaSeleccionada
+  reservaSeleccionada: Reserva = this.inicializarReserva();  
   modoFormulario: boolean = false;
+  modoEdicion: boolean = false;  // Para editar
+  reservaParaEliminar: Reserva | null = null;  // Para eliminar reserva
+
+  // Campos de selección de id
+  usuarioSeleccionadoId: number | null = null;
+  alojamientoSeleccionadoId: number | null = null;
+  restauranteSeleccionadoId: number | null = null;
 
   constructor(
     private reservaService: ReservaService,
@@ -35,35 +42,12 @@ export class ReservasComponent implements OnInit {
     this.cargarRestaurantes();
   }
 
-  // Inicializar una nueva reserva
   inicializarReserva(): Reserva {
     return {
       idReserva: undefined,
-      usuario: {
-        id: undefined,
-        username: '',
-        nombre: '',
-        apellidos: '',
-        password: '',
-        email: '',
-        telefono: '',
-        direccion: '',
-        rol: ''
-      },
-      alojamiento: {
-        idAlojamiento: undefined, nombre: '', ubicacion: '', precioNoche: 0,
-        tipo: '',
-        servicios: '',
-        puntuacion: 0
-      },
-      restaurante: {
-        idRestaurante: undefined, nombre: '', ubicacion: '',
-        tipoComida: '',
-        especialidad: '',
-        precioPromedio: 0,
-        horario: '',
-        puntuacion: 0
-      },
+      usuario: { id: undefined, username: '', nombre: '', apellidos: '', password: '', email: '', telefono: '', direccion: '', rol: '' },
+      alojamiento: null,
+      restaurante: null,
       fechaReserva: '',
       horaReserva: '',
       numPersonas: 1,
@@ -71,83 +55,92 @@ export class ReservasComponent implements OnInit {
     };
   }
 
-  // Cargar todas las reservas
   cargarReservas(): void {
     this.reservaService.getReservas().subscribe((data) => {
       this.reservas = data;
     });
   }
 
-  // Cargar todos los usuarios
   cargarUsuarios(): void {
     this.usuarioService.getUsuarios().subscribe((data) => {
       this.usuarios = data;
     });
   }
 
-  // Cargar todos los alojamientos
   cargarAlojamientos(): void {
     this.alojamientoService.getAlojamientosList().subscribe((data) => {
       this.alojamientos = data;
     });
   }
 
-  // Cargar todos los restaurantes
   cargarRestaurantes(): void {
     this.restauranteService.getRestaurantes().subscribe((data) => {
       this.restaurantes = data;
     });
   }
 
-  // Mostrar el formulario para crear o editar una reserva
-  mostrarFormulario(reserva?: Reserva): void {
-    this.reservaSeleccionada = reserva ? { ...reserva } : this.inicializarReserva();
+  mostrarFormulario(): void {
     this.modoFormulario = true;
+    this.modoEdicion = false;
+    this.reservaSeleccionada = this.inicializarReserva();
   }
 
-  // Guardar o actualizar una reserva
+  editarReserva(reserva: Reserva): void {
+    this.reservaSeleccionada = { ...reserva };
+    this.modoEdicion = true;  // Mostrar formulario para edición
+    this.modoFormulario = true;  // Abrir el formulario
+    this.usuarioSeleccionadoId = reserva.usuario?.id || null;
+    this.alojamientoSeleccionadoId = reserva.alojamiento?.idAlojamiento || null;
+    this.restauranteSeleccionadoId = reserva.restaurante?.idRestaurante || null;
+  }
+
   guardarReserva(): void {
     const reserva: any = {
       idReserva: this.reservaSeleccionada.idReserva,
-      usuario: { id: this.reservaSeleccionada.usuario.id }, // Solo enviar el ID
-      alojamiento: { idAlojamiento: this.reservaSeleccionada.alojamiento.idAlojamiento }, // Solo enviar el ID
-      restaurante: this.reservaSeleccionada.restaurante.idRestaurante
-        ? { idRestaurante: this.reservaSeleccionada.restaurante.idRestaurante } // Solo enviar el ID si está presente
-        : null,
+      usuario: { id: this.usuarioSeleccionadoId }, // Solo enviar el ID
+      alojamiento: this.alojamientoSeleccionadoId ? { idAlojamiento: this.alojamientoSeleccionadoId } : null,
+      restaurante: this.restauranteSeleccionadoId ? { idRestaurante: this.restauranteSeleccionadoId } : null,
       fechaReserva: this.reservaSeleccionada.fechaReserva,
       horaReserva: this.reservaSeleccionada.horaReserva,
       numPersonas: this.reservaSeleccionada.numPersonas,
       estado: this.reservaSeleccionada.estado
     };
-  
-    console.log('Payload enviado:', reserva); // Verificar antes de enviar
-  
-    this.reservaService.createReserva(reserva).subscribe(
-      (data) => {
-        console.log('Reserva guardada exitosamente', data);
+    
+    if (this.reservaSeleccionada.idReserva) {
+      this.reservaService.updateReserva(reserva).subscribe(() => {
         this.cargarReservas();
         this.cancelarFormulario();
-      },
-      (error) => {
-        console.error('Error al guardar la reserva', error);
-        alert('Error al guardar la reserva: ' + error.message);
-      }
-    );
+      });
+    } else {
+      this.reservaService.createReserva(reserva).subscribe(() => {
+        this.cargarReservas();
+        this.cancelarFormulario();
+      });
+    }
   }
-  
 
-  // Eliminar una reserva
-  eliminarReserva(idReserva: number | null): void {
-    if (idReserva) {
-      this.reservaService.deleteReserva(idReserva).subscribe(() => {
+  mostrarModalEliminar(reserva: Reserva): void {
+    this.reservaParaEliminar = reserva;  // Seleccionar la reserva para eliminar
+  }
+
+  cancelarEliminar(): void {
+    this.reservaParaEliminar = null;  // Cerrar el modal de eliminación sin hacer nada
+  }
+
+  confirmarEliminar(): void {
+    if (this.reservaParaEliminar) {
+      this.reservaService.deleteReserva(this.reservaParaEliminar.idReserva!).subscribe(() => {
+        this.reservaParaEliminar = null;
         this.cargarReservas();
       });
     }
   }
 
-  // Cancelar el formulario
   cancelarFormulario(): void {
     this.modoFormulario = false;
     this.reservaSeleccionada = this.inicializarReserva();
+    this.usuarioSeleccionadoId = null;
+    this.alojamientoSeleccionadoId = null;
+    this.restauranteSeleccionadoId = null;
   }
 }

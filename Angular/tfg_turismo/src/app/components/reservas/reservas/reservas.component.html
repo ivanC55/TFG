@@ -1,16 +1,20 @@
-<div class="container mx-auto px-4 mt-4">
-    <h2 class="text-2xl font-semibold mb-4">Gestión de Reservas</h2>
-    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">Crear Reserva</button>
+<div class="container mx-auto mt-4 px-4">
+    <h2 class="text-center mb-4 text-2xl font-semibold">Gestión de Reservas</h2>
 
-    <table class="min-w-full bg-white border border-gray-300 rounded-lg" *ngIf="reservas.length > 0">
+    <!-- Botón para crear una nueva reserva -->
+    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">
+        Nueva Reserva
+    </button>
+
+    <!-- Tabla de reservas -->
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
         <thead class="bg-gray-200">
             <tr>
-                <th class="py-2 px-4 text-left font-semibold text-gray-700">ID</th>
                 <th class="py-2 px-4 text-left font-semibold text-gray-700">Usuario</th>
                 <th class="py-2 px-4 text-left font-semibold text-gray-700">Alojamiento</th>
                 <th class="py-2 px-4 text-left font-semibold text-gray-700">Restaurante</th>
-                <th class="py-2 px-4 text-left font-semibold text-gray-700">Fecha</th>
-                <th class="py-2 px-4 text-left font-semibold text-gray-700">Hora</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Fecha Reserva</th>
+                <th class="py-2 px-4 text-left font-semibold text-gray-700">Hora Reserva</th>
                 <th class="py-2 px-4 text-left font-semibold text-gray-700">Número de Personas</th>
                 <th class="py-2 px-4 text-left font-semibold text-gray-700">Estado</th>
                 <th class="py-2 px-4 text-left font-semibold text-gray-700">Acciones</th>
@@ -18,85 +22,89 @@
         </thead>
         <tbody>
             <tr *ngFor="let reserva of reservas" class="hover:bg-gray-100">
-                <td class="py-2 px-4">{{ reserva.idReserva }}</td>
                 <td class="py-2 px-4">{{ reserva.usuario?.nombre }}</td>
-                <td class="py-2 px-4">{{ reserva.alojamiento?.nombre }}</td>
-                <td class="py-2 px-4">{{ reserva.restaurante?.nombre }}</td>
+                <td class="py-2 px-4">{{ reserva.alojamiento?.nombre || 'N/A' }}</td>
+                <td class="py-2 px-4">{{ reserva.restaurante?.nombre || 'N/A' }}</td>
                 <td class="py-2 px-4">{{ reserva.fechaReserva }}</td>
                 <td class="py-2 px-4">{{ reserva.horaReserva }}</td>
                 <td class="py-2 px-4">{{ reserva.numPersonas }}</td>
                 <td class="py-2 px-4">{{ reserva.estado }}</td>
                 <td class="py-2 px-4">
-                    <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm mr-2" (click)="mostrarFormulario(reserva)">Editar</button>
-                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm" (click)="eliminarReserva(reserva.idReserva!)">Eliminar</button>
+                    <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 text-sm mr-2"
+                        (click)="editarReserva(reserva)">
+                        Editar
+                    </button>
+                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm"
+                        (click)="mostrarModalEliminar(reserva)">
+                        Eliminar
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <!-- Formulario de Reserva -->
-    <div *ngIf="modoFormulario" class="mt-6">
-        <h3 class="text-xl font-semibold mb-4">{{ reservaSeleccionada?.idReserva ? 'Editar Reserva' : 'Nueva Reserva' }}</h3>
+    <!-- Modal de formulario de nueva reserva -->
+    <div *ngIf="modoFormulario" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+            <button (click)="cancelarFormulario()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <h3 class="text-lg font-semibold text-center mb-4">Formulario de Reserva</h3>
+            
+            <!-- Formulario de creación/edición de reserva -->
+            <form (ngSubmit)="guardarReserva()">
+                <div class="mb-4">
+                    <label for="usuario" class="block text-sm font-semibold text-gray-700">Usuario</label>
+                    <select [(ngModel)]="usuarioSeleccionadoId" name="usuario" id="usuario" class="w-full p-2 border rounded">
+                        <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nombre }}</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="alojamiento" class="block text-sm font-semibold text-gray-700">Alojamiento</label>
+                    <select [(ngModel)]="alojamientoSeleccionadoId" name="alojamiento" id="alojamiento" class="w-full p-2 border rounded">
+                        <option *ngFor="let alojamiento of alojamientos" [value]="alojamiento.idAlojamiento">{{ alojamiento.nombre }}</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="restaurante" class="block text-sm font-semibold text-gray-700">Restaurante</label>
+                    <select [(ngModel)]="restauranteSeleccionadoId" name="restaurante" id="restaurante" class="w-full p-2 border rounded">
+                        <option *ngFor="let restaurante of restaurantes" [value]="restaurante.idRestaurante">{{ restaurante.nombre }}</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="fechaReserva" class="block text-sm font-semibold text-gray-700">Fecha Reserva</label>
+                    <input type="date" [(ngModel)]="reservaSeleccionada.fechaReserva" name="fechaReserva" id="fechaReserva" required
+                        class="w-full p-2 border rounded" />
+                </div>
+                <div class="mb-4">
+                    <label for="horaReserva" class="block text-sm font-semibold text-gray-700">Hora Reserva</label>
+                    <input type="time" [(ngModel)]="reservaSeleccionada.horaReserva" name="horaReserva" id="horaReserva" required
+                        class="w-full p-2 border rounded" />
+                </div>
+                <div class="mb-4">
+                    <label for="numPersonas" class="block text-sm font-semibold text-gray-700">Número de Personas</label>
+                    <input type="number" [(ngModel)]="reservaSeleccionada.numPersonas" name="numPersonas" id="numPersonas" required
+                        class="w-full p-2 border rounded" />
+                </div>
+                <div class="mb-4">
+                    <button type="submit" class="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-        <form (ngSubmit)="guardarReserva()" class="space-y-6 bg-gray-700 p-6 rounded-lg">
-            <!-- Usuario -->
-            <div class="mb-4">
-                <label for="usuario" class="block text-white">Usuario</label>
-                <select id="usuario" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.usuario.id" name="usuario" required>
-                    <option *ngFor="let usuario of usuarios" [value]="usuario.id">
-                        {{ usuario.nombre }} {{ usuario.apellidos }}
-                    </option>
-                </select>
+    <!-- Modal de confirmación de eliminación -->
+    <div *ngIf="reservaParaEliminar" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+            <h3 class="text-lg font-semibold text-center mb-4">Confirmación de Eliminación</h3>
+            <p class="text-center mb-4">¿Estás seguro de que deseas eliminar esta reserva?</p>
+            <div class="flex justify-center">
+                <button (click)="confirmarEliminar()" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 mr-2">Eliminar</button>
+                <button (click)="cancelarEliminar()" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600">Cancelar</button>
             </div>
-
-            <!-- Alojamiento -->
-            <div class="mb-4">
-                <label for="alojamiento" class="block text-white">Alojamiento</label>
-                <select id="alojamiento" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.alojamiento.idAlojamiento" name="alojamiento" required>
-                    <option *ngFor="let alojamiento of alojamientos" [value]="alojamiento.idAlojamiento">
-                        {{ alojamiento.nombre }}
-                    </option>
-                </select>
-            </div>
-
-            <!-- Restaurante -->
-            <div class="mb-4">
-                <label for="restaurante" class="block text-white">Restaurante</label>
-                <select id="restaurante" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.restaurante.idRestaurante" name="restaurante" required>
-                    <option *ngFor="let restaurante of restaurantes" [value]="restaurante.idRestaurante">
-                        {{ restaurante.nombre }}
-                    </option>
-                </select>
-            </div>
-
-            <!-- Fecha de Reserva -->
-            <div class="mb-4">
-                <label for="fecha" class="block text-white">Fecha de Reserva</label>
-                <input id="fecha" type="date" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.fechaReserva" name="fechaReserva" required />
-            </div>
-
-            <!-- Hora de Reserva -->
-            <div class="mb-4">
-                <label for="hora" class="block text-white">Hora de Reserva</label>
-                <input id="hora" type="time" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.horaReserva" name="horaReserva" required />
-            </div>
-
-            <!-- Número de Personas -->
-            <div class="mb-4">
-                <label for="numPersonas" class="block text-white">Número de Personas</label>
-                <input id="numPersonas" type="number" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.numPersonas" name="numPersonas" required />
-            </div>
-
-            <!-- Estado -->
-            <div class="mb-4">
-                <label for="estado" class="block text-white">Estado</label>
-                <input id="estado" type="text" class="w-full px-4 py-2 text-gray-800 bg-gray-600 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="reservaSeleccionada.estado" name="estado" required />
-            </div>
-
-            <div class="flex space-x-4">
-                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Guardar</button>
-                <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600" (click)="cancelarFormulario()">Cancelar</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>

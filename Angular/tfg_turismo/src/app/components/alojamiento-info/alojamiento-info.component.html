@@ -13,38 +13,5 @@
         </div>
     </div>
 
-    <!-- Formulario de Reserva -->
-    <div class="mt-6">
-        <h3 class="text-xl font-semibold mb-4">Realizar Reserva</h3>
-        <form #reservaForm="ngForm" (ngSubmit)="realizarReserva()">
-            <!-- Nombre Completo -->
-            <div>
-                <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre Completo</label>
-                <input type="text" id="nombre" [(ngModel)]="reserva.usuario.nombre" name="nombre"
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Tu nombre" required />
-            </div>
-            <!-- Correo Electrónico -->
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                <input type="email" id="email" [(ngModel)]="reserva.usuario.email" name="email"
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Tu correo electrónico" required />
-            </div>
-            <!-- Fecha de Reserva -->
-            <div>
-                <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha de Reserva</label>
-                <input type="date" id="fecha" [(ngModel)]="reserva.fechaReserva" name="fecha"
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    required />
-            </div>
-            <!-- Botón de Reservar -->
-            <div>
-                <button type="submit"
-                    class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400">
-                    Reservar
-                </button>
-            </div>
-        </form>
-    </div>
+    
 </div>
