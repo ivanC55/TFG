@@ -7,11 +7,11 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']  // Corregí el nombre de 'styleUrl' a 'styleUrls'
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  alojamientos: Alojamiento[] = [];  // Definir la propiedad para almacenar los alojamientos
-  monumentos: MonumentoHistorico[] = []; // Destino la propiedad para almacened
+  alojamientos: Alojamiento[] = [];  
+  monumentos: MonumentoHistorico[] = []; 
 
   constructor(private alojamientoService: AlojamientoService,
     private http: HttpClient
@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.listAlojamientos();
-    this.listMonumentos();  // Llamar al servicio cuando se inicializa el componente
+    this.listMonumentos();  
   }
 
   listAlojamientos() {

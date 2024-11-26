@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { LoginResponse } from '../interfaces/loginResponse.model';
 
 @Injectable({
@@ -8,18 +8,22 @@ import { LoginResponse } from '../interfaces/loginResponse.model';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8081/auth/login'; // Asegúrate de usar la URL correcta del backend
+  private apiUrl = 'http://localhost:8081/api/auth/login'; 
 
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string): Observable<LoginResponse> {
     const body = { username, password };
+    console.log('Request Body:', body);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
+  
     return this.http.post<LoginResponse>(this.apiUrl, body, {
-      headers,
-      withCredentials: true
-    });
+      headers
+    }).pipe(
+      tap(response => {
+        this.saveToken(response.token);
+      })
+    )
   }
 
   getToken(): string | null {

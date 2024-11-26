@@ -1,5 +1,10 @@
 package com.turismo.auth.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class JwtAuthenticationResponse {
     private String accessToken;
 
@@ -7,12 +12,5 @@ public class JwtAuthenticationResponse {
         this.accessToken = accessToken;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 }
 
