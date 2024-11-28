@@ -20,6 +20,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
         if (token && !isPublicRoute) {
             // Si no es una ruta pública, se agrega el token de autorización
+            console.log('Token encontrado:', token);
             const cloned = req.clone({
                 headers: req.headers.set('Authorization', `Bearer ${token}`),
             });

@@ -19,21 +19,23 @@ import { ReservasComponent } from './components/reservas/reservas/reservas.compo
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './auth/components/login/login.component';
 import { TokenInterceptor } from './auth/tokenInterceptor';
-import { AuthGuard } from './auth/authGuard';
+import { AuthGuard } from './auth/auth.guard';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent }, // Acceso público
   { path: 'contacto', component: ContactoComponent },
+  { path: 'dashboard', component: DashboardComponent },
   //
-  { path: 'alojamientos', component: AlojamientosComponent, canActivate: [AuthGuard] }, // Protegido
-  { path: 'alojamiento/:id', component: AlojamientoInfoComponent, canActivate: [AuthGuard] },
-  { path: 'eventos', component: EventosComponent, canActivate: [AuthGuard] },
-  { path: 'monumentos', component: MonumentosComponent, canActivate: [AuthGuard] },
-  { path: 'puntos-de-interes', component: PuntosDeInteresComponent, canActivate: [AuthGuard] },
-  { path: 'restaurantes', component: RestaurantesComponent, canActivate: [AuthGuard] },
-  { path: 'rutas-turisticas', component: RutasTuristicasComponent, canActivate: [AuthGuard] },
-  { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard] },
-  { path: 'reservas', component: ReservasComponent, canActivate: [AuthGuard] },
+  { path: 'alojamientos', component: AlojamientosComponent,  }, // Protegido
+  { path: 'alojamiento/:id', component: AlojamientoInfoComponent, },
+  { path: 'eventos', component: EventosComponent },
+  { path: 'monumentos', component: MonumentosComponent,  },
+  { path: 'puntos-de-interes', component: PuntosDeInteresComponent,  },
+  { path: 'restaurantes', component: RestaurantesComponent,  },
+  { path: 'rutas-turisticas', component: RutasTuristicasComponent, },
+  { path: 'usuarios', component: UsuariosComponent,},
+  { path: 'reservas', component: ReservasComponent,},
   { path: 'login', component: LoginComponent },
   //
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Página de inicio por defecto
@@ -56,6 +58,7 @@ const routes: Routes = [
     ReservasComponent,
     FooterComponent,
     LoginComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

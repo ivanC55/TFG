@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Configuración CORS aquí
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/auth/**", "/api/home/**", "/api/alojamientos/**", "/api/monumentos/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/home/**", "/api/alojamientos/**", "/api/monumentos/**", "/api/rutas-turisticas/**", "/api/eventos/**", "/api/puntos-de-interes/**", "/api/usuarios/**", "/api/reservas/**", "/api/restaurantes/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
