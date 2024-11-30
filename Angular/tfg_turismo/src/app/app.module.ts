@@ -21,16 +21,29 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { TokenInterceptor } from './auth/tokenInterceptor';
 import { AuthGuard } from './auth/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AlojamientosPublicComponent } from './components/public/alojamientos-public/alojamientos-public.component';
+import { MonumentosPublicComponent } from './components/public/monumentos-public/monumentos-public.component';
+import { EventosPublicComponent } from './components/public/eventos-public/eventos-public.component';
+import { RutasPublicComponent } from './components/public/rutas-public/rutas-public.component';
+import { RestaurantesPublicComponent } from './components/public/restaurantes-public/restaurantes-public.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent }, // Acceso público
   { path: 'contacto', component: ContactoComponent },
   { path: 'dashboard', component: DashboardComponent },
   //
+  { path: 'alojamientos-public', component:AlojamientosPublicComponent},
   { path: 'alojamientos', component: AlojamientosComponent,  }, // Protegido
   { path: 'alojamiento/:id', component: AlojamientoInfoComponent, },
+
+
   { path: 'eventos', component: EventosComponent },
-  { path: 'monumentos', component: MonumentosComponent,  },
+  { path: 'eventos-public', component: EventosPublicComponent },
+
+  { path: 'monumentos-public', component: MonumentosPublicComponent},
+  { path: 'monumentos', component: MonumentosComponent },
+
+
   { path: 'puntos-de-interes', component: PuntosDeInteresComponent,  },
   { path: 'restaurantes', component: RestaurantesComponent,  },
   { path: 'rutas-turisticas', component: RutasTuristicasComponent, },
@@ -59,6 +72,11 @@ const routes: Routes = [
     FooterComponent,
     LoginComponent,
     DashboardComponent,
+    AlojamientosPublicComponent,
+    MonumentosPublicComponent,
+    EventosPublicComponent,
+    RutasPublicComponent,
+    RestaurantesPublicComponent,
   ],
   imports: [
     BrowserModule,

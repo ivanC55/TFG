@@ -23,6 +23,7 @@ export class MonumentosComponent implements OnInit {
   modoFormulario = false;  // Controla si el formulario está visible
   modoEdicion = false;  // Controla si el modal de edición está visible
   monumentoParaEliminar: MonumentoHistorico | null = null;  // Monumento seleccionado para eliminación
+isEditing: any;
 
   constructor(private monumentoService: MonumentoHistoricoService, private router: Router) { }
 

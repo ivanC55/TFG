@@ -1,0 +1,26 @@
+<div class="grid grid-cols-5 gap-4">
+
+    <div class="col-span-1"></div>
+    <div class="my-10 col-span-4">
+        <h2 class="text-2xl font-bold text-center mb-6">Galería de monumento</h2>
+        <div class="relative">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div *ngFor="let monumento of monumentos" class="flex flex-col bg-white rounded-lg shadow-lg">
+                    <img src="../../../../assets/info-pueblo/coche.JPG" alt="Imagen de {{ monumento.nombre }}"
+                    class="rounded-t-lg h-40 w-full object-cover transition-transform transform duration-300 ease-in-out hover:brightness-90">                
+                        <div class="p-4 flex flex-col flex-grow">
+                        <h5 class="font-semibold text-lg">{{ monumento.nombre }}</h5>
+                        <p class="text-gray-600">{{ monumento.tipo }} - {{ monumento.ubicacion }}</p>
+                        <p class="text-gray-700 mt-2">Puntuacion: {{ monumento.precio_entrada }} ⭐</p>
+                        <div class="flex-grow"></div> 
+                        <a [routerLink]="['/monumento', monumento.idMonumento]"
+                            class="mt-4 inline-block bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-400 text-center">
+                            Ver más
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

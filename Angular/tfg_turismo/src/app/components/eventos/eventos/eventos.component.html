@@ -1,132 +1,125 @@
-<div class="container mx-auto mt-4 px-4">
-    <h2 class="text-center mb-4 text-2xl font-semibold">Gestión de Eventos Culturales</h2>
+<div class="grid grid-cols-5 gap-4">
+    <div class="col-span-1"></div>
+    <div class="container mb-10 mt-4 col-span-4 px-6">
+        <h2 class="text-center mb-8 text-3xl font-semibold text-indigo-700">Gestión de Eventos Culturales</h2>
 
-    <!-- Botón para crear un nuevo evento -->
-    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-3" (click)="mostrarFormulario()">
-        Nuevo Evento
-    </button>
+        <button
+            class="bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 mb-6 shadow-md transition-all ease-in-out duration-300 transform hover:scale-105"
+            (click)="mostrarFormulario()">
+            {{ modoEdicion ? 'Cerrar Formulario' : 'Nuevo Evento' }}
+        </button>
 
-    <!-- Tabla de eventos culturales -->
-    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
-        <thead class="bg-gray-200">
-            <tr>
-                <th class="py-2 px-4 text-left font-semibold text-gray-700">Nombre</th>
-                <th class="py-2 px-4 text-left font-semibold text-gray-700">Ubicación</th>
-                <th class="py-2 px-4 text-left font-semibold text-gray-700">Fecha Inicio</th>
-                <th class="py-2 px-4 text-left font-semibold text-gray-700">Fecha Fin</th>
-                <th class="py-2 px-4 text-left font-semibold text-gray-700">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let evento of eventos" class="hover:bg-gray-100">
-                <td class="py-2 px-4">{{ evento.nombre }}</td>
-                <td class="py-2 px-4">{{ evento.ubicacion }}</td>
-                <td class="py-2 px-4">{{ evento.fecha_inicio | date }}</td>
-                <td class="py-2 px-4">{{ evento.fecha_fin | date }}</td>
-                <td class="py-2 px-4">
-                    <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 text-sm mr-2"
-                        (click)="verDetalles(evento.idEvento)">
-                        Ver
-                    </button>
-                    <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm mr-2"
-                        (click)="editarEvento(evento)">
-                        Editar
-                    </button>
-                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm"
-                        (click)="mostrarModalEliminar(evento)">
-                        Eliminar
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <!-- Modal de edición para editar un evento -->
-    <div *ngIf="modoEdicion" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-        <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
-            <!-- Botón para cerrar el modal -->
-            <button (click)="cancelarEdicion()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-
-            <h3 class="text-center text-lg font-semibold mb-4">Editar Evento</h3>
-
-            <!-- Formulario de edición de evento -->
-            <form (ngSubmit)="guardarEvento(eventoSeleccionado)">
-                <div class="mb-4">
-                    <label class="block text-gray-700">Nombre</label>
-                    <input [(ngModel)]="eventoSeleccionado.nombre" name="nombre" class="w-full px-4 py-2 border rounded"
-                        required />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700">Descripción</label>
-                    <textarea [(ngModel)]="eventoSeleccionado.descripcion" name="descripcion"
-                        class="w-full px-4 py-2 border rounded" required></textarea>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700">Ubicación</label>
-                    <input [(ngModel)]="eventoSeleccionado.ubicacion" name="ubicacion"
-                        class="w-full px-4 py-2 border rounded" required />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700">Fecha Inicio</label>
-                    <input type="date" [(ngModel)]="eventoSeleccionado.fecha_inicio" name="fecha_inicio"
-                        class="w-full px-4 py-2 border rounded" required />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700">Fecha Fin</label>
-                    <input type="date" [(ngModel)]="eventoSeleccionado.fecha_fin" name="fecha_fin"
-                        class="w-full px-4 py-2 border rounded" required />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700">Precio Entrada</label>
-                    <input type="number" [(ngModel)]="eventoSeleccionado.precio_entrada" name="precio_entrada"
-                        class="w-full px-4 py-2 border rounded" required />
-                </div>
-
-                <div class="flex justify-between">
-                    <button type="submit"
-                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Guardar</button>
-                    <button type="button" (click)="cancelarEdicion()"
-                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancelar</button>
-                </div>
-            </form>
+        <!-- Tabla -->
+        <div class="overflow-x-auto mt-8 rounded-lg">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+                <thead class="bg-indigo-600 text-white">
+                    <tr>
+                        <th class="py-3 px-6 text-left font-semibold">Nombre</th>
+                        <th class="py-3 px-6 text-left font-semibold">Ubicación</th>
+                        <th class="py-3 px-6 text-left font-semibold">Fecha Inicio</th>
+                        <th class="py-3 px-6 text-left font-semibold">Fecha Fin</th>
+                        <th class="py-3 px-6 text-left font-semibold">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let evento of eventos" class="hover:bg-gray-100">
+                        <td class="py-3 px-6">{{ evento.nombre }}</td>
+                        <td class="py-3 px-6">{{ evento.ubicacion }}</td>
+                        <td class="py-3 px-6">{{ evento.fecha_inicio | date }}</td>
+                        <td class="py-3 px-6">{{ evento.fecha_fin | date }}</td>
+                        <td class="py-3 px-6">
+                            <div class="flex space-x-2">
+                                <button
+                                    class="bg-yellow-500 text-white py-2 px-2 rounded-lg hover:bg-yellow-600 text-sm"
+                                    (click)="editarEvento(evento)">
+                                    <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12h6m-3-3v6M4.75 12A7.25 7.25 0 0012 4.75a7.25 7.25 0 107.25 7.25A7.25 7.25 0 004.75 12h.5z" />
+                                    </svg>
+                                </button>
+                                <button class="bg-red-500 text-white py-2 px-2 rounded-lg hover:bg-red-600 text-sm"
+                                    (click)="mostrarModalEliminar(evento)">
+                                    <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
 
-    <!-- Modal de confirmación para eliminar -->
-    <div *ngIf="eventoParaEliminar"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-        <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
-            <!-- Botón para cerrar el modal -->
-            <button (click)="cancelarEliminar()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
+        <!-- Modal de Edición -->
+        <div *ngIf="modoEdicion" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+            <div class="bg-white rounded-lg shadow-lg w-96 p-8 relative z-10">
+                <h3 class="text-center text-2xl font-semibold mb-6 text-blue-600">Editar Evento</h3>
 
-            <!-- Contenido del modal -->
-            <div class="text-center">
-                <svg class="w-12 h-12 mx-auto mb-4 text-red-500" fill="none" stroke="currentColor" stroke-width="2"
-                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M13 16h-1v-4h1m0-4h-.01M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"></path>
-                </svg>
-                <h3 class="text-lg font-semibold mb-4">
+                <form (ngSubmit)="guardarEvento(eventoSeleccionado)">
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Nombre</label>
+                        <input [(ngModel)]="eventoSeleccionado.nombre" name="nombre" required
+                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Descripción</label>
+                        <textarea [(ngModel)]="eventoSeleccionado.descripcion" name="descripcion" required
+                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Ubicación</label>
+                        <input [(ngModel)]="eventoSeleccionado.ubicacion" name="ubicacion" required
+                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Fecha Inicio</label>
+                        <input type="date" [(ngModel)]="eventoSeleccionado.fecha_inicio" name="fecha_inicio" required
+                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Fecha Fin</label>
+                        <input type="date" [(ngModel)]="eventoSeleccionado.fecha_fin" name="fecha_fin" required
+                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Precio Entrada</label>
+                        <input type="number" [(ngModel)]="eventoSeleccionado.precio_entrada" name="precio_entrada"
+                            required
+                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button type="submit"
+                            class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-200">
+                            Guardar
+                        </button>
+                        <button type="button" (click)="cancelarEdicion()"
+                            class="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-400 transition-all duration-200">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de Confirmación de Eliminación -->
+        <div *ngIf="eventoParaEliminar"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+            <div class="bg-white rounded-lg shadow-lg w-96 p-8 relative z-10">
+                <h3 class="text-center text-lg font-semibold mb-6">
                     ¿Estás seguro de eliminar el evento
                     <span class="font-bold">{{ eventoParaEliminar.nombre }}</span>?
                 </h3>
-                <div class="flex justify-center space-x-4">
+                <div class="flex justify-between">
                     <button (click)="confirmarEliminar()"
-                        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
-                        Sí, eliminar
+                        class="bg-red-600 text-white py-3 px-6 rounded-lg hover:bg-red-700 transition-all duration-200">
+                        Eliminar
                     </button>
                     <button (click)="cancelarEliminar()"
-                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+                        class="bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-all duration-200">
                         Cancelar
                     </button>
                 </div>

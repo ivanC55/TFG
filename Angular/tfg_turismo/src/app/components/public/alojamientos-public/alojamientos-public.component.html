@@ -1,0 +1,45 @@
+<div class="grid grid-cols-5 gap-4">
+
+    <!-- Espacio vacío para centrar contenido -->
+    <div class="col-span-1"></div>
+
+    <!-- Contenido principal -->
+    <div class="col-span-4 pr-20 mb-10">
+        <h2 class="text-2xl font-bold text-center mb-6">Nuestros Alojamientos</h2>
+
+        <!-- Cards de estadísticas -->
+        <div class="grid grid-cols-2 gap-4 mb-10">
+            <!-- Total Alojamientos -->
+            <div class="bg-emerald-300 shadow-md rounded-lg p-6 flex flex-col items-center">
+                <h2 class="text-black font-medium text-sm">Total Alojamientos</h2>
+                <p class="text-3xl font-bold">{{ alojamientos.length }}</p>
+                <span class="text-black text-sm mt-1">Número total de alojamientos registrados.</span>
+            </div>
+
+            <!-- Puntuación Media -->
+            <div class="bg-sky-200 shadow-md rounded-lg p-6 flex flex-col items-center">
+                <h2 class="text-black font-medium text-sm">Puntuación Media</h2>
+                <p class="text-3xl font-bold">{{ puntuacionMedia }}</p>
+                <span class="text-black text-sm mt-1">Promedio de puntuación de todos los alojamientos.</span>
+            </div>
+        </div>
+
+        <!-- Lista de alojamientos -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div *ngFor="let alojamiento of alojamientos" class="flex flex-col bg-white rounded-lg shadow-lg">
+                <img src="../../../../assets/info-pueblo/coche.JPG" alt="Imagen de {{ alojamiento.nombre }}"
+                    class="rounded-t-lg h-40 w-full object-cover transition-transform transform duration-300 ease-in-out hover:brightness-90">
+                <div class="p-4 flex flex-col flex-grow">
+                    <h5 class="font-semibold text-lg">{{ alojamiento.nombre }}</h5>
+                    <p class="text-gray-600">{{ alojamiento.tipo }} - {{ alojamiento.ubicacion }}</p>
+                    <p class="text-gray-700 mt-2">Puntuación: {{ alojamiento.puntuacion }} ⭐</p>
+                    <div class="flex-grow"></div>
+                    <a [routerLink]="['/alojamiento', alojamiento.idAlojamiento]"
+                        class="mt-4 inline-block bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-400 text-center">
+                        Ver más
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
