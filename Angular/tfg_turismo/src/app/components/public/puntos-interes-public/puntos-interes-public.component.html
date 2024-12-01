@@ -1,1 +1,47 @@
-<p>puntos-interes-public works!</p>
+<div class="grid grid-cols-5 gap-4 mt-20">
+    <!-- Espacio vacío para centrar contenido -->
+    <div class="col-span-1"></div>
+
+    <!-- Contenido principal -->
+    <div class="col-span-4 pr-20 mb-10">
+        <h2 class="text-2xl font-bold text-center mb-6">Puntos de Interés</h2>
+
+        <!-- Cards de estadísticas -->
+        <div class="grid grid-cols-2 gap-4 mb-10">
+            <!-- Total Puntos de Interés -->
+            <div class="bg-blue-300 shadow-md rounded-lg p-6 flex flex-col items-center">
+                <h2 class="text-black font-medium text-sm">Total Puntos de Interés</h2>
+                <p class="text-3xl font-bold">{{ puntosDeInteres.length }}</p>
+                <span class="text-black text-sm mt-1">Número total de puntos de interés registrados.</span>
+            </div>
+
+            <!-- Puntos con Ruta -->
+            <div class="bg-purple-200 shadow-md rounded-lg p-6 flex flex-col items-center">
+                <h2 class="text-black font-medium text-sm">Con Ruta Asociada</h2>
+                <p class="text-3xl font-bold">{{ puntosConRuta }}</p>
+                <span class="text-black text-sm mt-1">Puntos de interés con rutas asociadas.</span>
+            </div>
+        </div>
+
+        <!-- Lista de puntos de interés -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div *ngFor="let punto of puntosDeInteres" class="flex flex-col bg-white rounded-lg shadow-lg">
+                <img src="../../../../assets/info-pueblo/punto-interes.jpg" alt="Imagen de {{ punto.nombre }}"
+                    class="rounded-t-lg h-40 w-full object-cover transition-transform transform duration-300 ease-in-out hover:brightness-90">
+                <div class="p-4 flex flex-col flex-grow">
+                    <h5 class="font-semibold text-lg">{{ punto.nombre }}</h5>
+                    <p class="text-gray-600">{{ punto.descripcion }}</p>
+                    <p class="text-gray-700 mt-2">Coordenadas: {{ punto.coordenadas }}</p>
+                    <p *ngIf="punto.ruta" class="text-gray-700">Ruta: {{ punto.ruta.nombre }}</p>
+                    <div class="flex-grow"></div>
+                    <a 
+                        class="mt-4 inline-block bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-400 text-center">
+                        Ver más
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -8,7 +8,7 @@ import { ContactoComponent } from './contacto/contacto.component';
 import { AlojamientosComponent } from './components/alojamientos/alojamientos.component';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AlojamientoInfoComponent } from './components/alojamiento-info/alojamiento-info.component';
+import { AlojamientoInfoComponent } from './components/public/alojamiento-info/alojamiento-info.component';
 import { EventosComponent } from './components/eventos/eventos/eventos.component';
 import { MonumentosComponent } from './components/monumentos/monumentos/monumentos.component';
 import { PuntosDeInteresComponent } from './components/puntos-de-interes/puntos-de-interes/puntos-de-interes.component';
@@ -26,6 +26,12 @@ import { MonumentosPublicComponent } from './components/public/monumentos-public
 import { EventosPublicComponent } from './components/public/eventos-public/eventos-public.component';
 import { RutasPublicComponent } from './components/public/rutas-public/rutas-public.component';
 import { RestaurantesPublicComponent } from './components/public/restaurantes-public/restaurantes-public.component';
+import { PuntosInteresPublicComponent } from './components/public/puntos-interes-public/puntos-interes-public.component';
+import { PuntosInteresPublicInfoComponent } from './components/public/puntos-interes-public-info/puntos-interes-public-info.component';
+import { RestaurantesPublicInfoComponent } from './components/public/restaurantes-public-info/restaurantes-public-info.component';
+import { RutasPublicInfoComponent } from './components/public/rutas-public-info/rutas-public-info.component';
+import { EventosPublicInfoComponent } from './components/public/eventos-public-info/eventos-public-info.component';
+import { MonumentosPublicInfoComponent } from './components/public/monumentos-public-info/monumentos-public-info.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent }, // Acceso público
@@ -33,20 +39,31 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   //
   { path: 'alojamientos-public', component:AlojamientosPublicComponent},
-  { path: 'alojamientos', component: AlojamientosComponent,  }, // Protegido
+  { path: 'alojamientos', component: AlojamientosComponent,  }, 
   { path: 'alojamiento/:id', component: AlojamientoInfoComponent, },
 
 
   { path: 'eventos', component: EventosComponent },
   { path: 'eventos-public', component: EventosPublicComponent },
+  { path: 'evento/:id', component: EventosPublicInfoComponent },
+
 
   { path: 'monumentos-public', component: MonumentosPublicComponent},
   { path: 'monumentos', component: MonumentosComponent },
+  { path: 'monumento/:id', component: MonumentosPublicInfoComponent, },
 
-
+  { path: 'puntos-de-interes-public', component: PuntosInteresPublicComponent},
   { path: 'puntos-de-interes', component: PuntosDeInteresComponent,  },
-  { path: 'restaurantes', component: RestaurantesComponent,  },
+  { path: 'punto-interes/:id', component: PuntosInteresPublicInfoComponent, },
+
+  { path: 'restaurantes-public', component: RestaurantesPublicComponent},
+  { path: 'restaurantes', component: RestaurantesComponent },
+  { path: 'restaurante/:id', component: RestaurantesPublicInfoComponent, },
+
+  { path: 'rutas-public', component: RutasPublicComponent, },
   { path: 'rutas-turisticas', component: RutasTuristicasComponent, },
+  { path: 'ruta/:id', component: RutasPublicInfoComponent, },
+  
   { path: 'usuarios', component: UsuariosComponent,},
   { path: 'reservas', component: ReservasComponent,},
   { path: 'login', component: LoginComponent },
@@ -77,6 +94,11 @@ const routes: Routes = [
     EventosPublicComponent,
     RutasPublicComponent,
     RestaurantesPublicComponent,
+    PuntosInteresPublicInfoComponent,
+    RestaurantesPublicInfoComponent,
+    RutasPublicInfoComponent,
+    EventosPublicInfoComponent,
+    MonumentosPublicInfoComponent,
   ],
   imports: [
     BrowserModule,

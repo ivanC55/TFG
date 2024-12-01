@@ -17,14 +17,14 @@
                     <!-- Iterar sobre los alojamientos -->
                     <div *ngFor="let alojamiento of alojamientos" class="flex-none w-64">
                         <div class="bg-white rounded-lg shadow-lg text-center p-4">
-                            <img [src]="" alt="Imagen de {{ alojamiento.nombre }}"
-                                class="rounded-t-lg h-40 w-full object-cover">
+                            <img src="../../../../assets/info-pueblo/coche.JPG" alt="Imagen de {{ alojamiento.nombre }}"
+                                class="rounded-t-lg rounded-b-lg h-40 w-full object-cover hover:scale-105">
                             <div class="p-4">
                                 <h5 class="font-semibold text-lg">{{ alojamiento.nombre }}</h5>
                                 <p class="text-gray-600">{{ alojamiento.tipo }} - {{ alojamiento.ubicacion }}</p>
                                 <p class="text-gray-700 mt-2">Precio por noche: ${{ alojamiento.precioNoche }}</p>
                                 <a [routerLink]="['/alojamiento', alojamiento.idAlojamiento]"
-                                    class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                    class="mt-4 inline-block bg-emerald-300 text-gray-700 px-4 py-2 rounded hover:bg-emerald-600 hover:scale-105">
                                     Ver más
                                 </a>
                             </div>
@@ -32,12 +32,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    
-        <!-- Últimas Noticias -->
-        <div class="my-10">
-            <h2 class="text-2xl font-bold text-center mb-6">Últimas Noticias</h2>
-            <!-- Aquí va tu código de noticias -->
         </div>
     
         <!-- Carrusel de Monumentos Destacados -->
@@ -50,8 +44,8 @@
                         class="flex-none w-full lg:w-4/5 bg-white shadow-lg rounded-lg overflow-hidden">
                         <div class="flex flex-col lg:flex-row">
                             <!-- Imagen del monumento -->
-                            <div class="lg:w-1/2">
-                                <img [src]="" alt="{{ monumento.nombre }}" class="w-full h-64 object-cover">
+                            <div class="lg:w-1/2 mt-4 ml-4 mb-4 border-rounded">
+                                <img src="../../../../assets/info-pueblo/moreria1.JPG" alt="{{ monumento.nombre }}" class="w-full h-full object-cover border-rounded rounded-lg">
                             </div>
                             <!-- Descripción y mapa -->
                             <div class="lg:w-1/2 p-6 bg-gray-100">
@@ -65,7 +59,13 @@
                                 <!-- Aquí irá el mapa -->
                                 <p class="text-center font-semibold">Mapa</p>
                                 <p class="border border-gray-400 p-4 text-center">mapa</p>
+                                <a [routerLink]="['/monumento', monumento.idMonumento]"
+                                    class="mt-4 inline-block bg-orange-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                    Ver más
+                                </a>
                             </div>
+
+                            
                         </div>
                     </div>
                 </div>

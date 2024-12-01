@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlojamientoService } from '../../service/alojamiento.service';
-import { Alojamiento } from '../../interfaces/alojamiento.model';
-import { Reserva } from '../../interfaces/reserva.model';
-import { ReservaService } from '../../service/reserva.service';
+import { AlojamientoService } from '../../../service/alojamiento.service';
+import { Alojamiento } from '../../../interfaces/alojamiento.model';
+import { Reserva } from '../../../interfaces/reserva.model';
+import { ReservaService } from '../../../service/reserva.service';
 
 @Component({
   selector: 'app-alojamiento-info',
