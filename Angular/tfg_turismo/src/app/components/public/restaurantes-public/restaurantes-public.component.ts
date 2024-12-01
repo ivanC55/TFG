@@ -9,17 +9,16 @@ import { RestauranteService } from '../../../service/restaurante.service';
 })
 export class RestaurantesPublicComponent implements OnInit {
 
-  restaurantes: Restaurante[] = []; // Lista de restaurantes
-  precioPromedio: number = 0; // Precio promedio inicializado
+  restaurantes: Restaurante[] = []; 
+  precioPromedio: number = 0; 
 
   constructor(private restauranteService: RestauranteService) { }
 
   ngOnInit(): void {
-    // Obtener la lista de restaurantes
     this.restauranteService.getRestaurantes().subscribe({
       next: (data) => {
-        this.restaurantes = data; // Asignar restaurantes
-        this.calcularPrecioPromedio(); // Calcular precio promedio
+        this.restaurantes = data; 
+        this.calcularPrecioPromedio(); 
       },
       error: (error) => {
         console.error('Error al obtener restaurantes', error);

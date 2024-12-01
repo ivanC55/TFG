@@ -1,21 +1,16 @@
 <div class="grid grid-cols-5 gap-4 mt-20">
-    <!-- Espacio vacío para centrar contenido -->
     <div class="col-span-1"></div>
 
-    <!-- Contenido principal -->
     <div class="col-span-4 pr-20 mb-10">
         <h2 class="text-2xl font-bold text-center mb-6">Rutas Turísticas</h2>
 
-        <!-- Cards de estadísticas -->
         <div class="grid grid-cols-2 gap-4 mb-10">
-            <!-- Total Rutas -->
             <div class="bg-blue-300 shadow-md rounded-lg p-6 flex flex-col items-center">
                 <h2 class="text-black font-medium text-sm">Total Rutas</h2>
                 <p class="text-3xl font-bold">{{ rutas.length }}</p>
                 <span class="text-black text-sm mt-1">Número total de rutas registradas.</span>
             </div>
 
-            <!-- Duración Total Estimada -->
             <div class="bg-green-200 shadow-md rounded-lg p-6 flex flex-col items-center">
                 <h2 class="text-black font-medium text-sm">Duración Total Estimada</h2>
                 <p class="text-3xl font-bold">{{ duracionTotal }}</p>
@@ -23,22 +18,18 @@
             </div>
         </div>
 
-        <!-- Lista de rutas turísticas -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div *ngFor="let ruta of rutas" class="flex flex-col bg-white rounded-lg shadow-lg">
-                <img 
-                    src="../../../../assets/info-pueblo/puerta-moreria.JPG"
-                    alt="Mapa de la ruta {{ ruta.nombre }}" 
-                    class="rounded-t-lg h-40 w-full object-cover transition-transform transform duration-300 ease-in-out hover:brightness-90"
-                >
+                <img src="../../../../assets/info-pueblo/puerta-moreria.JPG" alt="Mapa de la ruta {{ ruta.nombre }}"
+                    class="rounded-t-lg h-40 w-full object-cover transition-transform transform duration-300 ease-in-out hover:brightness-90">
                 <div class="p-4 flex flex-col flex-grow">
                     <h5 class="font-semibold text-lg">{{ ruta.nombre }}</h5>
                     <p class="text-gray-600">Tipo: {{ ruta.tipo }}</p>
                     <p class="text-gray-700 mt-2">Duración: {{ ruta.duracionEstimada }}</p>
                     <p class="text-gray-700">Descripción: {{ ruta.descripcion }}</p>
                     <div class="flex-grow"></div>
-                    <a [routerLink]="['/ruta-turistica', ruta.idRuta]"
-                        class="mt-4 inline-block bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-400 text-center">
+                    <a [routerLink]="['/ruta', ruta.idRuta]"
+                        class="mt-4 inline-block bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-500 hover:scale-105 text-center">
                         Ver más
                     </a>
                 </div>

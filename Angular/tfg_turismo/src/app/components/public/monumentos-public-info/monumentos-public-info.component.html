@@ -1,1 +1,52 @@
-<p>monumentos-public-info works!</p>
+<div class="grid grid-cols-5 gap-4">
+    <div class="col-span-1"></div>
+    <div class="container mt-4 col-span-4" *ngIf="monumento">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col lg:flex-row">
+            <div class="lg:w-1/2 w-full">
+                <img src="../../../../assets/info-pueblo/arco-burgos2.JPG" class="w-full h-full object-cover rounded-t-lg lg:rounded-l-lg"
+                    alt="Imagen de {{ monumento.nombre }}">
+            </div>
+
+            <div class="lg:w-1/2 w-full px-6 py-4">
+                <div class="bg-orange-200 text-black p-4 rounded-lg mb-6">
+                    <h2 class="text-3xl font-bold">{{ monumento.nombre }}</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <span class="text-xl font-semibold text-gray-700 mr-2">Tipo:</span>
+                        <p class="text-lg text-gray-600">{{ monumento.tipo }}</p>
+                    </div>
+
+                    <div class="flex items-center">
+                        <span class="text-xl font-semibold text-gray-700 mr-2">Ubicación:</span>
+                        <p class="text-lg text-gray-600">{{ monumento.ubicacion }}</p>
+                    </div>
+
+                    <div class="flex items-center">
+                        <span class="text-xl font-semibold text-gray-700 mr-2">Horario:</span>
+                        <p class="text-lg text-gray-600">{{ monumento.horario }}</p>
+                    </div>
+
+                    <div class="flex items-center">
+                        <span class="text-xl font-semibold text-gray-700 mr-2">Precio de entrada:</span>
+                        <p class="text-lg text-gray-600">{{ monumento.precio_entrada | currency }}</p>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-2xl font-semibold mb-2">Historia</h3>
+                    <p class="text-gray-700 text-lg">
+                        {{ monumento.historia }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <button
+            class="mt-8 px-6 py-2 mb-10 bg-gray-900 text-white rounded-lg hover:bg-orange-600 transition duration-300"
+            [routerLink]="['/monumentos-public']">
+            Volver a la lista de monumentos
+        </button>
+    </div>
+</div>

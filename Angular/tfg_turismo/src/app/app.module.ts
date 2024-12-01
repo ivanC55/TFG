@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common'; 
 import { RouterModule, Routes } from '@angular/router'; // Importar RouterModule y Routes
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';  // Importar el componente Header
@@ -94,14 +95,17 @@ const routes: Routes = [
     EventosPublicComponent,
     RutasPublicComponent,
     RestaurantesPublicComponent,
+    PuntosInteresPublicComponent,
     PuntosInteresPublicInfoComponent,
     RestaurantesPublicInfoComponent,
     RutasPublicInfoComponent,
     EventosPublicInfoComponent,
     MonumentosPublicInfoComponent,
+  
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     RouterModule.forRoot(routes),
     FormsModule,
     HttpClientModule,

@@ -1,13 +1,15 @@
 <div class="grid grid-cols-5 gap-4">
-    
+
     <div class="col-span-1"></div>
-    
+
     <div class="col-span-4 w-full mt-0 pr-20">
-        <div class="text-white text-center mt-5 p-10 rounded-lg shadow-lg  x-auto px-4 bg-cover bg-center bg-no-repeat h-[500px] w-full" style="background-image: url('../../assets/info-pueblo/portada.JPG');">
+        <div class="text-white text-center mt-5 p-10 rounded-lg shadow-lg  x-auto px-4 bg-cover bg-center bg-no-repeat h-[500px] w-full"
+            style="background-image: url('../../assets/info-pueblo/portada.JPG');">
             <h1 class="text-4xl font-bold mt-60">Bienvenidos a nuestra plataforma</h1>
-            <p class="text-lg mt-2">Explora nuestras ofertas y servicios de alojamiento. ¡Tu próxima aventura comienza aquí!</p>
+            <p class="text-lg mt-2">Explora nuestras ofertas y servicios de alojamiento. ¡Tu próxima aventura comienza
+                aquí!</p>
         </div>
-    
+
         <!-- Sección de Galería de Alojamiento -->
         <div class="my-10">
             <h2 class="text-2xl font-bold text-center mb-6">Galería de Alojamiento</h2>
@@ -25,7 +27,7 @@
                                 <p class="text-gray-700 mt-2">Precio por noche: ${{ alojamiento.precioNoche }}</p>
                                 <a [routerLink]="['/alojamiento', alojamiento.idAlojamiento]"
                                     class="mt-4 inline-block bg-emerald-300 text-gray-700 px-4 py-2 rounded hover:bg-emerald-600 hover:scale-105">
-                                    Ver más
+                                    <b>Ver más</b>
                                 </a>
                             </div>
                         </div>
@@ -33,7 +35,7 @@
                 </div>
             </div>
         </div>
-    
+
         <!-- Carrusel de Monumentos Destacados -->
         <div class="mt-10">
             <h2 class="text-2xl font-bold text-center mb-6">Monumentos Destacados</h2>
@@ -45,7 +47,8 @@
                         <div class="flex flex-col lg:flex-row">
                             <!-- Imagen del monumento -->
                             <div class="lg:w-1/2 mt-4 ml-4 mb-4 border-rounded">
-                                <img src="../../../../assets/info-pueblo/moreria1.JPG" alt="{{ monumento.nombre }}" class="w-full h-full object-cover border-rounded rounded-lg">
+                                <img src="../../../../assets/info-pueblo/moreria1.JPG" alt="{{ monumento.nombre }}"
+                                    class="w-full h-full object-cover border-rounded rounded-lg">
                             </div>
                             <!-- Descripción y mapa -->
                             <div class="lg:w-1/2 p-6 bg-gray-100">
@@ -60,12 +63,12 @@
                                 <p class="text-center font-semibold">Mapa</p>
                                 <p class="border border-gray-400 p-4 text-center">mapa</p>
                                 <a [routerLink]="['/monumento', monumento.idMonumento]"
-                                    class="mt-4 inline-block bg-orange-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                    Ver más
+                                    class="mt-4 inline-block bg-orange-400 text-black px-4 py-2 rounded hover:bg-orange-600 hover:scale-105">
+                                    <b>Ver más</b>
                                 </a>
                             </div>
 
-                            
+
                         </div>
                     </div>
                 </div>

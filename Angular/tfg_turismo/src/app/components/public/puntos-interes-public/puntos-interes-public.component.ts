@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PuntoDeInteres } from '../../../interfaces/punto-de-interes.model';
-import { PuntoDeInteresService } from '../../../service/punto-de-interes.service';
+import { PuntoDeInteres } from '../../../interfaces/punto-de-interes.model'; // Asegúrate de que el modelo esté correcto
+import { PuntoDeInteresService } from '../../../service/punto-de-interes.service'; // Servicio para obtener los puntos de interés
 
 @Component({
   selector: 'app-puntos-interes-public',
@@ -18,8 +18,8 @@ export class PuntosInteresPublicComponent implements OnInit {
     // Obtener la lista de puntos de interés
     this.puntoDeInteresService.getPuntosDeInteres().subscribe({
       next: (data) => {
-        this.puntosDeInteres = data; // Asignar los puntos de interés
-        this.calcularPuntosConRuta(); // Calcular puntos con ruta
+        this.puntosDeInteres = data; 
+        this.calcularPuntosConRuta(); 
       },
       error: (error) => {
         console.error('Error al obtener puntos de interés', error);
@@ -27,8 +27,7 @@ export class PuntosInteresPublicComponent implements OnInit {
     });
   }
 
-  // Calcular cuántos puntos tienen ruta asociada
   calcularPuntosConRuta(): void {
-    this.puntosConRuta = this.puntosDeInteres.filter(punto => punto.ruta !== null).length;
+    this.puntosConRuta = this.puntosDeInteres.filter(punto => punto.ruta !== null && punto.ruta !== undefined).length;
   }
 }

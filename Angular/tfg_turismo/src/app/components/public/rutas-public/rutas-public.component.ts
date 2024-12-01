@@ -11,7 +11,6 @@ export class RutasPublicComponent implements OnInit {
   duracionTotal: string = '';
 
   ngOnInit(): void {
-    // Simula datos para pruebas
     this.rutas = [
       {
         idRuta: 1,
@@ -33,7 +32,6 @@ export class RutasPublicComponent implements OnInit {
       }
     ];
 
-    // Calcula la duración total acumulada (puedes ajustar este cálculo según tus necesidades)
-    this.duracionTotal = `${this.rutas.length * 2} horas`; // Ejemplo simple basado en un promedio
+    this.duracionTotal = `${this.rutas.length * 2} horas`; 
   }
 }
