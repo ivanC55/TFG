@@ -21,6 +21,7 @@
                         <th class="py-3 px-6 text-left font-semibold">Ubicación</th>
                         <th class="py-3 px-6 text-left font-semibold">Horario</th>
                         <th class="py-3 px-6 text-left font-semibold">Precio Entrada</th>
+                        <th class="py-3 px-6 text-left font-semibold">Imagen</th>
                         <th class="py-3 px-6 text-left font-semibold">Acciones</th>
                     </tr>
                 </thead>
@@ -33,6 +34,13 @@
                         <td class="py-3 px-6">{{ monumento.horario }}</td>
                         <td class="py-3 px-6">{{ monumento.precio_entrada | currency }}</td>
                         <td class="py-3 px-6">
+                            <img *ngIf="monumento.imagen"
+                                [src]="'/uploads/monumentos/' + monumento.imagen"
+                                alt="Imagen de {{ monumento.nombre }}"
+                                class="h-16 w-16 rounded-lg object-cover shadow-md">
+                            <span *ngIf="!monumento.imagen" class="text-gray-500 italic">Sin imagen</span>
+                        </td>
+                        <td class="py-3 px-6">
                             <div class="flex space-x-2"> <!-- Contenedor flex para alinear los botones en una fila -->
                                 <button
                                     class="bg-yellow-500 text-white py-2 px-2 rounded-lg hover:bg-yellow-600 text-sm"
@@ -44,8 +52,7 @@
                                     </svg>
                                 </button>
 
-                                <button
-                                    class="bg-red-500 text-white py-2 px-2 rounded-lg hover:bg-red-600 text-sm"
+                                <button class="bg-red-500 text-white py-2 px-2 rounded-lg hover:bg-red-600 text-sm"
                                     (click)="mostrarModalEliminar(monumento)">
                                     <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -86,7 +93,7 @@
                         <input [(ngModel)]="monumentoSeleccionado.horario" name="horario" required
                             class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
                     </div>
-                    
+
                     <div class="mb-4">
                         <label class="block text-gray-700">Tipo</label>
                         <input [(ngModel)]="monumentoSeleccionado.tipo" name="horario" required
@@ -99,23 +106,18 @@
                             required
                             class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
                     </div>
-                    
 
-                    <div class="flex flex-col items-center justify-center p-4">
-                        <!-- Etiqueta para el input -->
-                        <label for="file-input" class="cursor-pointer bg-indigo-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition">
-                            Cargar Imagen
-                        </label>
-                    
-                        <!-- Input para cargar la imagen -->
-                        <input id="file-input" type="file" class="hidden" accept="image/*" />
-                    
-                        <!-- Vista previa de la imagen cargada -->
-                        <div id="preview-container" class="mt-4">
-                            <img id="image-preview" class="max-w-full max-h-40 rounded-lg shadow-md" alt="Vista previa de la imagen" />
-                        </div>
+
+                    <label for="file-input"
+                        class="cursor-pointer bg-indigo-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition">
+                        Cargar Imagen
+                    </label>
+                    <input id="file-input" type="file" class="hidden" (change)="onFileSelected($event)" />
+                    <div id="preview-container" class="mt-4">
+                        <img *ngIf="previewUrl" [src]="previewUrl" class="max-w-full max-h-40 rounded-lg shadow-md"
+                            alt="Vista previa de la imagen" />
                     </div>
-                    
+
                     <div class="flex justify-between">
                         <button type="submit"
                             class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-200">
@@ -150,24 +152,24 @@
     </div>
 </div>
 <script>
-document.getElementById('file-input').addEventListener('change', function (event) {
-    const preview = document.getElementById('image-preview');
-    const file = event.target.files[0];
+    document.getElementById('file-input').addEventListener('change', function (event) {
+        const preview = document.getElementById('image-preview');
+        const file = event.target.files[0];
 
-    console.log("Archivo seleccionado:", file);
+        console.log("Archivo seleccionado:", file);
 
-    if (file) {
-        const reader = new FileReader();
+        if (file) {
+            const reader = new FileReader();
 
-        reader.onload = function (e) {
-            console.log("Contenido del archivo:", e.target.result);
-            preview.src = e.target.result;
-        };
+            reader.onload = function (e) {
+                console.log("Contenido del archivo:", e.target.result);
+                preview.src = e.target.result;
+            };
 
-        reader.readAsDataURL(file);
-    } else {
-        console.log("No se seleccionó ningún archivo");
-    }
-});
+            reader.readAsDataURL(file);
+        } else {
+            console.log("No se seleccionó ningún archivo");
+        }
+    });
 
 </script>

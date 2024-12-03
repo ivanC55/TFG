@@ -33,6 +33,7 @@ import { RestaurantesPublicInfoComponent } from './components/public/restaurante
 import { RutasPublicInfoComponent } from './components/public/rutas-public-info/rutas-public-info.component';
 import { EventosPublicInfoComponent } from './components/public/eventos-public-info/eventos-public-info.component';
 import { MonumentosPublicInfoComponent } from './components/public/monumentos-public-info/monumentos-public-info.component';
+import { PerfilComponent } from './components/public/perfil/perfil.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent }, // Acceso público
@@ -68,6 +69,8 @@ const routes: Routes = [
   { path: 'usuarios', component: UsuariosComponent,},
   { path: 'reservas', component: ReservasComponent,},
   { path: 'login', component: LoginComponent },
+
+  { path: 'perfil', component: PerfilComponent},
   //
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Página de inicio por defecto
 ];
@@ -101,6 +104,7 @@ const routes: Routes = [
     RutasPublicInfoComponent,
     EventosPublicInfoComponent,
     MonumentosPublicInfoComponent,
+    PerfilComponent,
   
   ],
   imports: [

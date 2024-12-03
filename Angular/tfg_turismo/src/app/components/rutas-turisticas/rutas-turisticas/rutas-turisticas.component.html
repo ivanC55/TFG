@@ -1,128 +1,138 @@
 <div class="grid grid-cols-5 gap-4">
-  <!-- Columna de espacio vacío para centrar el contenido -->
-  <div class="col-span-1"></div>
-  <div class="container mb-10 col-span-4 mt-4 px-4">
-      <h2 class="text-center mb-4 text-2xl font-semibold text-indigo-700">Gestión de Rutas Turísticas</h2>
-      
-      <!-- Botón para crear una nueva ruta turística -->
-      <button class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 mb-3 transition-all ease-in-out duration-300 transform hover:scale-105"
-          (click)="mostrarFormulario()">
-          Nueva Ruta Turística
-      </button>
+    <!-- Columna de espacio vacío para centrar el contenido -->
+    <div class="col-span-1"></div>
+    <div class="container mb-10 col-span-4 mt-4 px-4">
+        <h2 class="text-center mb-4 text-2xl font-semibold text-indigo-700">Gestión de Rutas Turísticas</h2>
 
-      <!-- Tabla de rutas -->
-      <div class="overflow-x-auto mt-8 rounded-lg">
-          <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
-              <thead class="bg-indigo-600 text-white">
-                  <tr>
-                      <th class="py-2 px-4 text-left font-semibold">Nombre</th>
-                      <th class="py-2 px-4 text-left font-semibold">Tipo</th>
-                      <th class="py-2 px-4 text-left font-semibold">Duración Estimada</th>
-                      <th class="py-2 px-4 text-left font-semibold">Acciones</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor="let ruta of rutas" class="hover:bg-gray-100">
-                      <td class="py-2 px-4">{{ ruta.nombre }}</td>
-                      <td class="py-2 px-4">{{ ruta.tipo }}</td>
-                      <td class="py-2 px-4">{{ ruta.duracionEstimada }}</td>
-                      <td class="py-2 px-4">
-                          <div class="flex space-x-2">
-                              <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm"
-                                  (click)="mostrarFormulario(ruta)">
-                                  <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
-                                          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M15 12h6m-3-3v6M4.75 12A7.25 7.25 0 0012 4.75a7.25 7.25 0 107.25 7.25A7.25 7.25 0 004.75 12h.5z" />
-                                      </svg>
-                              </button>
-                              <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm"
-                                  (click)="abrirModalEliminar(ruta)">
-                                  <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
-                                          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M6 18L18 6M6 6l12 12" />
-                                      </svg>
-                              </button>
-                          </div>
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
-      </div>
+        <!-- Botón para crear una nueva ruta turística -->
+        <button
+            class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 mb-3 transition-all ease-in-out duration-300 transform hover:scale-105"
+            (click)="mostrarFormulario()">
+            Nueva Ruta Turística
+        </button>
 
-      <!-- Modal de formulario de nueva ruta -->
-      <div *ngIf="mostrarModalFormulario"
-          class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
-              <button (click)="cancelarFormulario()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                  </svg>
-              </button>
-              <h3 class="text-lg font-semibold text-center mb-4 text-indigo-600">{{ rutaSeleccionada.idRuta ? 'Editar Ruta' : 'Nueva Ruta' }}</h3>
+        <!-- Tabla de rutas -->
+        <div class="overflow-x-auto mt-8 rounded-lg">
+            <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-indigo-600 text-white">
+                    <tr>
+                        <th class="py-2 px-4 text-left font-semibold">Nombre</th>
+                        <th class="py-2 px-4 text-left font-semibold">Tipo</th>
+                        <th class="py-2 px-4 text-left font-semibold">Duración Estimada</th>
+                        <th class="py-2 px-4 text-left font-semibold">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ruta of rutas" class="hover:bg-gray-100">
+                        <td class="py-2 px-4">{{ ruta.nombre }}</td>
+                        <td class="py-2 px-4">{{ ruta.tipo }}</td>
+                        <td class="py-2 px-4">{{ ruta.duracionEstimada }}</td>
+                        <td class="py-2 px-4">
+                            <div class="flex space-x-2">
+                                <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm"
+                                    (click)="mostrarFormulario(ruta)">
+                                    <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12h6m-3-3v6M4.75 12A7.25 7.25 0 0012 4.75a7.25 7.25 0 107.25 7.25A7.25 7.25 0 004.75 12h.5z" />
+                                    </svg>
+                                </button>
+                                <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm"
+                                    (click)="abrirModalEliminar(ruta)">
+                                    <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-              <!-- Formulario de creación/edición de ruta -->
-              <form (ngSubmit)="guardarRuta()">
-                  <div class="mb-4">
-                      <label for="nombre" class="block text-sm font-semibold text-gray-700">Nombre</label>
-                      <input id="nombre" type="text" [(ngModel)]="rutaSeleccionada.nombre" name="nombre"
-                          class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" required />
-                  </div>
+        <!-- Modal de formulario de nueva ruta -->
+        <div *ngIf="mostrarModalFormulario"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+            <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+                <button (click)="cancelarFormulario()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <h3 class="text-lg font-semibold text-center mb-4 text-indigo-600">{{ rutaSeleccionada.idRuta ? 'Editar Ruta' : 'Nueva Ruta' }}</h3>
 
-                  <div class="mb-4">
-                      <label for="tipo" class="block text-sm font-semibold text-gray-700">Tipo</label>
-                      <input id="tipo" type="text" [(ngModel)]="rutaSeleccionada.tipo" name="tipo"
-                          class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" required />
-                  </div>
+                <!-- Formulario de creación/edición de ruta -->
+                <form (ngSubmit)="guardarRuta()">
+                    <div class="mb-4">
+                        <label for="nombre" class="block text-sm font-semibold text-gray-700">Nombre</label>
+                        <input id="nombre" type="text" [(ngModel)]="rutaSeleccionada.nombre" name="nombre"
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" required />
+                    </div>
 
-                  <div class="mb-4">
-                      <label for="descripcion" class="block text-sm font-semibold text-gray-700">Descripción</label>
-                      <textarea id="descripcion" [(ngModel)]="rutaSeleccionada.descripcion" name="descripcion"
-                          class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" required></textarea>
-                  </div>
+                    <div class="mb-4">
+                        <label for="tipo" class="block text-sm font-semibold text-gray-700">Tipo</label>
+                        <input id="tipo" type="text" [(ngModel)]="rutaSeleccionada.tipo" name="tipo"
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" required />
+                    </div>
 
-                  <div class="mb-4">
-                      <label for="duracionEstimada" class="block text-sm font-semibold text-gray-700">Duración Estimada</label>
-                      <input id="duracionEstimada" type="text" [(ngModel)]="rutaSeleccionada.duracionEstimada" name="duracionEstimada"
-                          class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" required />
-                  </div>
+                    <div class="mb-4">
+                        <label for="descripcion" class="block text-sm font-semibold text-gray-700">Descripción</label>
+                        <textarea id="descripcion" [(ngModel)]="rutaSeleccionada.descripcion" name="descripcion"
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" required></textarea>
+                    </div>
 
-                  <div class="mb-4">
-                      <label for="puntosInteres" class="block text-sm font-semibold text-gray-700">Puntos de Interés (JSON)</label>
-                      <textarea id="puntosInteres" [(ngModel)]="rutaSeleccionada.puntosInteres" name="puntosInteres"
-                          class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500"></textarea>
-                  </div>
+                    <div class="mb-4">
+                        <label for="duracionEstimada" class="block text-sm font-semibold text-gray-700">Duración
+                            Estimada</label>
+                        <input id="duracionEstimada" type="text" [(ngModel)]="rutaSeleccionada.duracionEstimada"
+                            name="duracionEstimada" class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500"
+                            required />
+                    </div>
 
-                  <div class="mb-4">
-                      <label for="mapaRuta" class="block text-sm font-semibold text-gray-700">Mapa Ruta</label>
-                      <input id="mapaRuta" type="text" [(ngModel)]="rutaSeleccionada.mapaRuta" name="mapaRuta"
-                          class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
-                  </div>
+                    <div class="mb-4">
+                        <label for="puntosInteres" class="block text-sm font-semibold text-gray-700">Puntos de Interés
+                            (JSON)</label>
+                        <textarea id="puntosInteres" [(ngModel)]="rutaSeleccionada.puntosInteres" name="puntosInteres"
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500"></textarea>
+                    </div>
 
-                  <div class="flex space-x-4">
-                      <button type="submit" class="w-full py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-all duration-200">
-                          Guardar
-                      </button>
-                      <button type="button" class="w-full py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-all duration-200" (click)="cancelarFormulario()">
-                          Cancelar
-                      </button>
-                  </div>
-              </form>
-          </div>
-      </div>
+                    <div class="mb-4">
+                        <label for="mapaRuta" class="block text-sm font-semibold text-gray-700">Mapa Ruta</label>
+                        <input id="mapaRuta" type="text" [(ngModel)]="rutaSeleccionada.mapaRuta" name="mapaRuta"
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
+                    </div>
 
-      <!-- Modal de confirmación de eliminación -->
-      <div *ngIf="mostrarModalEliminar"
-          class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
-              <h3 class="text-lg font-semibold text-center mb-4 text-indigo-600">¿Seguro que deseas eliminar esta ruta?</h3>
-              <div class="flex justify-between">
-                  <button (click)="confirmarEliminar()" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition-all duration-200">Eliminar</button>
-                  <button (click)="cancelarEliminar()" class="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition-all duration-200">Cancelar</button>
-              </div>
-          </div>
-      </div>
-  </div>
+                    <div class="flex space-x-4">
+                        <button type="submit"
+                            class="w-full py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-all duration-200">
+                            Guardar
+                        </button>
+                        <button type="button"
+                            class="w-full py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-all duration-200"
+                            (click)="cancelarFormulario()">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de confirmación de eliminación -->
+        <div *ngIf="mostrarModalEliminar"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+            <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+                <h3 class="text-lg font-semibold text-center mb-4 text-indigo-600">¿Seguro que deseas eliminar esta
+                    ruta?</h3>
+                <div class="flex justify-between">
+                    <button (click)="confirmarEliminar()"
+                        class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition-all duration-200">Eliminar</button>
+                    <button (click)="cancelarEliminar()"
+                        class="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition-all duration-200">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

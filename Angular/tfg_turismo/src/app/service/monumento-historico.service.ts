@@ -30,4 +30,10 @@ export class MonumentoHistoricoService {
   deleteMonumento(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  uploadImage(id: number, file: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<string>(`${this.apiUrl}/upload/${id}`, formData);
+  }
 }

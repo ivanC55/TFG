@@ -23,7 +23,11 @@ export class MonumentosComponent implements OnInit {
   modoFormulario = false;  // Controla si el formulario está visible
   modoEdicion = false;  // Controla si el modal de edición está visible
   monumentoParaEliminar: MonumentoHistorico | null = null;  // Monumento seleccionado para eliminación
-isEditing: any;
+  isEditing: any;
+
+  // Propiedades para la carga de imágenes
+  selectedFile: File | null = null;
+  previewUrl: string | ArrayBuffer | null = null; // Previsualización de la imagen
 
   constructor(private monumentoService: MonumentoHistoricoService, private router: Router) { }
 
@@ -42,7 +46,7 @@ isEditing: any;
   }
 
   mostrarFormulario(): void {
-    this.modoEdicion = true;
+    this.modoEdicion = false; // Aseguramos que no estamos en modo de edición
     this.monumentoSeleccionado = {
       idMonumento: 0,
       nombre: '',
@@ -54,15 +58,31 @@ isEditing: any;
       imagen: ''
     };
     this.modoFormulario = true;
+    this.previewUrl = null; // Limpiar previsualización
+    this.selectedFile = null; // Limpiar archivo seleccionado
   }
 
   editarMonumento(monumento: MonumentoHistorico): void {
     this.monumentoSeleccionado = { ...monumento };
     this.modoEdicion = true;  // Mostrar el modal de edición
+    this.previewUrl = `http://localhost:8081/uploads/monumentos/${monumento.imagen}`; // Mostrar imagen actual como previsualización
   }
 
   cancelarEdicion(): void {
-    this.modoEdicion = false;  // Cerrar el modal de edición
+    this.modoEdicion = false;
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    this.selectedFile = file;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result; 
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   guardarMonumento(): void {
@@ -72,37 +92,61 @@ isEditing: any;
       alert('Todos los campos son obligatorios');
       return;
     }
-  
-    // Si el monumento tiene id, estamos editando un monumento
+
+    // Si estamos editando un monumento
     if (this.monumentoSeleccionado.idMonumento) {
       this.monumentoService.updateMonumento(this.monumentoSeleccionado.idMonumento, this.monumentoSeleccionado)
         .subscribe(() => {
-          this.modoEdicion = false;
-          this.cargarMonumentos();  // Recargar la lista de monumentos
+          if (this.selectedFile) {
+            this.subirImagen(this.monumentoSeleccionado.idMonumento);
+          } else {
+            this.finalizarGuardado();
+          }
         });
     } else {
-      // Si no tiene id, estamos creando un nuevo monumento
+      // Si estamos creando un nuevo monumento
       this.monumentoService.createMonumento(this.monumentoSeleccionado)
-        .subscribe(() => {
-          this.modoEdicion = false;
-          this.cargarMonumentos();  // Recargar la lista de monumentos
+        .subscribe((nuevoMonumento) => {
+          if (this.selectedFile) {
+            this.subirImagen(nuevoMonumento.idMonumento);
+          } else {
+            this.finalizarGuardado();
+          }
         });
     }
   }
-  
+
+  private subirImagen(id: number): void {
+    if (this.selectedFile) {
+      this.monumentoService.uploadImage(id, this.selectedFile)
+        .subscribe(() => {
+          this.finalizarGuardado();
+        }, error => {
+          console.error('Error al subir la imagen', error);
+          alert('Error al subir la imagen.');
+        });
+    }
+  }
+
+  private finalizarGuardado(): void {
+    this.modoEdicion = false;
+    this.modoFormulario = false;
+    this.cargarMonumentos();
+  }
+
   mostrarModalEliminar(monumento: MonumentoHistorico): void {
-    this.monumentoParaEliminar = monumento;  // Seleccionar el monumento para eliminar
+    this.monumentoParaEliminar = monumento;
   }
 
   cancelarEliminar(): void {
-    this.monumentoParaEliminar = null;  // Cerrar el modal de eliminación sin hacer nada
+    this.monumentoParaEliminar = null;
   }
 
   confirmarEliminar(): void {
     if (this.monumentoParaEliminar) {
       this.monumentoService.deleteMonumento(this.monumentoParaEliminar.idMonumento).subscribe(() => {
-        this.monumentoParaEliminar = null;  // Cerrar el modal de eliminación
-        this.cargarMonumentos();  // Recargar la lista de monumentos
+        this.monumentoParaEliminar = null;
+        this.cargarMonumentos();
       });
     }
   }
@@ -119,5 +163,7 @@ isEditing: any;
       imagen: ''
     };
     this.modoFormulario = false;
+    this.previewUrl = null;
+    this.selectedFile = null;
   }
 }

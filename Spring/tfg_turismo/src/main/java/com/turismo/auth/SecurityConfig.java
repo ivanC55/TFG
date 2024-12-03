@@ -17,6 +17,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -33,7 +34,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Configuración CORS aquí
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/auth/**", "/api/home/**", "/api/alojamientos/**", "/api/monumentos/**", "/api/rutas-turisticas/**", "/api/eventos/**", "/api/puntos-de-interes/**", "/api/usuarios/**", "/api/reservas/**", "/api/restaurantes/**").permitAll()
+                        .requestMatchers("/uploads/**","/api/auth/**", "/api/home/**", "/api/alojamientos/**", "/api/monumentos/**", "/api/rutas-turisticas/**", "/api/eventos/**", "/api/puntos-de-interes/**", "/api/usuarios/**", "/api/reservas/**", "/api/restaurantes/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
@@ -65,6 +66,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 }

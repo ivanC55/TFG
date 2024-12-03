@@ -2,29 +2,40 @@
 
     <div class="col-span-1"></div>
 
-    <div class="col-span-4 w-full mt-0 pr-20">
+    <div class="col-span-4 w-full mt-0 pr-10 pl-10">
         <div class="text-white text-center mt-5 p-10 rounded-lg shadow-lg  x-auto px-4 bg-cover bg-center bg-no-repeat h-[500px] w-full"
             style="background-image: url('../../assets/info-pueblo/portada.JPG');">
             <h1 class="text-4xl font-bold mt-60">Bienvenidos a nuestra plataforma</h1>
             <p class="text-lg mt-2">Explora nuestras ofertas y servicios de alojamiento. ¡Tu próxima aventura comienza
                 aquí!</p>
         </div>
-
         <!-- Sección de Galería de Alojamiento -->
-        <div class="my-10">
-            <h2 class="text-2xl font-bold text-center mb-6">Galería de Alojamiento</h2>
-            <div class="relative">
-                <!-- Contenedor del carrusel -->
-                <div class="flex overflow-x-scroll space-x-4 pb-4">
-                    <!-- Iterar sobre los alojamientos -->
-                    <div *ngFor="let alojamiento of alojamientos" class="flex-none w-64">
+        <div class="relative my-10">
+            <h2 class="text-2xl font-bold text-center mb-6">Nuestros Alojamiento</h2>
+            <div class="overflow-hidden relative w-full">
+                <!-- Botón izquierdo -->
+                <button (click)="prev()"
+                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-600">
+                    &#8592;
+                </button>
+
+                <!-- Carrusel -->
+                <div id="carousel" class="flex transition-transform duration-500"
+                    [style.transform]="'translateX(' + (-currentTranslate) + 'px)'"
+                    style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
+                    <div *ngFor="let alojamiento of alojamientos" class="flex-none w-[calc(33.33%-1rem)] px-2">
                         <div class="bg-white rounded-lg shadow-lg text-center p-4">
-                            <img src="../../../../assets/info-pueblo/coche.JPG" alt="Imagen de {{ alojamiento.nombre }}"
-                                class="rounded-t-lg rounded-b-lg h-40 w-full object-cover hover:scale-105">
+                            <img src="../../../../assets/info-pueblo/coche.JPG"
+                                [alt]="'Imagen de ' + alojamiento.nombre"
+                                class="rounded-lg h-40 w-full object-cover hover:scale-105" />
                             <div class="p-4">
                                 <h5 class="font-semibold text-lg">{{ alojamiento.nombre }}</h5>
-                                <p class="text-gray-600">{{ alojamiento.tipo }} - {{ alojamiento.ubicacion }}</p>
-                                <p class="text-gray-700 mt-2">Precio por noche: ${{ alojamiento.precioNoche }}</p>
+                                <p class="text-gray-600">
+                                    {{ alojamiento.tipo }} - {{ alojamiento.ubicacion }}
+                                </p>
+                                <p class="text-gray-700 mt-2">
+                                    Precio por noche: ${{ alojamiento.precioNoche }}
+                                </p>
                                 <a [routerLink]="['/alojamiento', alojamiento.idAlojamiento]"
                                     class="mt-4 inline-block bg-emerald-300 text-gray-700 px-4 py-2 rounded hover:bg-emerald-600 hover:scale-105">
                                     <b>Ver más</b>
@@ -33,46 +44,109 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Botón derecho -->
+                <button (click)="next()"
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-600">
+                    &#8594;
+                </button>
             </div>
         </div>
+
+
+        <!-- Carrusel de Restaurantes -->
+        <div class="relative my-10">
+            <h2 class="text-2xl font-bold text-center mb-6">Restaurantes Populares</h2>
+            <div class="overflow-hidden relative w-full">
+                <!-- Botón izquierdo -->
+                <button (click)="prevRestaurant()"
+                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-600">
+                    &#8592;
+                </button>
+
+                <!-- Carrusel -->
+                <div id="restaurantCarousel" class="flex transition-transform duration-500"
+                    [style.transform]="'translateX(' + (-currentRestaurantTranslate) + 'px)'"
+                    style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
+                    <div *ngFor="let restaurante of restaurantes" class="flex-none w-[calc(33.33%-1rem)] px-2">
+                        <div class="bg-white rounded-lg shadow-lg text-center p-4">
+                            <img src="../../assets/info-pueblo/muralla2.JPG" [alt]="'Imagen de ' + restaurante.nombre"
+                                class="rounded-lg h-40 w-full object-cover hover:scale-105" />
+                            <div class="p-4">
+                                <h5 class="font-semibold text-lg">{{ restaurante.nombre }}</h5>
+                                <p class="text-gray-600">{{ restaurante.especialidad }}</p>
+                                <p class="text-gray-700 mt-2">
+
+                                </p>
+                                <a [routerLink]="['/restaurante', restaurante.idRestaurante]"
+                                    class="mt-4 inline-block bg-indigo-400 text-black px-4 py-2 rounded hover:bg-indigo-600 hover:scale-105">
+                                    <b>Ver más</b>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón derecho -->
+                <button (click)="nextRestaurant()"
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-600">
+                    &#8594;
+                </button>
+            </div>
+        </div>
+
+
 
         <!-- Carrusel de Monumentos Destacados -->
         <div class="mt-10">
             <h2 class="text-2xl font-bold text-center mb-6">Monumentos Destacados</h2>
             <div class="relative">
-                <div class="flex overflow-x-scroll space-x-4 pb-4">
-                    <!-- Iterar sobre los monumentos -->
-                    <div *ngFor="let monumento of monumentos"
-                        class="flex-none w-full lg:w-4/5 bg-white shadow-lg rounded-lg overflow-hidden">
+                <!-- Contenedor del carrusel -->
+                <div class="flex justify-center items-center relative">
+                    <!-- Flecha izquierda -->
+                    <button (click)="cambiarMonumento(-1)"
+                        class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+                        &#10094;
+                    </button>
+
+                    <!-- Monumento actual -->
+                    <div class="flex-none w-full bg-white shadow-lg rounded-lg overflow-hidden">
                         <div class="flex flex-col lg:flex-row">
                             <!-- Imagen del monumento -->
                             <div class="lg:w-1/2 mt-4 ml-4 mb-4 border-rounded">
-                                <img src="../../../../assets/info-pueblo/moreria1.JPG" alt="{{ monumento.nombre }}"
+                                <img src="../../../../assets/info-pueblo/moreria1.JPG"
+                                    alt="{{ monumentos[indiceMonumento].nombre }}"
                                     class="w-full h-full object-cover border-rounded rounded-lg">
                             </div>
                             <!-- Descripción y mapa -->
                             <div class="lg:w-1/2 p-6 bg-gray-100">
-                                <h3 class="text-lg font-bold mb-4">{{ monumento.nombre }}</h3>
-                                <p><strong>Tipo:</strong> hola</p>
-                                <p><strong>Historia:</strong> {{ monumento.historia }}</p>
-                                <p><strong>Horario:</strong> {{ monumento.horario }}</p>
-                                <p><strong>Precio entrada:</strong> ${{ monumento.precio_entrada }}</p>
-                                <p><strong>Ubicación:</strong> {{ monumento.ubicacion }}</p>
+                                <h3 class="text-lg font-bold mb-4">{{ monumentos[indiceMonumento].nombre }}</h3>
+                                <p><strong>Tipo:</strong> {{ monumentos[indiceMonumento].tipo }}</p>
+                                <p><strong>Historia:</strong> {{ monumentos[indiceMonumento].historia }}</p>
+                                <p><strong>Horario:</strong> {{ monumentos[indiceMonumento].horario }}</p>
+                                <p><strong>Precio entrada:</strong> ${{ monumentos[indiceMonumento].precio_entrada }}
+                                </p>
+                                <p><strong>Ubicación:</strong> {{ monumentos[indiceMonumento].ubicacion }}</p>
                                 <hr class="my-4">
                                 <!-- Aquí irá el mapa -->
                                 <p class="text-center font-semibold">Mapa</p>
-                                <p class="border border-gray-400 p-4 text-center">mapa</p>
-                                <a [routerLink]="['/monumento', monumento.idMonumento]"
+                                <p class="border border-gray-400 p-4 text-center w-30 h-20">mapa</p>
+                                <a [routerLink]="['/monumento', monumentos[indiceMonumento].idMonumento]"
                                     class="mt-4 inline-block bg-orange-400 text-black px-4 py-2 rounded hover:bg-orange-600 hover:scale-105">
                                     <b>Ver más</b>
                                 </a>
                             </div>
-
-
                         </div>
                     </div>
+
+                    <!-- Flecha derecha -->
+                    <button (click)="cambiarMonumento(1)"
+                        class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+                        &#10095;
+                    </button>
                 </div>
             </div>
         </div>
+
     </div>
 </div>

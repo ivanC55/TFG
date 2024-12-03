@@ -5,7 +5,11 @@ import com.turismo.service.MonumentoHistoricoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -14,34 +18,57 @@ import java.util.List;
 public class MonumentoHistoricoRestController {
 
     private final MonumentoHistoricoService monumentoHistoricoService;
+    private final String UPLOAD_DIR = "src/main/resources/static/uploads/monumentos/";
 
     @Autowired
     public MonumentoHistoricoRestController(MonumentoHistoricoService monumentoHistoricoService) {
         this.monumentoHistoricoService = monumentoHistoricoService;
     }
 
-    // Obtener todos los monumentos históricos
+    @PostMapping("/upload/{id}")
+    public ResponseEntity<String> uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            // Validar monumento
+            MonumentoHistorico monumento = monumentoHistoricoService.getById(id);
+            if (monumento == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // Guardar archivo
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            Path path = Paths.get(UPLOAD_DIR + fileName);
+            Files.createDirectories(path.getParent());
+            Files.write(path, file.getBytes());
+
+            // Actualizar referencia de imagen en el monumento
+            monumento.setImagen(fileName);
+            monumentoHistoricoService.save(monumento);
+
+            return ResponseEntity.ok("Imagen subida exitosamente: " + fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error al subir la imagen.");
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<MonumentoHistorico>> getAllMonumentosHistoricos() {
         List<MonumentoHistorico> monumentos = monumentoHistoricoService.listAll();
         return ResponseEntity.ok(monumentos);
     }
 
-    // Obtener monumento histórico por id
     @GetMapping("/{id}")
     public ResponseEntity<MonumentoHistorico> getMonumentoHistoricoById(@PathVariable Long id) {
         MonumentoHistorico monumento = monumentoHistoricoService.getById(id);
         return monumento != null ? ResponseEntity.ok(monumento) : ResponseEntity.notFound().build();
     }
 
-    // Crear un nuevo monumento histórico
     @PostMapping
     public ResponseEntity<MonumentoHistorico> createMonumentoHistorico(@RequestBody MonumentoHistorico monumentoHistorico) {
         MonumentoHistorico newMonumento = monumentoHistoricoService.save(monumentoHistorico);
         return ResponseEntity.ok(newMonumento);
     }
 
-    // Actualizar un monumento histórico existente
     @PutMapping("/{id}")
     public ResponseEntity<MonumentoHistorico> updateMonumentoHistorico(@PathVariable Long id, @RequestBody MonumentoHistorico monumentoDetails) {
         MonumentoHistorico monumento = monumentoHistoricoService.getById(id);
@@ -62,7 +89,6 @@ public class MonumentoHistoricoRestController {
         return ResponseEntity.ok(updatedMonumento);
     }
 
-    // Eliminar un monumento histórico
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMonumentoHistorico(@PathVariable Long id) {
         MonumentoHistorico monumento = monumentoHistoricoService.getById(id);

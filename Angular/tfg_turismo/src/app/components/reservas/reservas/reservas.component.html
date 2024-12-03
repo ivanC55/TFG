@@ -1,128 +1,144 @@
 <div class="grid grid-cols-5 gap-4">
     <div class="col-span-1"></div>
-<div class="container mb-10 col-span-4 mt-4 px-4">
-    <h2 class="text-center mb-4 text-2xl font-semibold text-indigo-700">Gestión de Reservas</h2>
+    <div class="container mb-10 col-span-4 mt-4 px-4">
+        <h2 class="text-center mb-4 text-2xl font-semibold text-indigo-700">Gestión de Reservas</h2>
 
-    <!-- Botón para crear una nueva reserva -->
-    <button class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 mb-3 transition-all ease-in-out duration-300 transform hover:scale-105"
-        (click)="mostrarFormulario()">
-        Nueva Reserva
-    </button>
+        <!-- Botón para crear una nueva reserva -->
+        <button
+            class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 mb-3 transition-all ease-in-out duration-300 transform hover:scale-105"
+            (click)="mostrarFormulario()">
+            Nueva Reserva
+        </button>
 
-    <!-- Tabla de reservas -->
-    <div class="overflow-x-auto mt-8 rounded-lg">
-        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
-            <thead class="bg-indigo-600 text-white">
-                <tr>
-                    <th class="py-2 px-4 text-left font-semibold">Usuario</th>
-                    <th class="py-2 px-4 text-left font-semibold">Alojamiento</th>
-                    <th class="py-2 px-4 text-left font-semibold">Restaurante</th>
-                    <th class="py-2 px-4 text-left font-semibold">Fecha Reserva</th>
-                    <th class="py-2 px-4 text-left font-semibold">Hora Reserva</th>
-                    <th class="py-2 px-4 text-left font-semibold">Número de Personas</th>
-                    <th class="py-2 px-4 text-left font-semibold">Estado</th>
-                    <th class="py-2 px-4 text-left font-semibold">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let reserva of reservas" class="hover:bg-gray-100">
-                    <td class="py-2 px-4">{{ reserva.usuario?.nombre }}</td>
-                    <td class="py-2 px-4">{{ reserva.alojamiento?.nombre || 'N/A' }}</td>
-                    <td class="py-2 px-4">{{ reserva.restaurante?.nombre || 'N/A' }}</td>
-                    <td class="py-2 px-4">{{ reserva.fechaReserva }}</td>
-                    <td class="py-2 px-4">{{ reserva.horaReserva }}</td>
-                    <td class="py-2 px-4 text-center">{{ reserva.numPersonas }}</td>
-                    <td class="py-2 px-4">{{ reserva.estado }}</td>
-                    <td class="py-2 px-4">
-                        <div class="flex space-x-2">
-                            <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm"
-                                (click)="editarReserva(reserva)">
-                                <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
+        <!-- Tabla de reservas -->
+        <div class="overflow-x-auto mt-8 rounded-lg">
+            <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-indigo-600 text-white">
+                    <tr>
+                        <th class="py-2 px-4 text-left font-semibold">Usuario</th>
+                        <th class="py-2 px-4 text-left font-semibold">Alojamiento</th>
+                        <th class="py-2 px-4 text-left font-semibold">Restaurante</th>
+                        <th class="py-2 px-4 text-left font-semibold">Fecha Reserva</th>
+                        <th class="py-2 px-4 text-left font-semibold">Hora Reserva</th>
+                        <th class="py-2 px-4 text-left font-semibold">Número de Personas</th>
+                        <th class="py-2 px-4 text-left font-semibold">Estado</th>
+                        <th class="py-2 px-4 text-left font-semibold">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let reserva of reservas" class="hover:bg-gray-100">
+                        <td class="py-2 px-4">{{ reserva.usuario?.nombre }}</td>
+                        <td class="py-2 px-4">{{ reserva.alojamiento?.nombre || 'N/A' }}</td>
+                        <td class="py-2 px-4">{{ reserva.restaurante?.nombre || 'N/A' }}</td>
+                        <td class="py-2 px-4">{{ reserva.fechaReserva }}</td>
+                        <td class="py-2 px-4">{{ reserva.horaReserva }}</td>
+                        <td class="py-2 px-4 text-center">{{ reserva.numPersonas }}</td>
+                        <td class="py-2 px-4">{{ reserva.estado }}</td>
+                        <td class="py-2 px-4">
+                            <div class="flex space-x-2">
+                                <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm"
+                                    (click)="editarReserva(reserva)">
+                                    <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15 12h6m-3-3v6M4.75 12A7.25 7.25 0 0012 4.75a7.25 7.25 0 107.25 7.25A7.25 7.25 0 004.75 12h.5z" />
                                     </svg>
-                            </button>
-                            <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm"
-                                (click)="mostrarModalEliminar(reserva)">
-                                <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
+                                </button>
+                                <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 text-sm"
+                                    (click)="mostrarModalEliminar(reserva)">
+                                    <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M6 18L18 6M6 6l12 12" />
                                     </svg>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Modal de formulario de nueva reserva -->
-    <div *ngIf="modoFormulario" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-        <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
-            <button (click)="cancelarFormulario()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-            <h3 class="text-lg font-semibold text-center mb-4 text-indigo-600">Formulario de Reserva</h3>
-            
-            <!-- Formulario de creación/edición de reserva -->
-            <form (ngSubmit)="guardarReserva()">
-                <div class="mb-4">
-                    <label for="usuario" class="block text-sm font-semibold text-gray-700">Usuario</label>
-                    <select [(ngModel)]="usuarioSeleccionadoId" name="usuario" id="usuario" class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
-                        <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nombre }}</option>
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <label for="alojamiento" class="block text-sm font-semibold text-gray-700">Alojamiento</label>
-                    <select [(ngModel)]="alojamientoSeleccionadoId" name="alojamiento" id="alojamiento" class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
-                        <option *ngFor="let alojamiento of alojamientos" [value]="alojamiento.idAlojamiento">{{ alojamiento.nombre }}</option>
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <label for="restaurante" class="block text-sm font-semibold text-gray-700">Restaurante</label>
-                    <select [(ngModel)]="restauranteSeleccionadoId" name="restaurante" id="restaurante" class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
-                        <option *ngFor="let restaurante of restaurantes" [value]="restaurante.idRestaurante">{{ restaurante.nombre }}</option>
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <label for="fechaReserva" class="block text-sm font-semibold text-gray-700">Fecha Reserva</label>
-                    <input type="date" [(ngModel)]="reservaSeleccionada.fechaReserva" name="fechaReserva" id="fechaReserva" required
-                        class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
-                </div>
-                <div class="mb-4">
-                    <label for="horaReserva" class="block text-sm font-semibold text-gray-700">Hora Reserva</label>
-                    <input type="time" [(ngModel)]="reservaSeleccionada.horaReserva" name="horaReserva" id="horaReserva" required
-                        class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
-                </div>
-                <div class="mb-4">
-                    <label for="numPersonas" class="block text-sm font-semibold text-gray-700">Número de Personas</label>
-                    <input type="number" [(ngModel)]="reservaSeleccionada.numPersonas" name="numPersonas" id="numPersonas" required
-                        class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
-                </div>
-                <div class="mb-4">
-                    <button type="submit" class="w-full py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-all duration-200">
-                        Guardar
-                    </button>
-                </div>
-            </form>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
 
-    <!-- Modal de confirmación de eliminación -->
-    <div *ngIf="reservaParaEliminar" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-        <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
-            <h3 class="text-lg font-semibold text-center mb-4 text-indigo-600">Confirmación de Eliminación</h3>
-            <p class="text-center mb-4">¿Estás seguro de que deseas eliminar esta reserva?</p>
-            <div class="flex justify-center">
-                <button (click)="confirmarEliminar()" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition-all duration-200 mr-2">Eliminar</button>
-                <button (click)="cancelarEliminar()" class="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition-all duration-200">Cancelar</button>
+        <!-- Modal de formulario de nueva reserva -->
+        <div *ngIf="modoFormulario"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+            <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10" style="height: 60vh; max-height: 60vh;">
+                <button (click)="cancelarFormulario()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <h3 class="text-lg font-semibold text-center mb-4 text-indigo-600">Formulario de Reserva</h3>
+
+                <!-- Formulario de creación/edición de reserva -->
+                <form (ngSubmit)="guardarReserva()" class="space-y-4">
+                    <div>
+                        <label for="usuario" class="block text-sm font-semibold text-gray-700">Usuario</label>
+                        <select [(ngModel)]="usuarioSeleccionadoId" name="usuario" id="usuario"
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
+                            <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nombre }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="alojamiento" class="block text-sm font-semibold text-gray-700">Alojamiento</label>
+                        <select [(ngModel)]="alojamientoSeleccionadoId" name="alojamiento" id="alojamiento"
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
+                            <option *ngFor="let alojamiento of alojamientos" [value]="alojamiento.idAlojamiento">{{
+                                alojamiento.nombre }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="restaurante" class="block text-sm font-semibold text-gray-700">Restaurante</label>
+                        <select [(ngModel)]="restauranteSeleccionadoId" name="restaurante" id="restaurante"
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
+                            <option *ngFor="let restaurante of restaurantes" [value]="restaurante.idRestaurante">{{
+                                restaurante.nombre }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="fechaReserva" class="block text-sm font-semibold text-gray-700">Fecha
+                            Reserva</label>
+                        <input type="date" [(ngModel)]="reservaSeleccionada.fechaReserva" name="fechaReserva"
+                            id="fechaReserva" required
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
+                    </div>
+                    <div>
+                        <label for="horaReserva" class="block text-sm font-semibold text-gray-700">Hora Reserva</label>
+                        <input type="time" [(ngModel)]="reservaSeleccionada.horaReserva" name="horaReserva"
+                            id="horaReserva" required
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
+                    </div>
+                    <div>
+                        <label for="numPersonas" class="block text-sm font-semibold text-gray-700">Número de
+                            Personas</label>
+                        <input type="number" [(ngModel)]="reservaSeleccionada.numPersonas" name="numPersonas"
+                            id="numPersonas" required
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
+                    </div>
+                    <div>
+                        <button type="submit"
+                            class="w-full py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-all duration-200">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de confirmación de eliminación -->
+        <div *ngIf="reservaParaEliminar"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+            <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+                <h3 class="text-lg font-semibold text-center mb-4 text-indigo-600">Confirmación de Eliminación</h3>
+                <p class="text-center mb-4">¿Estás seguro de que deseas eliminar esta reserva?</p>
+                <div class="flex justify-center">
+                    <button (click)="confirmarEliminar()"
+                        class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition-all duration-200 mr-2">Eliminar</button>
+                    <button (click)="cancelarEliminar()"
+                        class="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition-all duration-200">Cancelar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>

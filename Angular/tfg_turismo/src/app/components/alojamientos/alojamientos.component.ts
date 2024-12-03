@@ -15,7 +15,7 @@ export class AlojamientosComponent implements OnInit {
     tipo: '',
     ubicacion: '',
     precioNoche: 0,
-    servicios: '',
+    servicios: [],
     puntuacion: 0,
   };
 
@@ -23,12 +23,21 @@ export class AlojamientosComponent implements OnInit {
   mostrarModalEliminar: boolean = false; // Controla la visibilidad del modal de eliminar
   isEditing: boolean = false; // Define si se está editando o creando un alojamiento
 
+  puntuacionInvalida: boolean = false;
+
   constructor(private alojamientoService: AlojamientoService) { }
 
   ngOnInit(): void {
     this.listAlojamientos();
   }
 
+  validarPuntuacion(): void {
+    if (this.alojamiento.puntuacion < 0 || this.alojamiento.puntuacion > 5) {
+      this.puntuacionInvalida = true;
+    } else {
+      this.puntuacionInvalida = false;
+    }
+  }
   // Obtener la lista de alojamientos
   listAlojamientos() {
     this.alojamientoService.getAlojamientosList().subscribe(
@@ -51,7 +60,7 @@ export class AlojamientosComponent implements OnInit {
         tipo: '',
         ubicacion: '',
         precioNoche: 0,
-        servicios: '',
+        servicios: [],
         puntuacion: 0,
       };
     this.isEditing = !!alojamiento;
@@ -61,33 +70,33 @@ export class AlojamientosComponent implements OnInit {
   // Guardar un alojamiento nuevo o editar uno existente
   guardarAlojamiento(): void {
     if (this.isEditing) {
-      // Actualizar alojamiento
-      this.alojamientoService.updateAlojamiento(this.alojamiento).subscribe(
-        () => {
-          alert('¡Alojamiento actualizado exitosamente!');
-          this.cerrarModalFormulario();
-          this.listAlojamientos(); // Actualizar la lista de alojamientos
-        },
-        (error) => {
-          console.error('Error al actualizar el alojamiento:', error);
-          alert('Hubo un error al actualizar el alojamiento.');
-        }
-      );
+        // Actualizar alojamiento
+        this.alojamientoService.updateAlojamiento(this.alojamiento).subscribe(
+            () => {
+                alert('¡Alojamiento actualizado exitosamente!');
+                this.cerrarModalFormulario();
+                this.listAlojamientos(); // Actualizar la lista de alojamientos
+            },
+            (error) => {
+                console.error('Error al actualizar el alojamiento:', error);
+                alert('Hubo un error al actualizar el alojamiento.');
+            }
+        );
     } else {
-      // Crear alojamiento nuevo
-      this.alojamientoService.createAlojamiento(this.alojamiento).subscribe(
-        () => {
-          alert('¡Alojamiento añadido exitosamente!');
-          this.cerrarModalFormulario();
-          this.listAlojamientos(); // Actualizar la lista de alojamientos
-        },
-        (error) => {
-          console.error('Error al añadir el alojamiento:', error);
-          alert('Hubo un error al añadir el alojamiento.');
-        }
-      );
+        // Crear alojamiento nuevo
+        this.alojamientoService.createAlojamiento(this.alojamiento).subscribe(
+            () => {
+                alert('¡Alojamiento añadido exitosamente!');
+                this.cerrarModalFormulario();
+                this.listAlojamientos(); // Actualizar la lista de alojamientos
+            },
+            (error) => {
+                console.error('Error al añadir el alojamiento:', error);
+                alert('Hubo un error al añadir el alojamiento.');
+            }
+        );
     }
-  }
+}
 
   // Eliminar alojamiento
   eliminarAlojamiento(id: number): void {
@@ -128,4 +137,27 @@ export class AlojamientosComponent implements OnInit {
   cerrarModalFormulario(): void {
     this.mostrarModalFormulario = false;
   }
+
+  // Función para agregar los servicios seleccionados
+  agregarServicioSeleccionado(): void {
+    const serviciosSeleccionados = Array.from((<HTMLSelectElement>document.getElementById('servicios')).selectedOptions)
+        .map(option => option.value);
+
+    // Asegurarnos de que los servicios seleccionados no se dupliquen
+    serviciosSeleccionados.forEach(servicio => {
+        if (!this.alojamiento.servicios.includes(servicio)) {
+            this.alojamiento.servicios.push(servicio);
+        }
+    });
 }
+
+  // Función para eliminar un servicio de la lista
+  eliminarServicio(servicio: string): void {
+    const index = this.alojamiento.servicios.indexOf(servicio);
+    if (index > -1) {
+        this.alojamiento.servicios.splice(index, 1); // Eliminar servicio de la lista
+    }
+}
+}
+
+

@@ -8,7 +8,8 @@
                 <!-- Main Label -->
                 <li class="px-5 hidden md:block">
                     <div class="flex flex-row items-center h-8">
-                        <div class="text-sm font-light tracking-wide text-gray-400 uppercase">ADMIN</div>
+                        <div class="text-sm font-light tracking-wide text-gray-400 uppercase"></div>
+                        <a href="/login" class="rounded-lg bg-green-300 flex items-center text-black w-20">Login</a>
                     </div>
                 </li>
                 <!-- Menu Items -->
@@ -186,12 +187,13 @@
             <div class="flex items-center space-x-4">
                 <!-- Imagen del perfil -->
                 <div class="relative">
-                    
-                    <img src="https://via.placeholder.com/40"
+                    <a routerLink="/perfil" class="block">
+                        <img src="https://via.placeholder.com/40"
                         alt="Perfil"
                         class="w-10 h-10 m-4 rounded-full object-cover cursor-pointer border-2 border-gray-300 hover:border-green-500"
                     />
-                    <a href="/login">Login</a>
+                    </a>
+                    
                 </div>
             </div>
     </div>
