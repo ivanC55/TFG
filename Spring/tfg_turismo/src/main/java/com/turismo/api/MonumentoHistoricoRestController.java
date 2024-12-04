@@ -26,12 +26,12 @@ public class MonumentoHistoricoRestController {
     }
 
     @PostMapping("/upload/{id}")
-    public ResponseEntity<String> uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
         try {
             // Validar monumento
             MonumentoHistorico monumento = monumentoHistoricoService.getById(id);
             if (monumento == null) {
-                return ResponseEntity.notFound().build();
+                return ResponseEntity.status(404).body("{\"error\": \"Monumento no encontrado\"}");
             }
 
             // Guardar archivo
@@ -44,12 +44,14 @@ public class MonumentoHistoricoRestController {
             monumento.setImagen(fileName);
             monumentoHistoricoService.save(monumento);
 
-            return ResponseEntity.ok("Imagen subida exitosamente: " + fileName);
+            // Devolver JSON como respuesta
+            return ResponseEntity.ok("{\"message\": \"Imagen subida exitosamente\", \"fileName\": \"" + fileName + "\"}");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Error al subir la imagen.");
+            return ResponseEntity.status(500).body("{\"error\": \"Error al subir la imagen\"}");
         }
     }
+
 
     @GetMapping
     public ResponseEntity<List<MonumentoHistorico>> getAllMonumentosHistoricos() {

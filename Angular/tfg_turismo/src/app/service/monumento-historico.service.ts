@@ -34,6 +34,6 @@ export class MonumentoHistoricoService {
   uploadImage(id: number, file: File): Observable<string> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<string>(`${this.apiUrl}/upload/${id}`, formData);
+    return this.http.post<string>(`${this.apiUrl}/upload/${id}`, formData, { responseType: 'json' });;
   }
 }

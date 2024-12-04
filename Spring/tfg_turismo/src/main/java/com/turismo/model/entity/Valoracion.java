@@ -1,26 +1,33 @@
 package com.turismo.model.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "valoraciones")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Valoracion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idValoracion;
 
+    private Double puntuacion;
+    private String comentario;
+
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
-    private Long idItem; // Puede ser id de alojamiento, restaurante, etc.
-    private String tipo; // Define el tipo (Alojamiento, Restaurante, etc.)
-    private Double puntuacion;
-    @Column(columnDefinition = "TEXT")
-    private String comentario;
+    @ManyToOne
+    @JoinColumn(name = "id_alojamiento", nullable = false)
+    private Alojamiento alojamiento;
 }
