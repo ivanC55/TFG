@@ -12,55 +12,58 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
-    @Service
-    public class ValoracionServiceImpl implements ValoracionService {
+@Service
+public class ValoracionServiceImpl implements ValoracionService {
 
-        private final ValoracionRepository valoracionRepository;
-        private final UsuarioRepository usuarioRepository;
-        private final AlojamientoRepository alojamientoRepository;
+    private final ValoracionRepository valoracionRepository;
 
-        public ValoracionServiceImpl(ValoracionRepository valoracionRepository,
-                                     UsuarioRepository usuarioRepository,
-                                     AlojamientoRepository alojamientoRepository) {
-            this.valoracionRepository = valoracionRepository;
-            this.usuarioRepository = usuarioRepository;
-            this.alojamientoRepository = alojamientoRepository;
-        }
+    public ValoracionServiceImpl(ValoracionRepository valoracionRepository) {
+        this.valoracionRepository = valoracionRepository;
+    }
 
-        @Override
-        public Valoracion saveValoracion(Long usuarioId, Long alojamientoId, Double puntuacion, String comentario) {
-            Assert.notNull(usuarioId, "El ID de usuario no debe ser nulo");
-            Assert.notNull(alojamientoId, "El ID de alojamiento no debe ser nulo");
+    @Override
+    public List<Valoracion> getAllValoraciones() {
+        return valoracionRepository.findAll();
+    }
 
-            Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-            Alojamiento alojamiento = alojamientoRepository.findById(alojamientoId).orElseThrow(() -> new IllegalArgumentException("Alojamiento no encontrado"));
+    @Override
+    public List<Valoracion> getValoracionesByAlojamiento(Long alojamientoId) {
+        Alojamiento alojamiento = new Alojamiento();
+        alojamiento.setIdAlojamiento(alojamientoId);
+        return valoracionRepository.findByAlojamiento(alojamiento);
+    }
 
-            Valoracion valoracion = new Valoracion();
-            valoracion.setUsuario(usuario);
-            valoracion.setAlojamiento(alojamiento);
+
+    @Override
+    public Valoracion saveValoracion(Long usuarioId, Long alojamientoId, Double puntuacion, String comentario) {
+        Usuario usuario = new Usuario();
+        usuario.setId(usuarioId);
+        Alojamiento alojamiento = new Alojamiento();
+        alojamiento.setIdAlojamiento(alojamientoId);
+
+        Valoracion valoracion = new Valoracion();
+        valoracion.setUsuario(usuario);
+        valoracion.setAlojamiento(alojamiento);
+        valoracion.setPuntuacion(puntuacion);
+        valoracion.setComentario(comentario);
+
+        return valoracionRepository.save(valoracion);
+    }
+
+    @Override
+    public Valoracion updateValoracion(Long id, Double puntuacion, String comentario) {
+        Optional<Valoracion> valoracionOpt = valoracionRepository.findById(id);
+        if (valoracionOpt.isPresent()) {
+            Valoracion valoracion = valoracionOpt.get();
             valoracion.setPuntuacion(puntuacion);
             valoracion.setComentario(comentario);
-
             return valoracionRepository.save(valoracion);
         }
-
-        @Override
-        public List<Valoracion> getValoracionesByAlojamiento(Long alojamientoId) {
-            Optional<Alojamiento> alojamiento = alojamientoRepository.findById(alojamientoId);
-            if (alojamiento.isEmpty()) {
-                throw new IllegalArgumentException("Alojamiento no encontrado");
-            }
-
-            return valoracionRepository.findByAlojamiento(alojamiento.get());
-        }
-
-        @Override
-        public List<Valoracion> getValoracionesByUsuario(Long usuarioId) {
-            Optional<Usuario> usuario = usuarioRepository.findById(usuarioId);
-            if (usuario.isEmpty()) {
-                throw new IllegalArgumentException("Usuario no encontrado");
-            }
-
-            return valoracionRepository.findByUsuario(usuario.get());
-        }
+        return null;
     }
+
+    @Override
+    public void deleteValoracion(Long id) {
+        valoracionRepository.deleteById(id);
+    }
+}

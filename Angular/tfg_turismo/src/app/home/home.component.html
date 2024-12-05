@@ -96,57 +96,58 @@
         </div>
 
 
+        <div *ngIf="monumentos && monumentos.length > 0">
+            <!-- Carrusel de Monumentos Destacados -->
+            <div class="mt-10">
+                <h2 class="text-2xl font-bold text-center mb-6">Monumentos Destacados</h2>
+                <div class="relative">
+                    <div class="flex justify-center items-center relative">
+                        <!-- Flecha izquierda -->
+                        <button (click)="cambiarMonumento(-1)"
+                            class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+                            &#10094;
+                        </button>
 
-        <!-- Carrusel de Monumentos Destacados -->
-        <div class="mt-10">
-            <h2 class="text-2xl font-bold text-center mb-6">Monumentos Destacados</h2>
-            <div class="relative">
-                <!-- Contenedor del carrusel -->
-                <div class="flex justify-center items-center relative">
-                    <!-- Flecha izquierda -->
-                    <button (click)="cambiarMonumento(-1)"
-                        class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
-                        &#10094;
-                    </button>
-
-                    <!-- Monumento actual -->
-                    <div class="flex-none w-full bg-white shadow-lg rounded-lg overflow-hidden">
-                        <div class="flex flex-col lg:flex-row">
-                            <!-- Imagen del monumento -->
-                            <div class="lg:w-1/2 mt-4 ml-4 mb-4 border-rounded">
-                                <img src="../../../../assets/info-pueblo/moreria1.JPG"
-                                    alt="{{ monumentos[indiceMonumento].nombre }}"
-                                    class="w-full h-full object-cover border-rounded rounded-lg">
-                            </div>
-                            <!-- Descripción y mapa -->
-                            <div class="lg:w-1/2 p-6 bg-gray-100">
-                                <h3 class="text-lg font-bold mb-4">{{ monumentos[indiceMonumento].nombre }}</h3>
-                                <p><strong>Tipo:</strong> {{ monumentos[indiceMonumento].tipo }}</p>
-                                <p><strong>Historia:</strong> {{ monumentos[indiceMonumento].historia }}</p>
-                                <p><strong>Horario:</strong> {{ monumentos[indiceMonumento].horario }}</p>
-                                <p><strong>Precio entrada:</strong> ${{ monumentos[indiceMonumento].precio_entrada }}
-                                </p>
-                                <p><strong>Ubicación:</strong> {{ monumentos[indiceMonumento].ubicacion }}</p>
-                                <hr class="my-4">
-                                <!-- Aquí irá el mapa -->
-                                <p class="text-center font-semibold">Mapa</p>
-                                <p class="border border-gray-400 p-4 text-center w-30 h-20">mapa</p>
-                                <a [routerLink]="['/monumento', monumentos[indiceMonumento].idMonumento]"
-                                    class="mt-4 inline-block bg-orange-400 text-black px-4 py-2 rounded hover:bg-orange-600 hover:scale-105">
-                                    <b>Ver más</b>
-                                </a>
+                        <!-- Monumento actual -->
+                        <div class="flex-none w-full bg-white shadow-lg rounded-lg overflow-hidden">
+                            <div class="flex flex-col lg:flex-row">
+                                <!-- Imagen del monumento -->
+                                <div class="lg:w-1/2 mt-4 ml-4 mb-4 border-rounded">
+                                    <img *ngIf="monumentos[indiceMonumento]" [src]="monumentos[indiceMonumento].imagen"
+                                        alt="{{ monumentos[indiceMonumento].nombre }}"
+                                        class="w-full h-full object-cover border-rounded rounded-lg">
+                                </div>
+                                <!-- Descripción y mapa -->
+                                <div class="lg:w-1/2 p-6 bg-gray-100">
+                                    <h3 class="text-lg font-bold mb-4">{{ monumentos[indiceMonumento].nombre }}</h3>
+                                    <p><strong>Tipo:</strong> {{ monumentos[indiceMonumento].tipo }}</p>
+                                    <p><strong>Historia:</strong> {{ monumentos[indiceMonumento].historia }}</p>
+                                    <p><strong>Horario:</strong> {{ monumentos[indiceMonumento].horario }}</p>
+                                    <p><strong>Precio entrada:</strong> ${{ monumentos[indiceMonumento].precio_entrada
+                                        }}</p>
+                                    <p><strong>Ubicación:</strong> {{ monumentos[indiceMonumento].ubicacion }}</p>
+                                    <hr class="my-4">
+                                    <!-- Aquí irá el mapa -->
+                                    <p class="text-center font-semibold">Mapa</p>
+                                    <p class="border border-gray-400 p-4 text-center w-30 h-20">mapa</p>
+                                    <a [routerLink]="['/monumento', monumentos[indiceMonumento].idMonumento]"
+                                        class="mt-4 inline-block bg-orange-400 text-black px-4 py-2 rounded hover:bg-orange-600 hover:scale-105">
+                                        <b>Ver más</b>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Flecha derecha -->
-                    <button (click)="cambiarMonumento(1)"
-                        class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
-                        &#10095;
-                    </button>
+                        <!-- Flecha derecha -->
+                        <button (click)="cambiarMonumento(1)"
+                            class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+                            &#10095;
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+
 
     </div>
 </div>

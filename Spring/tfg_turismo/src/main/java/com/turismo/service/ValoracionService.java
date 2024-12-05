@@ -5,10 +5,9 @@ import com.turismo.model.entity.Valoracion;
 import java.util.List;
 
 public interface ValoracionService {
-
-    Valoracion saveValoracion(Long usuarioId, Long alojamientoId, Double puntuacion, String comentario);
-
+    List<Valoracion> getAllValoraciones();
     List<Valoracion> getValoracionesByAlojamiento(Long alojamientoId);
-
-    List<Valoracion> getValoracionesByUsuario(Long usuarioId);
+    Valoracion saveValoracion(Long usuarioId, Long alojamientoId, Double puntuacion, String comentario);
+    Valoracion updateValoracion(Long id, Double puntuacion, String comentario);
+    void deleteValoracion(Long id);
 }

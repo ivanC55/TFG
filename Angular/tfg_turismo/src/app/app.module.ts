@@ -34,6 +34,7 @@ import { RutasPublicInfoComponent } from './components/public/rutas-public-info/
 import { EventosPublicInfoComponent } from './components/public/eventos-public-info/eventos-public-info.component';
 import { MonumentosPublicInfoComponent } from './components/public/monumentos-public-info/monumentos-public-info.component';
 import { PerfilComponent } from './components/public/perfil/perfil.component';
+import { ValoracionesComponent } from './components/valoraciones/valoraciones.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent }, // Acceso público
@@ -65,6 +66,8 @@ const routes: Routes = [
   { path: 'rutas-public', component: RutasPublicComponent, },
   { path: 'rutas-turisticas', component: RutasTuristicasComponent, },
   { path: 'ruta/:id', component: RutasPublicInfoComponent, },
+
+  { path: 'valoraciones', component: ValoracionesComponent,},
   
   { path: 'usuarios', component: UsuariosComponent,},
   { path: 'reservas', component: ReservasComponent,},
@@ -105,6 +108,7 @@ const routes: Routes = [
     EventosPublicInfoComponent,
     MonumentosPublicInfoComponent,
     PerfilComponent,
+    ValoracionesComponent,
   
   ],
   imports: [
