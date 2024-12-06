@@ -25,25 +25,25 @@ export class HomeComponent implements OnInit {
   restaurantItemWidth: number = 0;
   valoracionItemWidth: number = 0;
   currentValoracionIndex: number = 0;  
-  valoracionesPorPagina: number = 3; // Número de valoraciones a mostrar por página
+  valoracionesPorPagina: number = 3; 
 
   indiceMonumento: number = 0;
 
   @ViewChild('carousel') carousel!: ElementRef;
   @ViewChild('restaurantCarousel') restaurantCarousel!: ElementRef;
-  @ViewChild('valoracionesCarousel') valoracionesCarousel!: ElementRef; // Referencia al carrusel de valoraciones
+  @ViewChild('valoracionesCarousel') valoracionesCarousel!: ElementRef; 
 
   constructor(
     private alojamientoService: AlojamientoService,
     private http: HttpClient,
-    private valoracionService: ValoracionService // Inyectar el servicio de valoraciones
+    private valoracionService: ValoracionService 
   ) { }
 
   ngOnInit(): void {
     this.listAlojamientos();
     this.listMonumentos();
     this.listRestaurantes();
-    this.listValoraciones(); // Cargar las valoraciones
+    this.listValoraciones(); 
   }
 
   listAlojamientos() {
@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
     this.valoracionService.getValoraciones().subscribe(
       (data) => {
         this.valoraciones = data;
-        setTimeout(() => this.calculateValoracionItemWidth(), 0);  // Asegúrate de que el cálculo se haga después de que los datos estén disponibles
+        setTimeout(() => this.calculateValoracionItemWidth(), 0);  
       },
       (error) => {
         console.error('Error fetching valoraciones:', error);
@@ -119,7 +119,7 @@ export class HomeComponent implements OnInit {
   }
   
   nextValoracion() {
-    const totalPages = Math.ceil(this.valoraciones.length / this.valoracionesPorPagina); // Total de páginas
+    const totalPages = Math.ceil(this.valoraciones.length / this.valoracionesPorPagina); 
     if (this.currentValoracionIndex < totalPages - 1) {
       this.currentValoracionIndex++;
       this.currentValoracionTranslate = this.currentValoracionIndex * this.valoracionItemWidth;
@@ -146,9 +146,9 @@ export class HomeComponent implements OnInit {
     this.currentRestaurantTranslate = Math.min(this.currentRestaurantTranslate + this.restaurantItemWidth, maxRestaurantTranslate);
   }
 
-  // Cambiar entre monumentos
   cambiarMonumento(direccion: number): void {
     const totalMonumentos = this.monumentos.length;
     this.indiceMonumento = (this.indiceMonumento + direccion + totalMonumentos) % totalMonumentos;
+    console.log('Índice actual del monumento:', this.indiceMonumento);
   }
 }

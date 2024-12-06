@@ -21,10 +21,11 @@ public class Alojamiento {
     private String tipo;
     private String ubicacion;
     private Double precioNoche;
+
     @ElementCollection
     @CollectionTable(name = "alojamiento_servicios", joinColumns = @JoinColumn(name = "id_alojamiento"))
     @Column(name = "servicio")
     private List<String> servicios;
-
     private Double puntuacion;
+    private String imagen;
 }

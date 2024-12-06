@@ -17,7 +17,7 @@ public class Restaurante {
     private String nombre;
     private String tipoComida;
     private String especialidad;
-    private String ubicacion; // Cambiarlo a la clase correcta si `Point` está disponible en tu setup
+    private String ubicacion;
     private Double precioPromedio;
     private String horario;
     private Double puntuacion;

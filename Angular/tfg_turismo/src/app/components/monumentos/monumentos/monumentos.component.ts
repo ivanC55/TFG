@@ -21,11 +21,7 @@ export class MonumentosComponent implements OnInit {
     imagen: ''
   };
   modoFormulario = false;  // Controla si el formulario está visible
-  modoEdicion = false;  // Controla si el modal de edición está visible
   monumentoParaEliminar: MonumentoHistorico | null = null;  // Monumento seleccionado para eliminación
-  isEditing: any;
-
-  // Propiedades para la carga de imágenes
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null; // Previsualización de la imagen
 
@@ -46,7 +42,6 @@ export class MonumentosComponent implements OnInit {
   }
 
   mostrarFormulario(): void {
-    this.modoEdicion = false; // Aseguramos que no estamos en modo de edición
     this.monumentoSeleccionado = {
       idMonumento: 0,
       nombre: '',
@@ -64,12 +59,12 @@ export class MonumentosComponent implements OnInit {
 
   editarMonumento(monumento: MonumentoHistorico): void {
     this.monumentoSeleccionado = { ...monumento };
-    this.modoEdicion = true;  // Mostrar el modal de edición
-    this.previewUrl = `http://localhost:8081/uploads/monumentos/${monumento.imagen}`; // Mostrar imagen actual como previsualización
+    this.modoFormulario = true;  // Abrir el formulario para editar
+    this.previewUrl = `http://localhost:8081/uploads/monumentos/${monumento.imagen}`; // Previsualización de la imagen
   }
 
   cancelarEdicion(): void {
-    this.modoEdicion = false;
+    this.modoFormulario = false;
   }
 
   onFileSelected(event: any): void {
@@ -93,11 +88,9 @@ export class MonumentosComponent implements OnInit {
       return;
     }
 
-    // Determinar si es creación o edición
     const esEdicion = !!this.monumentoSeleccionado.idMonumento;
 
     if (esEdicion) {
-      // Si estamos editando un monumento
       this.monumentoService.updateMonumento(this.monumentoSeleccionado.idMonumento, this.monumentoSeleccionado)
         .subscribe(() => {
           if (this.selectedFile) {
@@ -110,7 +103,6 @@ export class MonumentosComponent implements OnInit {
           alert('Hubo un error al actualizar el monumento.');
         });
     } else {
-      // Si estamos creando un nuevo monumento
       this.monumentoService.createMonumento(this.monumentoSeleccionado)
         .subscribe((nuevoMonumento) => {
           if (this.selectedFile) {
@@ -125,7 +117,6 @@ export class MonumentosComponent implements OnInit {
     }
   }
 
-
   private subirImagen(id: number): void {
     if (this.selectedFile) {
       this.monumentoService.uploadImage(id, this.selectedFile)
@@ -139,11 +130,10 @@ export class MonumentosComponent implements OnInit {
   }
 
   private finalizarGuardado(): void {
-    this.modoEdicion = false;
     this.modoFormulario = false;
     this.cargarMonumentos();
-    this.selectedFile = null; // Limpiar archivo seleccionado
-    this.previewUrl = null; // Limpiar previsualización
+    this.selectedFile = null; 
+    this.previewUrl = null; 
   }
 
   mostrarModalEliminar(monumento: MonumentoHistorico): void {

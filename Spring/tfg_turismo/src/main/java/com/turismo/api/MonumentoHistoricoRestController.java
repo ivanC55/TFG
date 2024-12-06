@@ -3,10 +3,15 @@ package com.turismo.api;
 import com.turismo.model.entity.MonumentoHistorico;
 import com.turismo.service.MonumentoHistoricoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -49,6 +54,25 @@ public class MonumentoHistoricoRestController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("{\"error\": \"Error al subir la imagen\"}");
+        }
+    }
+
+    @GetMapping("/uploads/monumentos/{filename}")
+    public ResponseEntity<Resource> getImage(@PathVariable String filename) {
+        try {
+            // Obtener la ruta de la imagen
+            Path path = Paths.get(UPLOAD_DIR + filename);
+            Resource resource = new UrlResource(path.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                        .body(resource);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } catch (MalformedURLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

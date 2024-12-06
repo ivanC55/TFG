@@ -35,13 +35,11 @@ public class AlojamientoServiceImpl implements AlojamientoService {
 
     @Override
     public List<Alojamiento> listAll() {
-
         return alojamientoRepository.findAll();
     }
 
     @Override
     public List<Alojamiento> findByTipo(String tipo) {
-
         return alojamientoRepository.findByTipo(tipo);
     }
 

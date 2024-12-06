@@ -1,13 +1,14 @@
 <div class="grid grid-cols-5 gap-4">
-
     <div class="col-span-1"></div>
     <div class="container mb-10 mt-4 col-span-4 px-6">
-        <h2 class="text-center mb-8 text-3xl font-semibold text-indigo-700">Gestión de Monumentos Históricos</h2>
+        <h2 class="text-center mb-8 text-3xl font-semibold text-indigo-700">
+            Gestión de Monumentos Históricos
+        </h2>
 
         <button
             class="bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 mb-6 shadow-md transition-all ease-in-out duration-300 transform hover:scale-105"
             (click)="mostrarFormulario()">
-            {{ isEditing ? 'Cerrar Formulario' : 'Nuevo Monumento' }}
+            {{ modoFormulario ? 'Cerrar Formulario' : 'Nuevo Monumento' }}
         </button>
 
         <!-- Tabla -->
@@ -15,7 +16,7 @@
             <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
                 <thead class="bg-indigo-600 text-white">
                     <tr>
-                        <th class="py-3 px-6 text-left font-semibold"></th>
+                        <th class="py-3 px-6 text-left font-semibold">#</th>
                         <th class="py-3 px-6 text-left font-semibold">Nombre</th>
                         <th class="py-3 px-6 text-left font-semibold">Tipo</th>
                         <th class="py-3 px-6 text-left font-semibold">Ubicación</th>
@@ -35,30 +36,21 @@
                         <td class="py-3 px-6">{{ monumento.precio_entrada | currency }}</td>
                         <td class="py-3 px-6">
                             <img *ngIf="monumento.imagen"
-                                [src]="'/uploads/monumentos/' + monumento.imagen"
+                                [src]="'http://localhost:8081/uploads/monumentos/' + monumento.imagen"
                                 alt="Imagen de {{ monumento.nombre }}"
-                                class="h-16 w-16 rounded-lg object-cover shadow-md">
+                                class="h-16 w-16 rounded-lg object-cover shadow-md" />
                             <span *ngIf="!monumento.imagen" class="text-gray-500 italic">Sin imagen</span>
                         </td>
                         <td class="py-3 px-6">
-                            <div class="flex space-x-2"> <!-- Contenedor flex para alinear los botones en una fila -->
+                            <div class="flex space-x-2">
                                 <button
                                     class="bg-yellow-500 text-white py-2 px-2 rounded-lg hover:bg-yellow-600 text-sm"
                                     (click)="editarMonumento(monumento)">
-                                    <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 12h6m-3-3v6M4.75 12A7.25 7.25 0 0012 4.75a7.25 7.25 0 107.25 7.25A7.25 7.25 0 004.75 12h.5z" />
-                                    </svg>
+                                    Editar
                                 </button>
-
                                 <button class="bg-red-500 text-white py-2 px-2 rounded-lg hover:bg-red-600 text-sm"
                                     (click)="mostrarModalEliminar(monumento)">
-                                    <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
+                                    Eliminar
                                 </button>
                             </div>
                         </td>
@@ -67,111 +59,68 @@
             </table>
         </div>
 
-
-<!-- Modal de formulario -->
-<div *ngIf="modoFormulario" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-    <div class="bg-white rounded-lg shadow-lg w-96 p-8 relative z-10">
-        <h3 class="text-center text-2xl font-semibold mb-6 text-indigo-600">
-            {{ monumentoSeleccionado.idMonumento ? 'Editar Monumento' : 'Crear Nuevo Monumento' }}
-        </h3>
-
-        <form (ngSubmit)="guardarMonumento()">
-            <!-- Campos del formulario -->
-            <div class="mb-4">
-                <label class="block text-gray-700">Nombre</label>
-                <input [(ngModel)]="monumentoSeleccionado.nombre" name="nombre" required
-                    class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700">Historia</label>
-                <textarea [(ngModel)]="monumentoSeleccionado.historia" name="historia" required
-                    class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500"></textarea>
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700">Ubicación</label>
-                <input [(ngModel)]="monumentoSeleccionado.ubicacion" name="ubicacion" required
-                    class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700">Horario</label>
-                <input [(ngModel)]="monumentoSeleccionado.horario" name="horario" required
-                    class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700">Tipo</label>
-                <input [(ngModel)]="monumentoSeleccionado.tipo" name="tipo" required
-                    class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700">Precio Entrada</label>
-                <input type="number" [(ngModel)]="monumentoSeleccionado.precio_entrada" name="precio_entrada" required
-                    class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
-            </div>
-
-            <!-- Subida de imagen -->
-            <label for="file-input"
-                class="cursor-pointer bg-indigo-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition">
-                Cargar Imagen
-            </label>
-            <input id="file-input" type="file" class="hidden" (change)="onFileSelected($event)" />
-            <div class="mt-4">
-                <img *ngIf="previewUrl" [src]="previewUrl" class="max-w-full max-h-40 rounded-lg shadow-md"
-                    alt="Vista previa de la imagen" />
-            </div>
-
-            <!-- Botones -->
-            <div class="flex justify-between mt-6">
-                <button type="submit"
-                    class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-200">
-                    Guardar
-                </button>
-                <button type="button" (click)="cancelarFormulario()"
-                    class="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-400 transition-all duration-200">
-                    Cancelar
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-        <!-- Modal de Confirmación de Eliminación -->
-        <div *ngIf="monumentoParaEliminar"
+        <!-- Modal de formulario -->
+        <div *ngIf="modoFormulario"
             class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
             <div class="bg-white rounded-lg shadow-lg w-96 p-8 relative z-10">
-                <h3 class="text-center text-lg font-semibold mb-6">¿Seguro que deseas eliminar este monumento?</h3>
-                <div class="flex justify-between">
-                    <button (click)="confirmarEliminar()"
-                        class="bg-red-600 text-white py-3 px-6 rounded-lg hover:bg-red-700 transition-all duration-200">
-                        Eliminar
-                    </button>
-                    <button (click)="cancelarEliminar()"
-                        class="bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-all duration-200">
-                        Cancelar
-                    </button>
-                </div>
+                <h3 class="text-center text-2xl font-semibold mb-6 text-indigo-600">
+                    {{ monumentoSeleccionado.idMonumento ? 'Editar Monumento' : 'Crear Nuevo Monumento' }}
+                </h3>
+
+                <!-- Formulario de Monumento -->
+                <form (ngSubmit)="guardarMonumento()">
+                    <div class="mb-4">
+                        <label for="nombre" class="block text-sm font-semibold text-gray-700">Nombre</label>
+                        <input id="nombre" type="text" [(ngModel)]="monumentoSeleccionado.nombre" name="nombre"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm" required />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="historia" class="block text-sm font-semibold text-gray-700">Historia</label>
+                        <textarea id="historia" [(ngModel)]="monumentoSeleccionado.historia" name="historia"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm" required></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="tipo" class="block text-sm font-semibold text-gray-700">Tipo</label>
+                        <input id="tipo" type="text" [(ngModel)]="monumentoSeleccionado.tipo" name="tipo"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm" required />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="ubicacion" class="block text-sm font-semibold text-gray-700">Ubicación</label>
+                        <input id="ubicacion" type="text" [(ngModel)]="monumentoSeleccionado.ubicacion" name="ubicacion"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm" required />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="horario" class="block text-sm font-semibold text-gray-700">Horario</label>
+                        <input id="horario" type="text" [(ngModel)]="monumentoSeleccionado.horario" name="horario"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm" required />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="precio_entrada" class="block text-sm font-semibold text-gray-700">Precio
+                            Entrada</label>
+                        <input id="precio_entrada" type="number" [(ngModel)]="monumentoSeleccionado.precio_entrada"
+                            name="precio_entrada" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm"
+                            required />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="imagen" class="block text-sm font-semibold text-gray-700">Imagen</label>
+                        <input id="imagen" type="file" (change)="onFileSelected($event)"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm" />
+                    </div>
+
+                    <div class="flex justify-between mt-6">
+                        <button type="submit"
+                            class="bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700">Guardar</button>
+                        <button type="button" (click)="cancelarFormulario()"
+                            class="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600">Cancelar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<script>
-    document.getElementById('file-input').addEventListener('change', function (event) {
-        const preview = document.getElementById('image-preview');
-        const file = event.target.files[0];
-
-        console.log("Archivo seleccionado:", file);
-
-        if (file) {
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                console.log("Contenido del archivo:", e.target.result);
-                preview.src = e.target.result;
-            };
-
-            reader.readAsDataURL(file);
-        } else {
-            console.log("No se seleccionó ningún archivo");
-        }
-    });
-
-</script>
