@@ -1,22 +1,17 @@
 <div class="grid grid-cols-5 gap-4">
-
-    <!-- Espacio vacío para centrar contenido -->
     <div class="col-span-1"></div>
 
-    <!-- Contenido principal -->
     <div class="container col-span-4 mt-10 pr-20 ml-10 mb-10">
         <h2 class="text-2xl font-bold text-center mb-6">Nuestros Alojamientos</h2>
 
-        <!-- Cards de estadísticas -->
         <div class="grid grid-cols-2 gap-4 mb-10">
-            <!-- Total Alojamientos -->
+
             <div class="bg-emerald-300 shadow-md rounded-lg p-6 flex flex-col items-center">
                 <h2 class="text-black font-medium text-sm">Total Alojamientos</h2>
                 <p class="text-3xl font-bold">{{ alojamientos.length }}</p>
                 <span class="text-black text-sm mt-1">Número total de alojamientos registrados.</span>
             </div>
 
-            <!-- Puntuación Media -->
             <div class="bg-sky-900 shadow-md rounded-lg p-6 flex flex-col items-center">
                 <h2 class="text-black font-medium text-sm">Puntuación Media</h2>
                 <p class="text-3xl font-bold">{{ puntuacionMedia }} ⭐</p>
@@ -24,7 +19,43 @@
             </div>
         </div>
 
-        <!-- Lista de alojamientos -->
+        <div class="relative my-10">
+            <h2 class="text-2xl font-bold text-center mb-6">Valoraciones de Nuestros Alojamientos</h2>
+            <div class="overflow-hidden relative w-full">
+                <button (click)="prevValoracion()"
+                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-600">
+                    &#8592;
+                </button>
+
+                <div id="valoracionesCarousel" class="flex transition-transform duration-500"
+                    [style.transform]="'translateX(' + (-currentValoracionTranslate) + 'px)'"
+                    style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
+                    <div *ngFor="let valoracion of getValoracionesPorPagina()"
+                        class="flex-none w-[calc(33.33%-1rem)] px-2">
+                        <div
+                            class="bg-gray-800 bg-opacity-90 rounded-lg shadow-lg text-center p-4 border border-gray-700 hover:shadow-xl transition-shadow">
+                            <div class="mt-4">
+                                <h5 class="font-semibold text-lg text-white">{{ valoracion.usuario.nombre }}</h5>
+                                <p class="text-gray-300 mt-2 font-bold">{{ valoracion.alojamiento.nombre }}</p>
+                                <p class="text-gray-400">
+                                    <span class="text-yellow-500 font-bold flex items-center justify-center gap-1">
+                                        {{ valoracion.puntuacion }}/5
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <p class="text-gray-400 italic mt-4">"{{ valoracion.comentario }}"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button (click)="nextValoracion()"
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-600">
+                    &#8594;
+                </button>
+            </div>
+        </div>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div *ngFor="let alojamiento of alojamientos" class="flex flex-col bg-white rounded-lg shadow-lg">
                 <img src="../../../../assets/info-pueblo/coche.JPG" alt="Imagen de {{ alojamiento.nombre }}"
@@ -41,5 +72,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>

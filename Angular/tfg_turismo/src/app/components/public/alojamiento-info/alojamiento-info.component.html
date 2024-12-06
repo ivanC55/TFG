@@ -1,22 +1,19 @@
 <div class="grid grid-cols-5 gap-4">
-
     <div class="col-span-1"></div>
     <div class="container mt-4 col-span-4 pr-10 pl-10" *ngIf="alojamiento">
-        <!-- Información del Alojamiento -->
         <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col lg:flex-row">
             <!-- Imagen del Alojamiento -->
             <div class="lg:w-1/2 w-full">
-                <img src="../../../../assets/info-pueblo/coche.JPG" class="w-full h-full object-cover rounded-t-lg lg:rounded-l-lg" alt="Imagen del alojamiento">
+                <img src="../../../../assets/info-pueblo/coche.JPG"
+                    class="w-full h-full object-cover rounded-t-lg lg:rounded-l-lg" alt="Imagen del alojamiento">
             </div>
 
-            <!-- Detalles del Alojamiento -->
+            <!-- Información de Alojamiento -->
             <div class="lg:w-1/2 w-full px-6 py-4">
-                <!-- Nombre del Alojamiento -->
                 <div class="bg-green-200 text-black p-4 rounded-lg mb-6">
                     <h2 class="text-3xl font-bold">{{ alojamiento.nombre }}</h2>
                 </div>
 
-                <!-- Información de Alojamiento -->
                 <div class="space-y-4">
                     <div class="flex items-center">
                         <span class="text-xl font-semibold text-gray-700 mr-2">Tipo:</span>
@@ -40,25 +37,51 @@
 
                     <div class="flex items-center">
                         <span class="text-xl font-semibold text-gray-700 mr-2">Puntuación:</span>
-                        <p class="text-lg text-gray-600">{{ alojamiento.puntuacion }} 
+                        <p class="text-lg text-gray-600">{{ alojamiento.puntuacion }}
                             <span class="text-yellow-500 text-xl">⭐</span>
                         </p>
                     </div>
                 </div>
-
-                <!-- Parrafo Grande de Historia o Descripción -->
-                <div class="mt-6">
-                    <h3 class="text-2xl font-semibold mb-2">Historia</h3>
-                    <p class="text-gray-700 text-lg">
-                        Aquí va un párrafo largo que describe la historia, las características y cualquier otra información interesante sobre el alojamiento.
-                        Este es un excelente lugar para disfrutar de una estancia relajante. El alojamiento ha sido cuidadosamente diseñado para ofrecer la máxima comodidad.
-                        La ubicación es ideal para explorar las atracciones locales y disfrutar de un ambiente tranquilo y acogedor.
-                    </p>
-                </div>
             </div>
         </div>
 
-        <!-- Botón de Reserva -->
-        <button class="mt-8 px-6 py-2 mb-10 bg-gray-900 text-white rounded-lg hover:bg-green-600 transition duration-300">Reserva ahora</button>
+        <!-- Carrusel de Valoraciones -->
+        <div class="mt-10 mb-10">
+            <h3 class="text-2xl font-semibold mb-4 text-center">Valoraciones de este Alojamiento</h3>
+            <div class="relative flex justify-center items-center">
+                <!-- Botón Anterior -->
+                <button
+                    class="absolute left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full hover:bg-gray-600 transition z-10 disabled:opacity-50 disabled:cursor-not-allowed"
+                    [disabled]="indiceValoracionActual === 0" (click)="cambiarValoracion(-1)">
+                    &#8592;
+                </button>
+
+                <!-- Carrusel -->
+                <div class="overflow-hidden w-full">
+                    <div class="flex transition-transform duration-500"
+                        [style.transform]="'translateX(' + (-indiceValoracionActual * 100) + '%)'">
+                        <div *ngFor="let valoracion of valoracionesFiltradas" class="w-full px-4">
+                            <div
+                                class="bg-gray-800 bg-opacity-90 rounded-lg shadow-lg text-center p-6 border border-gray-700 hover:shadow-xl transition-shadow">
+                                <h5 class="font-semibold text-lg text-white">{{ valoracion.usuario.nombre }}</h5>
+                                <p class="text-gray-300 mt-2 font-bold">{{ valoracion.alojamiento.nombre }}</p>
+                                <p class="text-gray-400">
+                                    <span class="text-yellow-500 font-bold">{{ valoracion.puntuacion }}/5 ⭐</span>
+                                </p>
+                                <p class="text-gray-400 italic mt-4">"{{ valoracion.comentario }}"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón Siguiente -->
+                <button
+                    class="absolute right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full hover:bg-gray-600 transition z-10 disabled:opacity-50 disabled:cursor-not-allowed"
+                    [disabled]="indiceValoracionActual === valoracionesFiltradas.length - 1"
+                    (click)="cambiarValoracion(1)">
+                    &#8594;
+                </button>
+            </div>
+        </div>
     </div>
 </div>

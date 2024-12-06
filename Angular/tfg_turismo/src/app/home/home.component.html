@@ -9,7 +9,7 @@
             <p class="text-lg mt-2">Explora nuestras ofertas y servicios de alojamiento. ¡Tu próxima aventura comienza
                 aquí!</p>
         </div>
-        <!-- Sección de Galería de Alojamiento -->
+        <!-- Carrusel de Alojamiento -->
         <div class="relative my-10">
             <h2 class="text-2xl font-bold text-center mb-6">Nuestros Alojamiento</h2>
             <div class="overflow-hidden relative w-full">
@@ -20,7 +20,7 @@
                 </button>
 
                 <!-- Carrusel -->
-                <div id="carousel" class="flex transition-transform duration-500"
+                <div id="carousel" class="flex transition-transform duration-500 px-10"
                     [style.transform]="'translateX(' + (-currentTranslate) + 'px)'"
                     style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
                     <div *ngFor="let alojamiento of alojamientos" class="flex-none w-[calc(33.33%-1rem)] px-2">
@@ -47,11 +47,54 @@
 
                 <!-- Botón derecho -->
                 <button (click)="next()"
+                    class="absolute d right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-600">
+                    &#8594;
+                </button>
+            </div>
+        </div>
+
+
+
+        <div class="relative my-10">
+            <h2 class="text-2xl font-bold text-center mb-6">Valoraciones de Nuestros Alojamientos</h2>
+            <div class="overflow-hidden relative w-full">
+                <!-- Botón izquierdo -->
+                <button (click)="prevValoracion()"
+                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-600">
+                    &#8592;
+                </button>
+
+                <!-- Carrusel -->
+                <div id="valoracionesCarousel" class="flex transition-transform duration-500 px-10"
+                    [style.transform]="'translateX(' + (-currentValoracionTranslate) + 'px)'"
+                    style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
+                    <div *ngFor="let valoracion of getValoracionesPorPagina()"
+                        class="flex-none w-[calc(33.33%-1rem)] px-2">
+                        <div
+                            class="bg-gray-800 bg-opacity-90 rounded-lg shadow-lg text-center p-4 border border-gray-700 hover:shadow-xl transition-shadow">
+                            <div class="mt-4">
+                                <h5 class="font-semibold text-lg text-white">{{ valoracion.usuario.nombre }}</h5>
+                                <p class="text-gray-300 mt-2 font-bold">{{ valoracion.alojamiento.nombre }}</p>
+                                <p class="text-gray-400">
+                                    <span class="text-yellow-500 font-bold flex items-center justify-center gap-1">
+                                        {{ valoracion.puntuacion }}/5
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <p class="text-gray-400 italic mt-4">"{{ valoracion.comentario }}"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón derecho -->
+                <button (click)="nextValoracion()"
                     class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-600">
                     &#8594;
                 </button>
             </div>
         </div>
+
 
 
         <!-- Carrusel de Restaurantes -->
@@ -98,10 +141,10 @@
 
         <div *ngIf="monumentos && monumentos.length > 0">
             <!-- Carrusel de Monumentos Destacados -->
-            <div class="mt-10">
+            <div class="mt-10 mb-10">
                 <h2 class="text-2xl font-bold text-center mb-6">Monumentos Destacados</h2>
                 <div class="relative">
-                    <div class="flex justify-center items-center relative">
+                    <div class="flex justify-center items-center relative p-10">
                         <!-- Flecha izquierda -->
                         <button (click)="cambiarMonumento(-1)"
                             class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
