@@ -5,5 +5,6 @@ export interface Alojamiento {
     ubicacion: string;           
     precioNoche: number;        
     servicios: string[];          
-    puntuacion: number;          
+    puntuacion: number; 
+
 }
