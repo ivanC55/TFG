@@ -5,7 +5,7 @@ import { Alojamiento } from '../../../interfaces/alojamiento.model';
 import { Valoracion } from '../../../interfaces/valoracion.model';
 import { ValoracionService } from '../../../service/valoracion.service';
 import { ReservaService } from '../../../service/reserva.service';
-import { UsuarioService } from '../../../service/usuario.service';  // Servicio para obtener los usuarios
+import { UsuarioService } from '../../../service/usuario.service';  
 
 @Component({
   selector: 'app-alojamiento-info',

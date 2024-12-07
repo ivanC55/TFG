@@ -8,69 +8,67 @@
                     Crear Cuenta
                 </label>
                 <form (ngSubmit)="onRegister()" class="mt-10">
-                    <div>
-                        <label for="username" class="block text-sm text-gray-700">Usuario</label>
-                        <input id="username" [(ngModel)]="usuario.username" name="username" type="text"
-                            placeholder="Nombre de usuario"
-                            class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                            required />
-                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="username" class="block text-sm text-gray-700">Usuario</label>
+                            <input id="username" [(ngModel)]="usuario.username" name="username" type="text"
+                                placeholder="Nombre de usuario"
+                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                                required />
+                        </div>
+                        <div>
+                            <label for="nombre" class="block text-sm text-gray-700">Nombre</label>
+                            <input id="nombre" [(ngModel)]="usuario.nombre" name="nombre" type="text"
+                                placeholder="Nombre"
+                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                                required />
+                        </div>
 
-                    <div class="mt-7">
-                        <label for="nombre" class="block text-sm text-gray-700">Nombre</label>
-                        <input id="nombre" [(ngModel)]="usuario.nombre" name="nombre" type="text"
-                            placeholder="Nombre"
-                            class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                            required />
-                    </div>
+                        <div>
+                            <label for="apellidos" class="block text-sm text-gray-700">Apellidos</label>
+                            <input id="apellidos" [(ngModel)]="usuario.apellidos" name="apellidos" type="text"
+                                placeholder="Apellidos"
+                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                                required />
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm text-gray-700">Correo electrónico</label>
+                            <input id="email" [(ngModel)]="usuario.email" name="email" type="email"
+                                placeholder="Correo electrónico"
+                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                                required />
+                        </div>
 
-                    <div class="mt-7">
-                        <label for="apellidos" class="block text-sm text-gray-700">Apellidos</label>
-                        <input id="apellidos" [(ngModel)]="usuario.apellidos" name="apellidos" type="text"
-                            placeholder="Apellidos"
-                            class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                            required />
-                    </div>
+                        <div>
+                            <label for="telefono" class="block text-sm text-gray-700">Teléfono</label>
+                            <input id="telefono" [(ngModel)]="usuario.telefono" name="telefono" type="tel"
+                                placeholder="Teléfono"
+                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                                required />
+                        </div>
+                        <div>
+                            <label for="direccion" class="block text-sm text-gray-700">Dirección</label>
+                            <input id="direccion" [(ngModel)]="usuario.direccion" name="direccion" type="text"
+                                placeholder="Dirección"
+                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                                required />
+                        </div>
 
-                    <div class="mt-7">
-                        <label for="email" class="block text-sm text-gray-700">Correo electrónico</label>
-                        <input id="email" [(ngModel)]="usuario.email" name="email" type="email"
-                            placeholder="Correo electrónico"
-                            class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                            required />
-                    </div>
-
-                    <div class="mt-7">
-                        <label for="telefono" class="block text-sm text-gray-700">Teléfono</label>
-                        <input id="telefono" [(ngModel)]="usuario.telefono" name="telefono" type="tel"
-                            placeholder="Teléfono"
-                            class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                            required />
-                    </div>
-
-                    <div class="mt-7">
-                        <label for="direccion" class="block text-sm text-gray-700">Dirección</label>
-                        <input id="direccion" [(ngModel)]="usuario.direccion" name="direccion" type="text"
-                            placeholder="Dirección"
-                            class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                            required />
-                    </div>
-
-                    <div class="mt-7">
-                        <label for="rol" class="block text-sm text-gray-700">Rol</label>
-                        <select id="rol" [(ngModel)]="usuario.rol" name="rol"
-                            class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0" required>
-                            <option value="user">Usuario</option>
-                            <option value="admin">Administrador</option>
-                        </select>
-                    </div>
-
-                    <div class="mt-7">
-                        <label for="password" class="block text-sm text-gray-700">Contraseña</label>
-                        <input id="password" [(ngModel)]="usuario.password" name="password" type="password"
-                            placeholder="Contraseña"
-                            class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                            required />
+                        <div>
+                            <label for="rol" class="block text-sm text-gray-700">Rol</label>
+                            <select id="rol" [(ngModel)]="usuario.rol" name="rol"
+                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0" required>
+                                <option value="user">Usuario</option>
+                                <option value="admin">Administrador</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="password" class="block text-sm text-gray-700">Contraseña</label>
+                            <input id="password" [(ngModel)]="usuario.password" name="password" type="password"
+                                placeholder="Contraseña"
+                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                                required />
+                        </div>
                     </div>
 
                     <div class="mt-7">
@@ -80,34 +78,18 @@
                         </button>
                     </div>
 
-                    <div class="flex mt-7 items-center text-center">
-                        <hr class="border-gray-300 border-1 w-full rounded-md">
-                        <label class="block font-medium text-sm text-gray-600 w-full">Accede con</label>
-                        <hr class="border-gray-300 border-1 w-full rounded-md">
-                    </div>
-
-                    <div class="flex mt-7 justify-center w-full">
-                        <button
-                            class="mr-5 bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105">
-                            Facebook
-                        </button>
-
-                        <button
-                            class="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105">
-                            Google
-                        </button>
-                    </div>
-
                     <div class="mt-7">
                         <div class="flex justify-center items-center">
                             <label class="mr-2">¿Ya tienes cuenta?</label>
-                            <a href="#"
+                            <a routerLink="/login"
                                 class="text-blue-500 transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105">
                                 Inicia sesión
                             </a>
                         </div>
                     </div>
+
                 </form>
+                
             </div>
         </div>
     </div>

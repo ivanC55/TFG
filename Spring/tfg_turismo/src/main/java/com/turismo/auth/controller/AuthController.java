@@ -63,13 +63,16 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Usuario usuario) {
         try {
-            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            String rawPassword = usuario.getPassword();
+
+            usuario.setPassword(passwordEncoder.encode(rawPassword));
 
             Usuario savedUser = usuarioService.save(usuario);
 
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword())
+                    new UsernamePasswordAuthenticationToken(usuario.getUsername(), rawPassword)
             );
+
             String token = jwtTokenProvider.generateToken(authentication);
 
             return ResponseEntity.ok(Map.of("token", token));
@@ -78,6 +81,7 @@ public class AuthController {
             return ResponseEntity.status(500).body("Error al registrar el usuario");
         }
     }
+
 
 
 }
