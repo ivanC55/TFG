@@ -3,6 +3,8 @@ package com.turismo.auth.controller;
 import com.turismo.auth.model.JwtAuthenticationResponse;
 import com.turismo.auth.model.LoginRequest;
 import com.turismo.auth.service.JwtTokenProvider;
+import com.turismo.model.entity.Usuario;
+import com.turismo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,13 +30,16 @@ public class AuthController {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
         try {
             String username = loginRequest.get("username");
             String password = loginRequest.get("password");
 
-            System.out.println("Intentando autenticar usuario: " + username); // Log para depurar
+            System.out.println("Intentando autenticar usuario: " + username);
 
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)
@@ -46,15 +51,33 @@ public class AuthController {
 
             // Generar el token
             String token = jwtTokenProvider.generateToken(authentication);
-            System.out.println("Token generado: " + token); // Log para confirmar generación de token
+            System.out.println("Token generado: " + token);
 
             return ResponseEntity.ok(Map.of("token", token));
         } catch (Exception ex) {
-            ex.printStackTrace(); // Log para detectar excepciones
+            ex.printStackTrace();
             return ResponseEntity.status(401).body("Usuario o contraseña incorrectos");
         }
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody Usuario usuario) {
+        try {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
+            Usuario savedUser = usuarioService.save(usuario);
+
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword())
+            );
+            String token = jwtTokenProvider.generateToken(authentication);
+
+            return ResponseEntity.ok(Map.of("token", token));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(500).body("Error al registrar el usuario");
+        }
+    }
 
 
 }

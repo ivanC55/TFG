@@ -35,48 +35,52 @@ import { EventosPublicInfoComponent } from './components/public/eventos-public-i
 import { MonumentosPublicInfoComponent } from './components/public/monumentos-public-info/monumentos-public-info.component';
 import { PerfilComponent } from './components/public/perfil/perfil.component';
 import { ValoracionesComponent } from './components/valoraciones/valoraciones.component';
+import { RegisterComponent } from './auth/components/register/register.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent }, // Acceso público
   { path: 'contacto', component: ContactoComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  //
-  { path: 'alojamientos-public', component:AlojamientosPublicComponent},
-  { path: 'alojamientos', component: AlojamientosComponent,  }, 
-  { path: 'alojamiento/:id', component: AlojamientoInfoComponent, },
-
-
-  { path: 'eventos', component: EventosComponent },
-  { path: 'eventos-public', component: EventosPublicComponent },
-  { path: 'evento/:id', component: EventosPublicInfoComponent },
-
-
-  { path: 'monumentos-public', component: MonumentosPublicComponent},
-  { path: 'monumentos', component: MonumentosComponent },
-  { path: 'monumento/:id', component: MonumentosPublicInfoComponent, },
-
-  { path: 'puntos-de-interes-public', component: PuntosInteresPublicComponent},
-  { path: 'puntos-de-interes', component: PuntosDeInteresComponent,  },
-  { path: 'punto-interes/:id', component: PuntosInteresPublicInfoComponent, },
-
-  { path: 'restaurantes-public', component: RestaurantesPublicComponent},
-  { path: 'restaurantes', component: RestaurantesComponent },
-  { path: 'restaurante/:id', component: RestaurantesPublicInfoComponent, },
-
-  { path: 'rutas-public', component: RutasPublicComponent, },
-  { path: 'rutas-turisticas', component: RutasTuristicasComponent, },
-  { path: 'ruta/:id', component: RutasPublicInfoComponent, },
-
-  { path: 'valoraciones', component: ValoracionesComponent,},
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }, // Ruta protegida
   
-  { path: 'usuarios', component: UsuariosComponent,},
-  { path: 'reservas', component: ReservasComponent,},
-  { path: 'login', component: LoginComponent },
+  // Rutas públicas
+  { path: 'alojamientos-public', component: AlojamientosPublicComponent },
+  { path: 'eventos-public', component: EventosPublicComponent },
+  { path: 'monumentos-public', component: MonumentosPublicComponent },
+  { path: 'puntos-de-interes-public', component: PuntosInteresPublicComponent },
+  { path: 'restaurantes-public', component: RestaurantesPublicComponent },
+  { path: 'rutas-public', component: RutasPublicComponent },
 
-  { path: 'perfil', component: PerfilComponent},
-  //
+  // Rutas privadas, protegidas por AuthGuard
+  { path: 'alojamientos', component: AlojamientosComponent, canActivate: [AuthGuard] },
+  { path: 'alojamiento/:id', component: AlojamientoInfoComponent, canActivate: [AuthGuard] },
+  
+  { path: 'eventos', component: EventosComponent, canActivate: [AuthGuard] },
+  { path: 'evento/:id', component: EventosPublicInfoComponent, canActivate: [AuthGuard] },
+
+  { path: 'monumentos', component: MonumentosComponent, canActivate: [AuthGuard] },
+  { path: 'monumento/:id', component: MonumentosPublicInfoComponent, canActivate: [AuthGuard] },
+
+  { path: 'puntos-de-interes', component: PuntosDeInteresComponent, canActivate: [AuthGuard] },
+  { path: 'punto-interes/:id', component: PuntosInteresPublicInfoComponent, canActivate: [AuthGuard] },
+
+  { path: 'restaurantes', component: RestaurantesComponent, canActivate: [AuthGuard] },
+  { path: 'restaurante/:id', component: RestaurantesPublicInfoComponent, canActivate: [AuthGuard] },
+
+  { path: 'rutas-turisticas', component: RutasTuristicasComponent, canActivate: [AuthGuard] },
+  { path: 'ruta/:id', component: RutasPublicInfoComponent, canActivate: [AuthGuard] },
+
+  { path: 'valoraciones', component: ValoracionesComponent, canActivate: [AuthGuard] },
+  { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard] },
+  { path: 'reservas', component: ReservasComponent, canActivate: [AuthGuard] },
+
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+
+  { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] }, // Ruta protegida
+  
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Página de inicio por defecto
 ];
+
 
 @NgModule({
   declarations: [
@@ -109,6 +113,7 @@ const routes: Routes = [
     MonumentosPublicInfoComponent,
     PerfilComponent,
     ValoracionesComponent,
+    RegisterComponent,
   
   ],
   imports: [

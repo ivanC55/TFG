@@ -21,7 +21,7 @@
                         <span class="ml-2 text-sm tracking-wide truncate">Inicio</span>
                     </a>
                 </li>
-                <li>
+                <li *ngIf="isAuthenticated">
                     <a href="/alojamientos"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -31,14 +31,10 @@
                                     d="M12 12V3m0 9v9M5 8h14M5 4h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z">
                                 </path>
                             </svg>
-
                         </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Alojamientos</span>
-                        <span
-                            class="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">New</span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Alojamientos Admin</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="/alojamientos-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
@@ -49,15 +45,11 @@
                                     d="M12 12V3m0 9v9M5 8h14M5 4h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z">
                                 </path>
                             </svg>
-
                         </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Alojamientos Public</span>
-                        <span
-                            class="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">New</span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Alojamientos</span>
                     </a>
                 </li>
-
-                <li>
+                <li *ngIf="isAuthenticated">
                     <a href="/monumentos"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -67,10 +59,9 @@
                                     d="M12 2L2 7h3v7h5V7h3v7h5V7h3L12 2z"></path>
                             </svg>
                         </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Monumentos</span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Monumentos Admin</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="/monumentos-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
@@ -81,12 +72,24 @@
                                     d="M12 2L2 7h3v7h5V7h3v7h5V7h3L12 2z"></path>
                             </svg>
                         </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Monumentos Public</span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Monumentos </span>
                     </a>
                 </li>
-
-                <li>
+                <li *ngIf="isAuthenticated">
                     <a href="/restaurantes"
+                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                        <span class="inline-flex justify-center items-center ml-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 8v8m0 4h12m-6 0v-4m0 4h6m-6 0h-6m12 0h-6"></path>
+                            </svg>
+                        </span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Restaurantes Admin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/restaurantes-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -100,60 +103,46 @@
                 </li>
 
                 <li>
-                    <a href="/restaurantes-public"
-                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
-                        <span class="inline-flex justify-center items-center ml-4">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 8v8m0 4h12m-6 0v-4m0 4h6m-6 0h-6m12 0h-6"></path>
-                            </svg>
-                        </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Restaurantes Public</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/puntos-de-interes"
-                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
-                        <span class="inline-flex justify-center items-center ml-4">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 2C8.134 2 5 5.134 5 9c0 3.866 3.134 7 7 7s7-3.134 7-7c0-3.866-3.134-7-7-7zm0 10a3 3 0 100-6 3 3 0 000 6z">
-                                </path>
-                            </svg>
-                        </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Puntos de Interes</span>
-                    </a>
-                </li>
-
-                <li>
                     <a href="/puntos-de-interes-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 2C8.134 2 5 5.134 5 9c0 3.866 3.134 7 7 7s7-3.134 7-7c0-3.866-3.134-7-7-7zm0 10a3 3 0 100-6 3 3 0 000 6z">
+                                    d="M17 8l4-4m0 0l-4-4m4 4H3m10 4l4-4m0 0l-4-4m4 4H3m7 6l4-4m0 0l-4-4m4 4H3m6 2H3m3 3h3m-3 0h3">
                                 </path>
                             </svg>
                         </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Puntos de Interes Public</span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Puntos de Interés</span>
                     </a>
                 </li>
 
-                <li>
+                <li *ngIf="isAuthenticated">
+                    <a href="/puntos-de-interes"
+                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                        <span class="inline-flex justify-center items-center ml-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4-4m0 0l-4-4m4 4H3m10 4l4-4m0 0l-4-4m4 4H3m7 6l4-4m0 0l-4-4m4 4H3m6 2H3m3 3h3m-3 0h3">
+                                </path>
+                            </svg>
+                        </span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Puntos de Interés Admin</span>
+                    </a>
+                </li>
+                <!-- New Sections -->
+                <li *ngIf="isAuthenticated">
                     <a href="/eventos"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 7h16M4 12h16M4 17h16M10 3v18"></path>
+                                    d="M4 4h16m0 0v16M4 4l16 16"></path>
                             </svg>
                         </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Eventos Culturales</span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Eventos Admin</span>
                     </a>
                 </li>
 
@@ -164,102 +153,90 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 7h16M4 12h16M4 17h16M10 3v18"></path>
+                                    d="M4 4h16m0 0v16M4 4l16 16"></path>
                             </svg>
                         </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Eventos Public</span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Eventos</span>
                     </a>
                 </li>
 
-                <li>
-                    <a href="/rutas-turisticas"
-                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
-                        <span class="inline-flex justify-center items-center ml-4">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 4v16m8-8H4"></path>
-                            </svg>
-                        </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Rutas Turisticas</span>
-                    </a>
-                </li>
 
-                <li>
-                    <a href="/rutas-public"
-                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
-                        <span class="inline-flex justify-center items-center ml-4">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 4v16m8-8H4"></path>
-                            </svg>
-                        </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Rutas Public</span>
-                    </a>
-                </li>
-
-                <li>
+                <li *ngIf="isAuthenticated">
                     <a href="/reservas"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M16 6h2a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h2m4 0V2m0 4h4m-4 4h4m-4 4h4">
-                                </path>
+                                    d="M3 10h18m-9 4l-4 4m0 0l4 4m-4-4h6"></path>
                             </svg>
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Reservas</span>
                     </a>
                 </li>
-
-                <li>
+                <li *ngIf="isAuthenticated">
                     <a href="/valoraciones"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 7a4 4 0 100 8 4 4 0 000-8zM4 21v-2a4 4 0 018 0v2M16 21v-2a4 4 0 018 0v2">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7 7 7-7">
                                 </path>
                             </svg>
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Valoraciones</span>
                     </a>
                 </li>
-
-
-                <li>
+                <li *ngIf="isAuthenticated">
                     <a href="/usuarios"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 7a4 4 0 100 8 4 4 0 000-8zM4 21v-2a4 4 0 018 0v2M16 21v-2a4 4 0 018 0v2">
-                                </path>
+                                    d="M15 12h4l-2-2m0 0l2-2m-2 2H9l2 2m-2-2l-2 2m4 0h4"></path>
                             </svg>
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Usuarios</span>
                     </a>
                 </li>
+
+                <li *ngIf="isAuthenticated">
+                    <a (click)="logout()"
+                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-red-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                        <span class="inline-flex justify-center items-center ml-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H3"></path>
+                            </svg>
+                        </span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Cerrar sesión</span>
+                    </a>
+                </li>
+
+                <li *ngIf="!isAuthenticated">
+                    <a routerLink="/login"
+                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                        <span class="inline-flex justify-center items-center ml-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7l5 5-5 5M18 12H6"></path>
+                            </svg>
+                        </span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Iniciar sesión</span>
+                    </a>
+                </li>
+
+
             </ul>
         </div>
-        <!-- Perfil -->
-        <div class="flex items-center justify-between p-4 border-t border-gray-700">
-            <!-- Imagen del perfil -->
-            <div class="flex items-center">
-                <a routerLink="/perfil" class="block">
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                        alt="Perfil"
-                        class="w-10 h-10 rounded-full object-cover cursor-pointer border-2 border-gray-300 hover:border-green-500" />
-                </a>
-            </div>
-            <!-- Botón de login -->
-            <a href="/login"
-                class="px-4 py-2 bg-emerald-500 hover:bg-sky-600 text-white text-sm font-medium rounded-lg shadow-md transition-colors duration-200">
-                Login
+        <div class="flex items-center m-4">
+            <a routerLink="/perfil" class="block">
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    alt="Perfil"
+                    class="w-10 h-10 rounded-full object-cover cursor-pointer border-2 border-gray-300 hover:border-green-500" />
             </a>
         </div>
     </div>

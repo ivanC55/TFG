@@ -8,40 +8,42 @@ import { LoginResponse } from '../interfaces/loginResponse.model';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8081/api/auth/login'; 
+  private apiUrl = 'http://localhost:8081/api/auth';  // URL de la API de login
 
   constructor(private http: HttpClient) { }
 
+  // Método para hacer login
   login(username: string, password: string): Observable<LoginResponse> {
     const body = { username, password };
-    console.log('Request Body:', body);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  
-    return this.http.post<LoginResponse>(this.apiUrl, body, {
-      headers
-    }).pipe(
+
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, body, { headers }).pipe(
       tap(response => {
-        this.saveToken(response.token);
+        this.saveToken(response.token);  // Guardamos el token
       })
-    )
+    );
+  }
+
+  register(username: string, nombre: string, apellidos: string, email: string, telefono: string, direccion: string, rol: string, password: string): Observable<any> {
+    const user = { username, nombre, apellidos, email, telefono, direccion, rol, password };
+    return this.http.post(`${this.apiUrl}/register`, user);  // Aquí usamos la URL de registro
   }
 
   getToken(): string | null {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('token');
-    }
-    return null;
+    return localStorage.getItem('token');  
   }
 
+  
   saveToken(token: string): void {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('token', token);
-    }
+    localStorage.setItem('token', token);  
   }
 
+  
   logout(): void {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.removeItem('token');
-    }
+    localStorage.removeItem('token');  
+  }
+
+  isAuthenticated(): boolean {
+    return this.getToken() !== null;  
   }
 }

@@ -7,7 +7,7 @@ export interface Reserva {
     usuario?: Usuario;
     alojamiento: Alojamiento | null;
     restaurante: Restaurante | null;
-    fechaReserva: string; // Usamos string para compatibilidad con formularios
+    fechaReserva: string; 
     horaReserva: string;
     numPersonas: number;
     estado: string;
