@@ -31,12 +31,15 @@
                                 class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
                                 required />
                         </div>
+
                         <div>
                             <label for="email" class="block text-sm text-gray-700">Correo electrónico</label>
                             <input id="email" [(ngModel)]="usuario.email" name="email" type="email"
                                 placeholder="Correo electrónico"
                                 class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                                required />
+                                required [pattern]="emailPattern" />
+                            <div *ngIf="emailInvalid" class="text-red-500 text-sm mt-1">Por favor, ingresa un correo
+                                electrónico válido.</div>
                         </div>
 
                         <div>
@@ -44,8 +47,10 @@
                             <input id="telefono" [(ngModel)]="usuario.telefono" name="telefono" type="tel"
                                 placeholder="Teléfono"
                                 class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                                required />
+                                required [pattern]="'[0-9]{9}'" />
+                            <div *ngIf="telefonoInvalid" class="text-red-500 text-sm mt-1">El teléfono debe tener 9 dígitos.</div>
                         </div>
+
                         <div>
                             <label for="direccion" class="block text-sm text-gray-700">Dirección</label>
                             <input id="direccion" [(ngModel)]="usuario.direccion" name="direccion" type="text"
@@ -55,20 +60,24 @@
                         </div>
 
                         <div>
-                            <label for="rol" class="block text-sm text-gray-700">Rol</label>
-                            <select id="rol" [(ngModel)]="usuario.rol" name="rol"
-                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0" required>
-                                <option value="user">Usuario</option>
-                                <option value="admin">Administrador</option>
-                            </select>
-                        </div>
-                        <div>
                             <label for="password" class="block text-sm text-gray-700">Contraseña</label>
                             <input id="password" [(ngModel)]="usuario.password" name="password" type="password"
                                 placeholder="Contraseña"
-                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                                class=" mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
                                 required />
                         </div>
+
+                        <div>
+                            <label for="confirmPassword" class="block text-sm text-gray-700">Repetir contraseña</label>
+                            <input id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword"
+                                type="password" placeholder="Repetir contraseña"
+                                class=" mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                                required />
+                            <div *ngIf="passwordMismatch" class="text-red-500 text-sm mt-1">Las contraseñas no coinciden.</div>
+                        </div>
+
+                        
+
                     </div>
 
                     <div class="mt-7">

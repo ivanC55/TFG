@@ -36,7 +36,7 @@
                     </a>
                 </li>
 
-                <li *ngIf="!authService.isAuthenticated() && authService.getRole() !== 'ROLE_ADMIN'">
+                <li *ngIf="!authService.isAuthenticated() || authService.getRole() === 'ROLE_USER'">
                     <a href="/monumentos-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -66,7 +66,7 @@
                     </a>
                 </li>
 
-                <li *ngIf="!authService.isAuthenticated() && authService.getRole() !== 'ROLE_ADMIN'">
+                <li *ngIf="!authService.isAuthenticated() || authService.getRole() === 'ROLE_USER'">
                     <a href="/alojamientos-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -95,7 +95,7 @@
                     </a>
                 </li>
 
-                <li *ngIf="!authService.isAuthenticated() && authService.getRole() !== 'ROLE_ADMIN'">
+                <li *ngIf="!authService.isAuthenticated() || authService.getRole() === 'ROLE_USER'">
                     <a href="/restaurantes-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -109,7 +109,7 @@
                     </a>
                 </li>
 
-                <li *ngIf="!authService.isAuthenticated() && authService.getRole() !== 'ROLE_ADMIN'">
+                <li *ngIf="!authService.isAuthenticated() || authService.getRole() === 'ROLE_USER'">
                     <a href="/puntos-de-interes-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -138,7 +138,7 @@
                         <span class="ml-2 text-sm tracking-wide truncate">Puntos de Interés Admin</span>
                     </a>
                 </li>
-                <!-- New Sections -->
+                
                 <li *ngIf="authService.isAuthenticated() && authService.getRole() === 'ROLE_ADMIN'">
                     <a href="/eventos"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
@@ -153,7 +153,7 @@
                     </a>
                 </li>
 
-                <li *ngIf="!authService.isAuthenticated() && authService.getRole() !== 'ROLE_ADMIN'">
+                <li *ngIf="!authService.isAuthenticated() || authService.getRole() === 'ROLE_USER'">
                     <a href="/eventos-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">

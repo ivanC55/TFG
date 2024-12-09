@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/error","/uploads/**","/api/valoraciones/**","/api/monumentos/upload/**","/api/auth/**", "/api/home/**", "/api/alojamientos/**", "/api/monumentos/**", "/api/rutas-turisticas/**", "/api/eventos/**", "/api/puntos-de-interes/**", "/api/usuarios/**", "/api/reservas/**", "/api/restaurantes/**").permitAll()  // Rutas públicas
+                        .requestMatchers("/error","/uploads/**","/api/roles/**","/api/valoraciones/**","/api/monumentos/upload/**","/api/auth/**", "/api/home/**", "/api/alojamientos/**", "/api/monumentos/**", "/api/rutas-turisticas/**", "/api/eventos/**", "/api/puntos-de-interes/**", "/api/usuarios/**", "/api/reservas/**", "/api/restaurantes/**").permitAll()  // Rutas públicas
 
                         .requestMatchers("/api/usuarios/**").hasRole("ADMIN")
                         .requestMatchers("/api/reservas/**").hasRole("ADMIN")

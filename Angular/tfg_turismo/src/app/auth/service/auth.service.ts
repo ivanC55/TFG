@@ -5,6 +5,7 @@ import { catchError, tap, throwError } from 'rxjs';
 import { LoginResponse } from '../interfaces/loginResponse.model';
 import { Usuario } from '../../interfaces/usuario.model';
 import jwt_decode from 'jwt-decode';
+import { Role } from '../../interfaces/role.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -29,7 +30,7 @@ export class AuthService {
     );
   }
 
-  register(username: string, nombre: string, apellidos: string, email: string, telefono: string, direccion: string, rol: string, password: string): Observable<any> {
+  register(username: string, nombre: string, apellidos: string, email: string, telefono: string, direccion: string, rol: Role, password: string): Observable<any> {
     const user = { username, nombre, apellidos, email, telefono, direccion, rol, password };
     return this.http.post(`${this.apiUrl}/register`, user);  
   }
