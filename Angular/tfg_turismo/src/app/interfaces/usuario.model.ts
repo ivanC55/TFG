@@ -1,5 +1,7 @@
+import { Role } from './role.model';
+
 export interface Usuario {
-    id?: number; // Opcional, porque en creación no existe
+    id?: number;
     username: string;
     nombre: string;
     apellidos: string;
@@ -7,5 +9,5 @@ export interface Usuario {
     email: string;
     telefono: string;
     direccion: string;
-    rol: string;
+    rol: Role;
 }

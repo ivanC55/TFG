@@ -20,25 +20,28 @@ public class JwtTokenProvider {
     private CustomUserDetailsService customUserDetailsService;
 
     private String secretKey = "misecreto2516UltraSecreto654651wehfsdjkfsnsjfsfsdf54s5d4fsdSDFSDFSDFS54sf5sDFSdf5s4dfFSFs54f5s4df1s54dfs54dfsd5f4dfskjfksfdhsjkfddnssfsdf54sf64df564f5df4gdfg4445fdg";
-    private long validityInMilliseconds = 3600000; // 1 hora
+    private long validityInMilliseconds = 3600000;
 
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
-        System.out.println("Generando token para usuario: " + username); // Log
+        String role = authentication.getAuthorities().stream()
+                .map(authority -> authority.getAuthority())
+                .findFirst().orElse(""); // Obtener el rol (primer rol del usuario)
+
+        System.out.println("Generando token para usuario: " + username + " con rol: " + role);
+
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + validityInMilliseconds);
 
-        // Generar el token JWT
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setSubject(username)
+                .claim("role", role)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
-
-        // Asegurarse de que el token sea URL-safe (en caso de que haya algún problema)
-        return Base64.getUrlEncoder().encodeToString(token.getBytes());
     }
+
 
     public boolean validateToken(String token) {
         try {
@@ -53,10 +56,8 @@ public class JwtTokenProvider {
         Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         String username = claims.getSubject();
 
-        // Cargar el usuario desde la base de datos usando el UserDetailsService
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
-        // Retornar un AuthenticationToken con el UserDetails
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 }

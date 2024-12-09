@@ -14,4 +14,7 @@ public interface UsuarioService {
 
     List<Usuario> listAll();
 
+    Usuario findByUsername(String username);
+    Usuario updateRole(Long id, String rol);
+
 }

@@ -16,7 +16,10 @@ export class RegisterComponent {
     email: '',
     telefono: '',
     direccion: '',
-    rol: 'user',    
+    rol: {
+      id: 0,
+      name: ''
+    },    
   };
 
   errorMessage: string = '';
@@ -31,7 +34,7 @@ export class RegisterComponent {
       this.usuario.email,
       this.usuario.telefono,
       this.usuario.direccion,
-      this.usuario.rol,
+      this.usuario.rol.name,
       this.usuario.password
     ).subscribe({
       next: (response) => {

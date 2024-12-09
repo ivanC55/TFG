@@ -21,7 +21,37 @@
                         <span class="ml-2 text-sm tracking-wide truncate">Inicio</span>
                     </a>
                 </li>
-                <li *ngIf="isAuthenticated">
+
+                <li *ngIf="authService.isAuthenticated() && authService.getRole() === 'ROLE_ADMIN'"> <a
+                        href="/monumentos"
+                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                        <span class="inline-flex justify-center items-center ml-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 2L2 7h3v7h5V7h3v7h5V7h3L12 2z"></path>
+                            </svg>
+                        </span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Monumentos Admin</span>
+                    </a>
+                </li>
+
+                <li *ngIf="!authService.isAuthenticated() && authService.getRole() !== 'ROLE_ADMIN'">
+                    <a href="/monumentos-public"
+                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                        <span class="inline-flex justify-center items-center ml-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 2L2 7h3v7h5V7h3v7h5V7h3L12 2z"></path>
+                            </svg>
+                        </span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Monumentos </span>
+                    </a>
+                </li>
+
+
+                <li *ngIf="authService.isAuthenticated() && authService.getRole() === 'ROLE_ADMIN'">
                     <a href="/alojamientos"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -35,7 +65,8 @@
                         <span class="ml-2 text-sm tracking-wide truncate">Alojamientos Admin</span>
                     </a>
                 </li>
-                <li>
+
+                <li *ngIf="!authService.isAuthenticated() && authService.getRole() !== 'ROLE_ADMIN'">
                     <a href="/alojamientos-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -49,33 +80,8 @@
                         <span class="ml-2 text-sm tracking-wide truncate">Alojamientos</span>
                     </a>
                 </li>
-                <li *ngIf="isAuthenticated">
-                    <a href="/monumentos"
-                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
-                        <span class="inline-flex justify-center items-center ml-4">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 2L2 7h3v7h5V7h3v7h5V7h3L12 2z"></path>
-                            </svg>
-                        </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Monumentos Admin</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/monumentos-public"
-                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
-                        <span class="inline-flex justify-center items-center ml-4">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 2L2 7h3v7h5V7h3v7h5V7h3L12 2z"></path>
-                            </svg>
-                        </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Monumentos </span>
-                    </a>
-                </li>
-                <li *ngIf="isAuthenticated">
+
+                <li *ngIf="authService.isAuthenticated() && authService.getRole() === 'ROLE_ADMIN'">
                     <a href="/restaurantes"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -88,7 +94,8 @@
                         <span class="ml-2 text-sm tracking-wide truncate">Restaurantes Admin</span>
                     </a>
                 </li>
-                <li>
+
+                <li *ngIf="!authService.isAuthenticated() && authService.getRole() !== 'ROLE_ADMIN'">
                     <a href="/restaurantes-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -102,7 +109,7 @@
                     </a>
                 </li>
 
-                <li>
+                <li *ngIf="!authService.isAuthenticated() && authService.getRole() !== 'ROLE_ADMIN'">
                     <a href="/puntos-de-interes-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -117,7 +124,7 @@
                     </a>
                 </li>
 
-                <li *ngIf="isAuthenticated">
+                <li *ngIf="authService.isAuthenticated() && authService.getRole() === 'ROLE_ADMIN'">
                     <a href="/puntos-de-interes"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -132,7 +139,7 @@
                     </a>
                 </li>
                 <!-- New Sections -->
-                <li *ngIf="isAuthenticated">
+                <li *ngIf="authService.isAuthenticated() && authService.getRole() === 'ROLE_ADMIN'">
                     <a href="/eventos"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -146,7 +153,7 @@
                     </a>
                 </li>
 
-                <li>
+                <li *ngIf="!authService.isAuthenticated() && authService.getRole() !== 'ROLE_ADMIN'">
                     <a href="/eventos-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -160,8 +167,7 @@
                     </a>
                 </li>
 
-
-                <li *ngIf="isAuthenticated">
+                <li *ngIf="authService.isAuthenticated() && authService.getRole() === 'ROLE_ADMIN'">
                     <a href="/reservas"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -174,7 +180,7 @@
                         <span class="ml-2 text-sm tracking-wide truncate">Reservas</span>
                     </a>
                 </li>
-                <li *ngIf="isAuthenticated">
+                <li *ngIf="authService.isAuthenticated() && authService.getRole() === 'ROLE_ADMIN'">
                     <a href="/valoraciones"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -187,7 +193,7 @@
                         <span class="ml-2 text-sm tracking-wide truncate">Valoraciones</span>
                     </a>
                 </li>
-                <li *ngIf="isAuthenticated">
+                <li *ngIf="authService.isAuthenticated() && authService.getRole() === 'ROLE_ADMIN'">
                     <a href="/usuarios"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">

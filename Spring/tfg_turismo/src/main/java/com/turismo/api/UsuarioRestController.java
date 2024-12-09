@@ -74,4 +74,12 @@ public class UsuarioRestController {
         usuarioService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}/rol")
+    public ResponseEntity<Usuario> asignarRol(@PathVariable Long id, @RequestParam String rolName) {
+
+        Usuario usuario = usuarioService.updateRole(id, rolName);
+        return usuario != null ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
+    }
+
 }

@@ -14,19 +14,16 @@ export class TokenInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = this.authService.getToken();
-
-        // Verificar si la ruta es pública y no agregar token en esos casos
-        const isPublicRoute = req.url.includes('/api/alojamientos') || req.url.includes('/api/monumentos');
-
-        if (token && !isPublicRoute) {
-            // Si no es una ruta pública, se agrega el token de autorización
-            console.log('Token encontrado:', token);
+        console.log('Token en Interceptor:', token);
+        if (token) {
             const cloned = req.clone({
-                headers: req.headers.set('Authorization', `Bearer ${token}`),
+                setHeaders: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
             return next.handle(cloned);
+        } else {
+            return next.handle(req);
         }
-        // Si la ruta es pública o no hay token, se hace la solicitud normalmente
-        return next.handle(req);
     }
 }

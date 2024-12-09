@@ -17,13 +17,25 @@ export class LoginComponent {
   onLogin(): void {
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
-        const token = response.token; // Asegúrate de que el backend devuelva el token en esta propiedad
-        this.authService.saveToken(token);
-        this.router.navigate(['/home']); // Redirige al home
+        console.log('Respuesta del servidor:', response); // Verifica si el token está presente
+        const token = response.token;
+        if (token) {
+          this.authService.saveToken(token);
+          this.router.navigate(['/home']);
+        } else {
+          this.errorMessage = 'Error: No se recibió un token válido.';
+        }
       },
       error: (err) => {
-        this.errorMessage = 'Credenciales inválidas'; // Manejar errores
+        if (err.status === 404) {
+          this.errorMessage = 'El usuario no existe. Por favor, verifica los datos.';
+        } else if (err.status === 401) {
+          this.errorMessage = 'Usuario o contraseña inválidas. Inténtalo de nuevo.';
+        } else {
+          this.errorMessage = 'Ocurrió un error inesperado. Inténtalo más tarde.';
+        }
       },
     });
   }
+  
 }

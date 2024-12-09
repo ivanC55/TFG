@@ -36,49 +36,60 @@ import { MonumentosPublicInfoComponent } from './components/public/monumentos-pu
 import { PerfilComponent } from './components/public/perfil/perfil.component';
 import { ValoracionesComponent } from './components/valoraciones/valoraciones.component';
 import { RegisterComponent } from './auth/components/register/register.component';
+import { RoleGuard } from './auth/role.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent }, // Acceso público
   { path: 'contacto', component: ContactoComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }, // Ruta protegida
   
   // Rutas públicas
   { path: 'alojamientos-public', component: AlojamientosPublicComponent },
+  { path: 'alojamiento/:id', component: AlojamientoInfoComponent },
+
   { path: 'eventos-public', component: EventosPublicComponent },
+  { path: 'evento/:id', component: EventosPublicInfoComponent  },
+
   { path: 'monumentos-public', component: MonumentosPublicComponent },
+  { path: 'monumento/:id', component: MonumentosPublicInfoComponent },
+
   { path: 'puntos-de-interes-public', component: PuntosInteresPublicComponent },
+  { path: 'punto-interes/:id', component: PuntosInteresPublicInfoComponent },
+
+
   { path: 'restaurantes-public', component: RestaurantesPublicComponent },
+  { path: 'restaurante/:id', component: RestaurantesPublicInfoComponent },
+
   { path: 'rutas-public', component: RutasPublicComponent },
-
-  // Rutas privadas, protegidas por AuthGuard
-  { path: 'alojamientos', component: AlojamientosComponent, canActivate: [AuthGuard] },
-  { path: 'alojamiento/:id', component: AlojamientoInfoComponent, canActivate: [AuthGuard] },
-  
-  { path: 'eventos', component: EventosComponent, canActivate: [AuthGuard] },
-  { path: 'evento/:id', component: EventosPublicInfoComponent, canActivate: [AuthGuard] },
-
-  { path: 'monumentos', component: MonumentosComponent, canActivate: [AuthGuard] },
-  { path: 'monumento/:id', component: MonumentosPublicInfoComponent, canActivate: [AuthGuard] },
-
-  { path: 'puntos-de-interes', component: PuntosDeInteresComponent, canActivate: [AuthGuard] },
-  { path: 'punto-interes/:id', component: PuntosInteresPublicInfoComponent, canActivate: [AuthGuard] },
-
-  { path: 'restaurantes', component: RestaurantesComponent, canActivate: [AuthGuard] },
-  { path: 'restaurante/:id', component: RestaurantesPublicInfoComponent, canActivate: [AuthGuard] },
-
-  { path: 'rutas-turisticas', component: RutasTuristicasComponent, canActivate: [AuthGuard] },
-  { path: 'ruta/:id', component: RutasPublicInfoComponent, canActivate: [AuthGuard] },
-
-  { path: 'valoraciones', component: ValoracionesComponent, canActivate: [AuthGuard] },
-  { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard] },
-  { path: 'reservas', component: ReservasComponent, canActivate: [AuthGuard] },
+  { path: 'ruta/:id', component: RutasPublicInfoComponent },
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
-  { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] }, // Ruta protegida
+
+
+
+  // Rutas privadas, protegidas por AuthGuard
+  { path: 'alojamientos', component: AlojamientosComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'ROLE_ADMIN' } },
   
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // Página de inicio por defecto
+  { path: 'eventos', component: EventosComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'ROLE_ADMIN' } },
+
+  { path: 'monumentos', component: MonumentosComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'ROLE_ADMIN' } },
+
+  { path: 'puntos-de-interes', component: PuntosDeInteresComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'ROLE_ADMIN' } },
+
+  { path: 'restaurantes', component: RestaurantesComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'ROLE_ADMIN' } },
+
+  { path: 'rutas-turisticas', component: RutasTuristicasComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'ROLE_ADMIN' } },
+
+  { path: 'valoraciones', component: ValoracionesComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'ROLE_ADMIN' } },
+
+  { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'ROLE_ADMIN' } },
+
+  { path: 'reservas', component: ReservasComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'ROLE_ADMIN' } },
+
+  { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: 'ROLE_ADMIN' } }, 
+  
+  { path: '', redirectTo: '/home', pathMatch: 'full' }, 
 ];
 
 
@@ -125,7 +136,8 @@ const routes: Routes = [
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-    AuthGuard
+    AuthGuard,
+    RoleGuard
   ],
   bootstrap: [AppComponent]
 })

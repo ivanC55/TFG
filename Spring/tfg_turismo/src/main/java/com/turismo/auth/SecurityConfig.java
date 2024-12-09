@@ -31,10 +31,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Configuración CORS aquí
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/error","/uploads/**","/api/valoraciones/**","/api/monumentos/upload/**","/api/auth/**", "/api/home/**", "/api/alojamientos/**", "/api/monumentos/**", "/api/rutas-turisticas/**", "/api/eventos/**", "/api/puntos-de-interes/**", "/api/usuarios/**", "/api/reservas/**", "/api/restaurantes/**").permitAll()
+                        .requestMatchers("/error","/uploads/**","/api/valoraciones/**","/api/monumentos/upload/**","/api/auth/**", "/api/home/**", "/api/alojamientos/**", "/api/monumentos/**", "/api/rutas-turisticas/**", "/api/eventos/**", "/api/puntos-de-interes/**", "/api/usuarios/**", "/api/reservas/**", "/api/restaurantes/**").permitAll()  // Rutas públicas
+
+                        .requestMatchers("/api/usuarios/**").hasRole("ADMIN")
+                        .requestMatchers("/api/reservas/**").hasRole("ADMIN")
+                        .requestMatchers("/api/valoraciones/**").hasRole("ADMIN")
+                        .requestMatchers("/api/monumentos/**").hasRole("USER")
+
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
@@ -42,16 +48,14 @@ public class SecurityConfig {
 
         return http.build();
     }
-
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // Permite solicitudes desde el frontend Angular
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos HTTP permitidos
-        configuration.setAllowedHeaders(List.of("*")); // Permite todos los encabezados
-        configuration.setAllowCredentials(true); // Permite el envío de credenciales (como cookies)
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
 
-        // Registro de la configuración CORS para todas las rutas de la API
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 

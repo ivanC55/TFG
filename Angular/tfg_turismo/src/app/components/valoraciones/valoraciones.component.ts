@@ -38,7 +38,10 @@ export class ValoracionesComponent implements OnInit {
   inicializarValoracion(): Valoracion {
     return {
       idValoracion: null,
-      usuario: { id: undefined, username: '', nombre: '', apellidos: '', password: '', email: '', telefono: '', direccion: '', rol: '' },
+      usuario: { id: undefined, username: '', nombre: '', apellidos: '', password: '', email: '', telefono: '', direccion: '', rol: {
+        id: 0,
+        name: ''
+      } },
       alojamiento: {
         idAlojamiento: undefined, nombre: '',
         tipo: '',
