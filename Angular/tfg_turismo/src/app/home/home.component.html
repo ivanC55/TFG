@@ -25,7 +25,7 @@
                     style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
                     <div *ngFor="let alojamiento of alojamientos" class="flex-none w-[calc(33.33%-1rem)] px-2">
                         <div class="bg-white rounded-lg shadow-lg text-center p-4">
-                            <img src="../../../../assets/info-pueblo/coche.JPG"
+                            <img [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen"
                                 [alt]="'Imagen de ' + alojamiento.nombre"
                                 class="rounded-lg h-40 w-full object-cover hover:scale-105" />
                             <div class="p-4">
@@ -154,7 +154,8 @@
                         <div class="flex flex-col lg:flex-row">
                             <!-- Imagen del monumento -->
                             <div class="lg:w-1/2 mt-4 ml-4 mb-4 border-rounded">
-                                <img [src]="'http://localhost:8081/uploads/monumentos/' + monumentos[indiceMonumento].imagen" />
+                                <img
+                                    [src]="'http://localhost:8081/uploads/monumentos/' + monumentos[indiceMonumento].imagen" />
                             </div>
                             <!-- Descripción y mapa -->
                             <div class="lg:w-1/2 p-6 bg-gray-100">

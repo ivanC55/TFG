@@ -82,7 +82,12 @@
                     <div class="mb-4">
                         <label class="block text-gray-700">Fecha Fin</label>
                         <input type="date" [(ngModel)]="eventoSeleccionado.fecha_fin" name="fecha_fin" required
+                            [min]="eventoSeleccionado.fecha_inicio | date:'yyyy-MM-dd'"
                             class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" />
+                        <div *ngIf="eventoSeleccionado.fecha_inicio && eventoSeleccionado.fecha_fin && eventoSeleccionado.fecha_inicio > eventoSeleccionado.fecha_fin"
+                            class="text-red-500 text-sm">
+                            La fecha de fin no puede ser antes de la fecha de inicio.
+                        </div>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700">Precio Entrada</label>

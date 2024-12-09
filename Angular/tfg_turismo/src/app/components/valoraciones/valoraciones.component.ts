@@ -48,7 +48,8 @@ export class ValoracionesComponent implements OnInit {
         ubicacion: '',
         precioNoche: 0,
         servicios: [],
-        puntuacion: 0
+        puntuacion: 0,
+        imagen: ''
       },
       puntuacion: 0,
       comentario: ''

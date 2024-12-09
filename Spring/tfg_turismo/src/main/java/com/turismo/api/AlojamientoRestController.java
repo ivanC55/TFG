@@ -26,7 +26,6 @@ public class AlojamientoRestController {
     private final AlojamientoService alojamientoService;
     private final String UPLOAD_DIR = "src/main/resources/static/uploads/alojamientos/";
 
-    // Lista de servicios permitidos
     private static final List<String> SERVICIOS_PERMITIDOS = Arrays.asList(
             "WiFi", "Piscina", "Aparcamiento gratuito", "Desayuno incluido", "Gimnasio"
     );

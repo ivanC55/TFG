@@ -4,7 +4,6 @@ import com.turismo.model.entity.Alojamiento;
 
 import java.util.List;
 
-
 public interface AlojamientoService {
     Alojamiento save(Alojamiento alojamiento);
     void delete(Long id);

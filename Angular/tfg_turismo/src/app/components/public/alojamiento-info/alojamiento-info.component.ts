@@ -46,7 +46,8 @@ export class AlojamientoInfoComponent implements OnInit {
       ubicacion: '',
       precioNoche: 0,
       servicios: [],
-      puntuacion: 0
+      puntuacion: 0,
+      imagen: ''
     },
     idValoracion: null
   };

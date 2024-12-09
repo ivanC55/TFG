@@ -62,16 +62,19 @@ export class EventosComponent implements OnInit {
   }
 
   guardarEvento(evento: Evento): void {
+    // Verificar si todos los campos están completos
     if (!evento.nombre || !evento.descripcion || !evento.ubicacion || !evento.precio_entrada) {
       alert('Todos los campos son obligatorios');
       return;
     }
+
+    // Validación de fechas
     if (evento.fecha_inicio > evento.fecha_fin) {
       alert('La fecha de inicio no puede ser posterior a la fecha de fin');
       return;
     }
 
-    // Si las validaciones pasan, guardamos el evento
+    // Si todas las validaciones pasan, guardamos el evento
     if (evento.idEvento) {
       this.eventoService.updateEvento(evento.idEvento, evento).subscribe(() => {
         this.modoEdicion = false;
@@ -85,8 +88,9 @@ export class EventosComponent implements OnInit {
     }
 
     console.log("Evento guardado:", evento);
-        this.modoEdicion = false;
+    this.modoEdicion = false;
   }
+
 
 
   mostrarModalEliminar(evento: Evento): void {

@@ -60,7 +60,6 @@ public class MonumentoHistoricoRestController {
     @GetMapping("/uploads/monumentos/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) {
         try {
-            // Obtener la ruta de la imagen
             Path path = Paths.get(UPLOAD_DIR + filename);
             Resource resource = new UrlResource(path.toUri());
 
