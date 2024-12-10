@@ -10,7 +10,6 @@ import { PuntoDeInteresService } from '../../../service/punto-de-interes.service
 export class PuntosInteresPublicComponent implements OnInit {
 
   puntosDeInteres: PuntoDeInteres[] = []; // Lista de puntos de interés
-  puntosConRuta: number = 0; // Contador de puntos con ruta asociada
 
   constructor(private puntoDeInteresService: PuntoDeInteresService) { }
 

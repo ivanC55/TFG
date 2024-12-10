@@ -4,7 +4,8 @@
         <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col lg:flex-row">
             <!-- Imagen -->
             <div class="lg:w-1/2 w-full">
-                <img src="{{ puntoDeInteres.imagen || '../../../../assets/info-pueblo/torre-sangrienta.JPG' }}" class="w-full h-full object-cover rounded-t-lg lg:rounded-l-lg"
+                <img *ngIf="puntoDeInteres.imagen" [src]="'http://localhost:8081/api/puntos-de-interes/uploads/puntos-interes/' + puntoDeInteres.imagen" alt="Imagen de {{ puntoDeInteres.nombre }}"
+                class="w-full h-full object-cover rounded-t-lg lg:rounded-l-lg"
                     alt="Imagen de {{ puntoDeInteres.nombre }}">
             </div>
 
