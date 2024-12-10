@@ -1,34 +1,35 @@
 <div class="grid grid-cols-5 gap-4">
     <div class="col-span-1"></div>
-    <div class="container mt-4 col-span-4 pr-10 pl-10" *ngIf="puntoDeInteres">
+    <div class="container mt-4 col-span-4 px-10" *ngIf="puntoDeInteres">
         <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col lg:flex-row">
+            <!-- Imagen -->
             <div class="lg:w-1/2 w-full">
-                <img src="../../../../assets/info-pueblo/torre-sangrienta.JPG" class="w-full h-full object-cover rounded-t-lg lg:rounded-l-lg"
+                <img src="{{ puntoDeInteres.imagen || '../../../../assets/info-pueblo/torre-sangrienta.JPG' }}" class="w-full h-full object-cover rounded-t-lg lg:rounded-l-lg"
                     alt="Imagen de {{ puntoDeInteres.nombre }}">
             </div>
 
+            <!-- Información del Punto de Interés -->
             <div class="lg:w-1/2 w-full px-6 py-4">
+                <!-- Nombre -->
                 <div class="bg-orange-200 text-black p-4 rounded-lg mb-6">
                     <h2 class="text-3xl font-bold">{{ puntoDeInteres.nombre }}</h2>
                 </div>
 
+                <!-- Descripción -->
                 <div class="space-y-4">
                     <div class="flex items-center">
                         <span class="text-xl font-semibold text-gray-700 mr-2">Descripción:</span>
                         <p class="text-lg text-gray-600">{{ puntoDeInteres.descripcion }}</p>
                     </div>
 
-                    <div class="flex items-center">
-                        <span class="text-xl font-semibold text-gray-700 mr-2">Coordenadas:</span>
-                        <p class="text-lg text-gray-600">{{ puntoDeInteres.coordenadas }}</p>
-                    </div>
-
-                    <div class="flex items-center" *ngIf="puntoDeInteres.ruta">
-                        <span class="text-xl font-semibold text-gray-700 mr-2">Ruta asociada:</span>
-                        <p class="text-lg text-gray-600">{{ puntoDeInteres.ruta.nombre }}</p>
+                    <!-- Ubicación -->
+                    <div class="flex items-center" *ngIf="puntoDeInteres.ubicacion">
+                        <span class="text-xl font-semibold text-gray-700 mr-2">Ubicación:</span>
+                        <p class="text-lg text-gray-600">{{ puntoDeInteres.ubicacion }}</p>
                     </div>
                 </div>
 
+                <!-- Historia del Punto de Interés -->
                 <div class="mt-6" *ngIf="puntoDeInteres.descripcion">
                     <h3 class="text-2xl font-semibold mb-2">Historia</h3>
                     <p class="text-gray-700 text-lg">
@@ -38,6 +39,7 @@
             </div>
         </div>
 
+        <!-- Botón de Volver -->
         <button
             class="mt-8 px-6 py-2 mb-10 bg-gray-900 text-white rounded-lg hover:bg-orange-600 transition duration-300"
             [routerLink]="['/puntos-de-interes-public']">

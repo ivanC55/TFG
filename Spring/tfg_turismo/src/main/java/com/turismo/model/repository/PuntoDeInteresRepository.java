@@ -11,7 +11,6 @@ public interface PuntoDeInteresRepository extends JpaRepository<PuntoDeInteres,L
     // Buscar un único punto de interés por nombre
     Optional<PuntoDeInteres> findByNombre(String nombre);
 
-    // Buscar múltiples puntos de interés asociados a una ruta
-    List<PuntoDeInteres> findByRuta_IdRuta(Long idRuta);
+
 
 }

@@ -16,8 +16,8 @@
                     <tr>
                         <th class="py-3 px-6 text-left font-semibold">Nombre</th>
                         <th class="py-3 px-6 text-left font-semibold">Descripción</th>
-                        <th class="py-3 px-6 text-left font-semibold">Coordenadas</th>
-                        <th class="py-3 px-6 text-left font-semibold">Orden</th>
+                        <th class="py-3 px-6 text-left font-semibold">Ubicación</th>
+                        <th class="py-3 px-6 text-left font-semibold">Imagen</th>
                         <th class="py-3 px-6 text-left font-semibold">Acciones</th>
                     </tr>
                 </thead>
@@ -25,13 +25,18 @@
                     <tr *ngFor="let punto of puntos" class="hover:bg-gray-100">
                         <td class="py-3 px-6">{{ punto.nombre }}</td>
                         <td class="py-3 px-6">{{ punto.descripcion }}</td>
-                        <td class="py-3 px-6">{{ punto.coordenadas }}</td>
-                        <td class="py-3 px-6">{{ punto.orden }}</td>
+                        <td class="py-3 px-6">{{ punto.ubicacion }}</td>
+                        <td class="py-3 px-6">
+                            <!-- Mostrar imagen del punto de interés, si existe -->
+                            <img *ngIf="punto.imagen" [src]="'http://localhost:8081/api/puntos-de-interes/uploads/puntos-interes/' + punto.imagen" alt="Imagen de {{ punto.nombre }}" class="w-16 h-16 object-cover rounded">
+                            <!-- Si no hay imagen, mostrar un texto indicativo -->
+                            <span *ngIf="!punto.imagen" class="text-gray-400">No disponible</span>
+                        </td>
                         <td class="py-3 px-6">
                             <div class="flex space-x-2">
                                 <button
                                     class="bg-yellow-500 text-white py-2 px-2 rounded-lg hover:bg-yellow-600 text-sm"
-                                    (click)="editarPunto(punto)">
+                                    (click)="mostrarFormulario(punto)">
                                     <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -54,11 +59,14 @@
         </div>
 
         <!-- Modal de Edición -->
-        <div *ngIf="modoEdicion" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div *ngIf="modoFormulario"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
             <div class="bg-white rounded-lg shadow-lg w-96 p-8 relative z-10">
-                <h3 class="text-center text-2xl font-semibold mb-6 text-blue-600">Editar Punto de Interés</h3>
+                <h3 class="text-center text-2xl font-semibold mb-6 text-blue-600">
+                    {{ modoEdicion ? 'Editar Punto de Interés' : 'Nuevo Punto de Interés' }}
+                </h3>
 
-                <form (ngSubmit)="guardarPunto(puntoSeleccionado)">
+                <form (ngSubmit)="guardarPunto()">
                     <div class="mb-4">
                         <label class="block text-gray-700">Nombre</label>
                         <input [(ngModel)]="puntoSeleccionado.nombre" name="nombre" required
@@ -70,14 +78,19 @@
                             class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"></textarea>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-gray-700">Coordenadas</label>
-                        <input [(ngModel)]="puntoSeleccionado.coordenadas" name="coordenadas" required
+                        <label class="block text-gray-700">Ubicación</label>
+                        <input [(ngModel)]="puntoSeleccionado.ubicacion" name="ubicacion" required
                             class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" />
                     </div>
+
+                    <!-- Carga de Imagen -->
                     <div class="mb-4">
-                        <label class="block text-gray-700">Orden</label>
-                        <input type="number" [(ngModel)]="puntoSeleccionado.orden" name="orden" required
+                        <label class="block text-gray-700">Imagen</label>
+                        <input type="file" (change)="onFileSelected($event)"
                             class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" />
+                        <div *ngIf="previewUrl" class="mt-2">
+                            <img [src]="previewUrl" alt="Vista previa" class="w-full h-64 object-cover rounded-lg">
+                        </div>
                     </div>
 
                     <div class="flex justify-between">
@@ -85,7 +98,7 @@
                             class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-200">
                             Guardar
                         </button>
-                        <button type="button" (click)="cancelarEdicion()"
+                        <button type="button" (click)="cancelarFormulario()"
                             class="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-400 transition-all duration-200">
                             Cancelar
                         </button>

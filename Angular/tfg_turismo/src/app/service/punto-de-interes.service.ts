@@ -41,8 +41,9 @@ export class PuntoDeInteresService {
         return this.http.get<PuntoDeInteres>(`${this.apiUrl}/nombre/${nombre}`);
     }
 
-    // Buscar por ID de ruta
-    findByRutaId(idRuta: number): Observable<PuntoDeInteres[]> {
-        return this.http.get<PuntoDeInteres[]>(`${this.apiUrl}/ruta/${idRuta}`);
+    uploadImage(id: number, file: File): Observable<string> {
+        const formData = new FormData();
+        formData.append('file', file);
+        return this.http.post<string>(`${this.apiUrl}/upload/${id}`, formData, { responseType: 'json' });
     }
 }

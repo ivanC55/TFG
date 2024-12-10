@@ -11,11 +11,6 @@
                 <span class="text-black text-sm mt-1">Número total de puntos de interés registrados.</span>
             </div>
 
-            <div class="bg-purple-200 shadow-md rounded-lg p-6 flex flex-col items-center">
-                <h2 class="text-black font-medium text-sm">Con Ruta Asociada</h2>
-                <p class="text-3xl font-bold">{{ puntosConRuta }}</p>
-                <span class="text-black text-sm mt-1">Puntos de interés con rutas asociadas.</span>
-            </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -25,8 +20,7 @@
                 <div class="p-4 flex flex-col flex-grow">
                     <h5 class="font-semibold text-lg">{{ punto.nombre }}</h5>
                     <p class="text-gray-600">{{ punto.descripcion }}</p>
-                    <p class="text-gray-700 mt-2">Coordenadas: {{ punto.coordenadas }}</p>
-                    <p *ngIf="punto.ruta" class="text-gray-700">Ruta: {{ punto.ruta.nombre }}</p>
+                    
                     <div class="flex-grow"></div>
                     <a [routerLink]="['/punto-interes', punto.idPunto]"
                         class="mt-4 inline-block bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-500 hover:scale-105 text-center">

@@ -1,11 +1,21 @@
 package com.turismo.api;
 
 import com.turismo.model.entity.PuntoDeInteres;
+import com.turismo.model.entity.Restaurante;
 import com.turismo.service.PuntoDeInteresService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -14,6 +24,8 @@ import java.util.List;
 public class PuntoDeInteresRestController {
 
     private final PuntoDeInteresService puntoDeInteresService;
+    private final String UPLOAD_DIR = "src/main/resources/static/uploads/puntos-interes/";
+
 
     @Autowired
     public PuntoDeInteresRestController(PuntoDeInteresService puntoDeInteresService) {
@@ -52,9 +64,7 @@ public class PuntoDeInteresRestController {
         // Actualizar los campos del punto de interés
         punto.setNombre(puntoDetails.getNombre());
         punto.setDescripcion(puntoDetails.getDescripcion());
-        punto.setCoordenadas(puntoDetails.getCoordenadas());
-        punto.setOrden(puntoDetails.getOrden());
-        punto.setRuta(puntoDetails.getRuta());
+
 
         PuntoDeInteres updatedPunto = puntoDeInteresService.save(punto);
         return ResponseEntity.ok(updatedPunto);
@@ -78,10 +88,46 @@ public class PuntoDeInteresRestController {
         return punto != null ? ResponseEntity.ok(punto) : ResponseEntity.notFound().build();
     }
 
-    // Buscar puntos de interés por ID de ruta
-    @GetMapping("/ruta/{idRuta}")
-    public ResponseEntity<List<PuntoDeInteres>> getPuntosDeInteresByRutaId(@PathVariable Long idRuta) {
-        List<PuntoDeInteres> puntos = puntoDeInteresService.findByRutaId(idRuta);
-        return ResponseEntity.ok(puntos);
+    @PostMapping("/upload/{id}")
+    public ResponseEntity<?> uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            PuntoDeInteres puntoDeInteres = puntoDeInteresService.getById(id);
+            if (puntoDeInteres == null) {
+                return ResponseEntity.status(404).body("{\"error\": \"Punto de interés no encontrado\"}");
+            }
+
+            // Guardar archivo
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            Path path = Paths.get(UPLOAD_DIR + fileName);
+            Files.createDirectories(path.getParent());
+            Files.write(path, file.getBytes());
+
+            puntoDeInteres.setImagen(fileName);
+            puntoDeInteresService.save(puntoDeInteres);
+
+            return ResponseEntity.ok("{\"message\": \"Imagen subida exitosamente\", \"fileName\": \"" + fileName + "\"}");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("{\"error\": \"Error al subir la imagen\"}");
+        }
+    }
+
+
+    @GetMapping("/uploads/puntos-interes/{filename}")
+    public ResponseEntity<Resource> getImage(@PathVariable String filename) {
+        try {
+            Path path = Paths.get(UPLOAD_DIR + filename);
+            Resource resource = new UrlResource(path.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                        .body(resource);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } catch (MalformedURLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

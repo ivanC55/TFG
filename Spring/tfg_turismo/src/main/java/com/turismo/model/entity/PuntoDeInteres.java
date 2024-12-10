@@ -14,13 +14,9 @@ public class PuntoDeInteres {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPunto;
 
-    @ManyToOne
-    @JoinColumn(name = "id_ruta")
-    private RutaTuristica ruta;
-
     private String nombre;
     @Column(columnDefinition = "TEXT")
     private String descripcion;
-    private String coordenadas; // Cambiarlo a la clase correcta si `Point` está disponible en tu setup
-    private Integer orden;
+    private String ubicacion;
+    private String imagen;
 }

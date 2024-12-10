@@ -39,8 +39,4 @@ public class PuntoDeInteresServiceImpl implements PuntoDeInteresService {
         return puntoDeInteresRepository.findByNombre(nombre);
     }
 
-    @Override
-    public List<PuntoDeInteres> findByRutaId(Long idRuta) {
-        return puntoDeInteresRepository.findByRuta_IdRuta(idRuta);
     }
-}

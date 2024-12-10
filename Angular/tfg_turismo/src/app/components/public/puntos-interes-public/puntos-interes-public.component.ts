@@ -19,7 +19,6 @@ export class PuntosInteresPublicComponent implements OnInit {
     this.puntoDeInteresService.getPuntosDeInteres().subscribe({
       next: (data) => {
         this.puntosDeInteres = data; 
-        this.calcularPuntosConRuta(); 
       },
       error: (error) => {
         console.error('Error al obtener puntos de interés', error);
@@ -27,7 +26,4 @@ export class PuntosInteresPublicComponent implements OnInit {
     });
   }
 
-  calcularPuntosConRuta(): void {
-    this.puntosConRuta = this.puntosDeInteres.filter(punto => punto.ruta !== null && punto.ruta !== undefined).length;
-  }
 }
