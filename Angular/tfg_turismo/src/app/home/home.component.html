@@ -113,7 +113,8 @@
                     style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
                     <div *ngFor="let restaurante of restaurantes" class="flex-none w-[calc(33.33%-1rem)] px-2">
                         <div class="bg-white rounded-lg shadow-lg text-center p-4">
-                            <img src="../../assets/info-pueblo/muralla2.JPG" [alt]="'Imagen de ' + restaurante.nombre"
+                            <img [src]="'http://localhost:8081/api/restaurantes/uploads/restaurantes/' + restaurante.imagen"
+                                [alt]="'Imagen de ' + restaurante.nombre"
                                 class="rounded-lg h-40 w-full object-cover hover:scale-105" />
                             <div class="p-4">
                                 <h5 class="font-semibold text-lg">{{ restaurante.nombre }}</h5>
