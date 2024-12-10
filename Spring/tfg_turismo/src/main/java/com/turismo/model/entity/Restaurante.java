@@ -21,4 +21,5 @@ public class Restaurante {
     private Double precioPromedio;
     private String horario;
     private Double puntuacion;
+    private String imagen;
 }

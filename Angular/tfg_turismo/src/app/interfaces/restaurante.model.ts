@@ -7,4 +7,5 @@ export interface Restaurante {
     precioPromedio: number;
     horario: string;
     puntuacion: number;
+    imagen: string;
 }

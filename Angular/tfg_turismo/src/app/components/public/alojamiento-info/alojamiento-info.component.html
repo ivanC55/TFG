@@ -5,6 +5,10 @@
         <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col lg:flex-row">
             <!-- Imagen del Alojamiento -->
             <div class="lg:w-1/2 w-full">
+                <img *ngIf="alojamiento.imagen" 
+                     [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen" 
+                     alt="Imagen del alojamiento" 
+                     class="w-full h-full object-cover">
             </div>
 
             <!-- Información de Alojamiento -->

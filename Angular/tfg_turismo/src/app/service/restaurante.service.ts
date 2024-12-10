@@ -12,7 +12,7 @@ export class RestauranteService {
 
     getRestaurantes(): Observable<Restaurante[]> {
         return this.http.get<Restaurante[]>(this.apiUrl);
-    }
+    } 
 
     getRestauranteById(id: number): Observable<Restaurante> {
         return this.http.get<Restaurante>(`${this.apiUrl}/${id}`);
@@ -32,5 +32,11 @@ export class RestauranteService {
 
     getRestaurantesByTipoComida(tipoComida: string): Observable<Restaurante[]> {
         return this.http.get<Restaurante[]>(`${this.apiUrl}/tipoComida/${tipoComida}`);
+    }
+
+    uploadImage(id: number, file: File): Observable<string> {
+        const formData = new FormData();
+        formData.append('file', file);
+        return this.http.post<string>(`${this.apiUrl}/upload/${id}`, formData, { responseType: 'json' });
     }
 }
