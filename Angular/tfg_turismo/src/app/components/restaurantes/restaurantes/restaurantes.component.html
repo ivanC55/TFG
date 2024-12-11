@@ -14,7 +14,7 @@
                     <th class="py-3 px-6 text-left font-semibold">Tipo de Comida</th>
                     <th class="py-3 px-6 text-left font-semibold">Especialidad</th>
                     <th class="py-3 px-6 text-left font-semibold">Ubicación</th>
-                    <th class="py-3 px-6 text-left font-semibold">Imagen</th> <!-- Nueva columna para la imagen -->
+                    <th class="py-3 px-6 text-left font-semibold">Imagen</th> 
                     <th class="py-3 px-6 text-left font-semibold">Acciones</th>
                 </tr>
             </thead>
@@ -25,9 +25,7 @@
                     <td class="py-2 px-4">{{ restaurante.especialidad }}</td>
                     <td class="py-2 px-4">{{ restaurante.ubicacion }}</td>
                     <td class="py-2 px-4">
-                        <!-- Mostrar imagen del restaurante, si existe -->
                         <img *ngIf="restaurante.imagen" [src]="'http://localhost:8081/api/restaurantes/uploads/restaurantes/' + restaurante.imagen" alt="Imagen del restaurante" class="w-16 h-16 object-cover rounded-lg border" />
-                        <!-- Si no hay imagen, mostrar un ícono o una imagen predeterminada -->
                         <img *ngIf="!restaurante.imagen" src="assets/placeholder.png" alt="Imagen no disponible" class="w-16 h-16 object-cover rounded">
                     </td>
                     <td class="py-2 px-4">
@@ -92,11 +90,9 @@
                             class="w-full px-4 py-2 border rounded" required />
                     </div>
 
-                    <!-- Imagen del Restaurante -->
                     <div class="mb-4">
                         <label class="block text-gray-700">Imagen</label>
                         <input type="file" (change)="onFileSelected($event)" class="w-full px-4 py-2 border rounded" />
-                        <!-- Si hay una imagen seleccionada o ya existe, la mostramos -->
                         <div *ngIf="previewUrl" class="mt-2">
                             <img [src]="previewUrl" alt="Vista previa de la imagen" class="w-full h-48 object-cover border rounded" />
                         </div>

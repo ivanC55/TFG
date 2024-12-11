@@ -9,7 +9,7 @@ import { Evento } from '../interfaces/evento.model';
 export class EventoService {
   private apiUrl = 'http://localhost:8081/api/eventos'; // Cambia según tu configuración
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Método para obtener el token de localStorage
   private getAuthHeaders(): HttpHeaders {
@@ -48,5 +48,11 @@ export class EventoService {
   deleteEvento(id: number): Observable<void> {
     const headers = this.getAuthHeaders();
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers });
+  }
+
+  uploadImage(id: number, file: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<string>(`${this.apiUrl}/upload/${id}`, formData, { responseType: 'json' });
   }
 }

@@ -6,4 +6,5 @@ export interface Evento {
     fecha_fin: Date;
     ubicacion: string;
     precio_entrada: number;
+    imagen: string;
 }

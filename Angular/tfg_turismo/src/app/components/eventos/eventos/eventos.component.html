@@ -18,6 +18,7 @@
                         <th class="py-3 px-6 text-left font-semibold">Ubicación</th>
                         <th class="py-3 px-6 text-left font-semibold">Fecha Inicio</th>
                         <th class="py-3 px-6 text-left font-semibold">Fecha Fin</th>
+                        <th class="py-3 px-6 text-left font-semibold">Imagen</th>
                         <th class="py-3 px-6 text-left font-semibold">Acciones</th>
                     </tr>
                 </thead>
@@ -27,6 +28,11 @@
                         <td class="py-3 px-6">{{ evento.ubicacion }}</td>
                         <td class="py-3 px-6">{{ evento.fecha_inicio | date }}</td>
                         <td class="py-3 px-6">{{ evento.fecha_fin | date }}</td>
+                        <td class="py-2 px-4">
+                            <img *ngIf="evento.imagen" [src]="'http://localhost:8081/api/eventos/uploads/eventos/' + evento.imagen" alt="Imagen del evento" class="w-16 h-16 object-cover rounded-lg border" />
+                            <img *ngIf="!evento.imagen" src="assets/placeholder.png" alt="Imagen no disponible" class="w-16 h-16 object-cover rounded">
+                        </td>
+
                         <td class="py-3 px-6">
                             <div class="flex space-x-2">
                                 <button
@@ -56,9 +62,9 @@
         <!-- Modal de Edición -->
         <div *ngIf="modoEdicion" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
             <div class="bg-white rounded-lg shadow-lg w-96 p-8 relative z-10">
-                <h3 class="text-center text-2xl font-semibold mb-6 text-blue-600">Editar Evento</h3>
+                <h3 class="text-center text-lg font-semibold mb-4">{{ eventoSeleccionado.idEvento ? 'Editar Restaurante' : 'Nuevo Restaurante' }}</h3>
 
-                <form (ngSubmit)="guardarEvento(eventoSeleccionado)">
+                <form (ngSubmit)="guardarEvento()">
                     <div class="mb-4">
                         <label class="block text-gray-700">Nombre</label>
                         <input [(ngModel)]="eventoSeleccionado.nombre" name="nombre" required
@@ -94,6 +100,19 @@
                         <input type="number" [(ngModel)]="eventoSeleccionado.precio_entrada" name="precio_entrada"
                             required
                             class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Imagen</label>
+                        <input type="file" (change)="onFileSelected($event)" class="w-full px-4 py-2 border rounded" />
+                        <!-- Si hay una imagen seleccionada o ya existe, la mostramos -->
+                        <div *ngIf="previewUrl" class="mt-2">
+                            <img [src]="previewUrl" alt="Vista previa de la imagen" class="w-full h-48 object-cover border rounded" />
+                        </div>
+                        <div *ngIf="eventoSeleccionado.imagen" class="mt-2">
+                            <img [src]="eventoSeleccionado.imagen" alt="Imagen actual del restaurante"
+                                class="w-full h-48 object-cover border rounded" />
+                        </div>
                     </div>
 
                     <div class="flex justify-between">

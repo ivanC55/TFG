@@ -26,5 +26,6 @@ public class EventoCultural {
     private Date fecha_fin;
     private String ubicacion;
     private Double precio_entrada;
+    private String imagen;
 
 }

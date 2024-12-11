@@ -20,11 +20,14 @@
         <!-- Lista de eventos -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div *ngFor="let evento of eventos" class="flex flex-col bg-white rounded-lg shadow-lg">
-                <img src="../../../../assets/info-pueblo/coche.JPG" alt="Imagen de {{ evento.nombre }}"
+                <img *ngIf="evento.imagen"
+                    [src]="'http://localhost:8081/api/eventos/uploads/eventos/' + evento.imagen"
+                    alt="Imagen de {{ evento.nombre }}"
                     class="rounded-t-lg h-40 w-full object-cover transition-transform transform duration-300 ease-in-out hover:brightness-90">
                 <div class="p-4 flex flex-col flex-grow">
                     <h5 class="font-semibold text-lg">{{ evento.nombre }}</h5>
-                    <p class="text-gray-600">{{ evento.ubicacion }} - {{ evento.fecha_inicio | date:'shortDate' }} a {{ evento.fecha_fin | date:'shortDate' }}</p>
+                    <p class="text-gray-600">{{ evento.ubicacion }} - {{ evento.fecha_inicio | date:'shortDate' }} a {{
+                        evento.fecha_fin | date:'shortDate' }}</p>
                     <p class="text-gray-700 mt-2">Precio Entrada: {{ evento.precio_entrada | currency }}</p>
                     <div class="flex-grow"></div>
                     <a [routerLink]="['/evento', evento.idEvento]"

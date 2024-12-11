@@ -18,10 +18,14 @@ export class EventosComponent implements OnInit {
     fecha_fin: new Date(),
     ubicacion: '',
     precio_entrada: 0,
+    imagen: '',
   };
   modoFormulario = false;
   modoEdicion = false; // Controla si el modal de edición está visible
   eventoParaEliminar: Evento | null = null;
+
+  selectedFile: File | null = null;
+  previewUrl: string | ArrayBuffer | null = null;
 
   constructor(private eventoService: EventoService, private router: Router) { }
 
@@ -47,6 +51,7 @@ export class EventosComponent implements OnInit {
       fecha_fin: new Date(),
       ubicacion: '',
       precio_entrada: 0,
+      imagen: '',
     };
     this.modoFormulario = true;
   }
@@ -61,36 +66,41 @@ export class EventosComponent implements OnInit {
     this.modoEdicion = false; // Cerrar el modal de edición
   }
 
-  guardarEvento(evento: Evento): void {
-    // Verificar si todos los campos están completos
-    if (!evento.nombre || !evento.descripcion || !evento.ubicacion || !evento.precio_entrada) {
+  guardarEvento(): void {
+    // Validación de campos obligatorios
+    if (!this.eventoSeleccionado.nombre || !this.eventoSeleccionado.descripcion || !this.eventoSeleccionado.ubicacion || !this.eventoSeleccionado.precio_entrada) {
       alert('Todos los campos son obligatorios');
       return;
     }
-
+  
     // Validación de fechas
-    if (evento.fecha_inicio > evento.fecha_fin) {
+    if (this.eventoSeleccionado.fecha_inicio > this.eventoSeleccionado.fecha_fin) {
       alert('La fecha de inicio no puede ser posterior a la fecha de fin');
       return;
     }
-
-    // Si todas las validaciones pasan, guardamos el evento
-    if (evento.idEvento) {
-      this.eventoService.updateEvento(evento.idEvento, evento).subscribe(() => {
-        this.modoEdicion = false;
-        this.cargarEventos();
+  
+    // Si el evento tiene un id (está siendo editado), lo actualizamos
+    if (this.eventoSeleccionado.idEvento !== undefined) {
+      this.eventoService.updateEvento(this.eventoSeleccionado.idEvento, this.eventoSeleccionado).subscribe(() => {
+        // Si se ha seleccionado una imagen, la subimos
+        if (this.selectedFile) {
+          this.subirImagen(this.eventoSeleccionado.idEvento!); // idEvento ahora es seguro
+        } else {
+          this.finalizarGuardado(); // Finaliza el proceso de guardado sin imagen
+        }
       });
     } else {
-      this.eventoService.createEvento(evento).subscribe(() => {
-        this.modoEdicion = false;
-        this.cargarEventos();
+      // Si no tiene id (es un nuevo evento), lo creamos
+      this.eventoService.createEvento(this.eventoSeleccionado).subscribe((nuevoEvento) => {
+        // Si se ha seleccionado una imagen, la subimos
+        if (this.selectedFile) {
+          this.subirImagen(nuevoEvento.idEvento!); // idEvento no es undefined en este caso
+        } else {
+          this.finalizarGuardado(); // Finaliza el proceso de guardado sin imagen
+        }
       });
     }
-
-    console.log("Evento guardado:", evento);
-    this.modoEdicion = false;
   }
-
 
 
   mostrarModalEliminar(evento: Evento): void {
@@ -108,5 +118,35 @@ export class EventosComponent implements OnInit {
         this.cargarEventos(); // Actualizar la lista de eventos
       });
     }
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    this.selectedFile = file;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  private subirImagen(id: number): void {
+    if (this.selectedFile) {
+      this.eventoService.uploadImage(id, this.selectedFile).subscribe(
+        () => this.finalizarGuardado(),
+        (error) => {
+          console.error('Error al subir la imagen:', error);
+          alert('Hubo un error al subir la imagen.');
+        }
+      );
+    }
+  }
+
+  private finalizarGuardado(): void {
+    this.modoFormulario = false;
+    this.cargarEventos();
   }
 }
