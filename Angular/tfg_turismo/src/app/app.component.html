@@ -1,9 +1,17 @@
-<div class="flex flex-col min-h-screen bg-gradient-to-br from-gray-600 to-gray-200"> 
-  <app-header></app-header>
-  
-  <div class="flex-1"> 
-      <router-outlet></router-outlet>
+<div class="flex flex-col min-h-screen relative"
+  style="background-size: cover; background-position: center; background-attachment: fixed;">
+
+  <div class="absolute inset-0"
+    style="background-image: url('../assets/info-pueblo/portada.JPG'); background-size: cover; background-position: center; background-attachment: fixed; z-index: -2;">
   </div>
-    <app-footer></app-footer>
+
+  <div class="absolute inset-0 bg-black opacity-60" style="z-index: -1;"></div>
+
+  <app-header></app-header>
+
+  <div class="flex-1">
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer></app-footer>
 
 </div>

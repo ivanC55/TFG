@@ -6,6 +6,7 @@ import { ReservaService } from '../../../service/reserva.service';
 import { AuthService } from '../../../auth/service/auth.service';
 import { Valoracion } from '../../../interfaces/valoracion.model';
 import { Alojamiento } from '../../../interfaces/alojamiento.model';
+import { Usuario } from '../../../interfaces/usuario.model';
 
 @Component({
   selector: 'app-alojamiento-info',
@@ -17,7 +18,7 @@ export class AlojamientoInfoComponent implements OnInit {
   valoraciones: Valoracion[] = [];
   valoracionesFiltradas: Valoracion[] = [];
   alojamientoSeleccionado: Alojamiento | null = null;
-  usuarioLogueado: any;
+  usuarioLogueado: Usuario | undefined;
 
   // Formularios
   mostrarFormularioReserva: boolean = false;
@@ -152,18 +153,12 @@ export class AlojamientoInfoComponent implements OnInit {
   }
 
   abrirFormularioReserva(): void {
-    if (!this.usuarioLogueado) {
-      this.router.navigate(['/login']);
-      return;
-    }
+    
     this.mostrarFormularioReserva = true;
   }
 
   abrirFormularioValoracion(): void {
-    if (!this.usuarioLogueado) {
-      this.router.navigate(['/login']); 
-      return;
-    }
+    
     this.mostrarFormularioValoracion = true;
   }
 }

@@ -3,15 +3,19 @@
     <div class="col-span-1"></div>
 
     <div class="col-span-4 w-full mt-0 pr-10 pl-10">
-        <div class="text-white text-center mt-5 p-10 rounded-lg shadow-lg  x-auto px-4 bg-cover bg-center bg-no-repeat h-[500px] w-full"
-            style="background-image: url('../../assets/info-pueblo/portada.JPG');">
+        <div class="text-white text-center mt-5 p-10 rounded-lg shadow-lg x-auto px-4 bg-cover bg-center bg-no-repeat bg-opacity-50 h-[500px] w-full"
+        style="
+            background-image: url('../../assets/info-pueblo/portada2.jpg');
+            background-size: cover;
+            background-position: center;
+            image-rendering: auto;">
             <h1 class="text-4xl font-bold mt-60">Bienvenidos a nuestra plataforma</h1>
             <p class="text-lg mt-2">Explora nuestras ofertas y servicios de alojamiento. ¡Tu próxima aventura comienza
                 aquí!</p>
         </div>
         <!-- Carrusel de Alojamiento -->
         <div class="relative my-10">
-            <h2 class="text-2xl font-bold text-center mb-6">Nuestros Alojamiento</h2>
+            <h2 class="text-2xl font-bold text-white text-center mb-6 ">Nuestros Alojamiento</h2>
             <div class="overflow-hidden relative w-full">
                 <!-- Botón izquierdo -->
                 <button (click)="prev()"
@@ -56,7 +60,7 @@
 
 
         <div class="relative my-10">
-            <h2 class="text-2xl font-bold text-center mb-6">Valoraciones de Nuestros Alojamientos</h2>
+            <h2 class="text-2xl text-white font-bold text-center mb-6">Valoraciones de Nuestros Alojamientos</h2>
             <div class="overflow-hidden relative w-full">
                 <!-- Botón izquierdo -->
                 <button (click)="prevValoracion()"
@@ -99,7 +103,7 @@
 
         <!-- Carrusel de Restaurantes -->
         <div class="relative my-10">
-            <h2 class="text-2xl font-bold text-center mb-6">Restaurantes Populares</h2>
+            <h2 class="text-2xl text-white font-bold text-center mb-6">Restaurantes Populares</h2>
             <div class="overflow-hidden relative w-full">
                 <!-- Botón izquierdo -->
                 <button (click)="prevRestaurant()"
@@ -115,7 +119,7 @@
                         <div class="bg-white rounded-lg shadow-lg text-center p-4">
                             <img [src]="'http://localhost:8081/api/restaurantes/uploads/restaurantes/' + restaurante.imagen"
                                 [alt]="'Imagen de ' + restaurante.nombre"
-                                class="rounded-lg h-40 w-full object-cover hover:scale-105" />
+                                class="rounded-lg h-40 w-full object-cover hover:scale-105"/>
                             <div class="p-4">
                                 <h5 class="font-semibold text-lg">{{ restaurante.nombre }}</h5>
                                 <p class="text-gray-600">{{ restaurante.especialidad }}</p>
@@ -141,7 +145,7 @@
 
 
         <div *ngIf="monumentos && monumentos.length > 0" class="mt-10 mb-10">
-            <h2 class="text-2xl font-bold text-center mb-6">Monumentos Destacados</h2>
+            <h2 class="text-2xl text-white font-bold text-center mb-6">Monumentos Destacados</h2>
             <div class="relative">
                 <div class="flex justify-center items-center relative p-10">
                     <!-- Flecha izquierda -->
