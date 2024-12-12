@@ -1,5 +1,6 @@
 package com.turismo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,9 +26,11 @@ public class Valoracion {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
+    @JsonBackReference("usuario-valoraciones")
     private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "id_alojamiento", nullable = false)
+    @JsonBackReference("alojamiento-valoraciones")
     private Alojamiento alojamiento;
 }

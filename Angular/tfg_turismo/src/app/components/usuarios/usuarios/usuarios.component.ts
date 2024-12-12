@@ -23,10 +23,13 @@ export class UsuariosComponent implements OnInit {
       id: 0,
       name: ''
     },
+    reservas: []
   };
   modoFormulario = false;
   modoEdicion = false; // Controla si el modal de edición está visible
   usuarioParaEliminar: Usuario | null = null;
+
+  roles: any[] = [];
 
   constructor(private usuarioService: UsuarioService, private router: Router) { }
 
@@ -57,6 +60,7 @@ export class UsuariosComponent implements OnInit {
         id: 0,
         name: ''
       },
+      reservas:[],
     };
     this.modoFormulario = true;
   }

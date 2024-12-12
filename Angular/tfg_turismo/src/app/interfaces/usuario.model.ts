@@ -1,3 +1,4 @@
+import { Reserva } from './reserva.model';
 import { Role } from './role.model';
 
 export interface Usuario {
@@ -10,4 +11,5 @@ export interface Usuario {
     telefono: string;
     direccion: string;
     rol: Role;
+    reservas : Reserva[];
 }

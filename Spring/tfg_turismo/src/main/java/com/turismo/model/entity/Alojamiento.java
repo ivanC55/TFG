@@ -1,6 +1,6 @@
 package com.turismo.model.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,4 +28,12 @@ public class Alojamiento {
     private List<String> servicios;
     private Double puntuacion;
     private String imagen;
+
+    @OneToMany(mappedBy = "alojamiento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("alojamiento-reservas") // Identificador único
+    private List<Reserva> reservas;
+
+    @OneToMany(mappedBy = "alojamiento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("alojamiento-valoraciones") // Identificador único
+    private List<Valoracion> valoraciones;
 }

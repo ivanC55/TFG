@@ -36,7 +36,7 @@ public class UsuarioRestController {
     }
 
     // Crear un nuevo usuario
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
         Usuario newUsuario = usuarioService.save(usuario);
         return ResponseEntity.ok(newUsuario);

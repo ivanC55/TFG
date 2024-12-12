@@ -57,10 +57,8 @@ export class AuthService {
     if (token && token !== '') {
       try {
         const decodedToken = jwt_decode(token) as any;
-        console.log('Decoded Token:', decodedToken);  // Deberías ver el rol en este log
         return decodedToken.role || '';  // Acceder al rol desde el claim 'role'
       } catch (error) {
-        console.error("Error al decodificar el token:", error);
         return '';  
       }
     }

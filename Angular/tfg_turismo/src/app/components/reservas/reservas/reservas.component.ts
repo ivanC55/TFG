@@ -45,10 +45,13 @@ export class ReservasComponent implements OnInit {
   inicializarReserva(): Reserva {
     return {
       idReserva: undefined,
-      usuario: { id: undefined, username: '', nombre: '', apellidos: '', password: '', email: '', telefono: '', direccion: '', rol: {
-        id: 0,
-        name: ''
-      } },
+      usuario: {
+        id: undefined, username: '', nombre: '', apellidos: '', password: '', email: '', telefono: '', direccion: '', rol: {
+          id: 0,
+          name: ''
+        },
+        reservas: []
+      },
       alojamiento: null,
       restaurante: null,
       fechaReserva: '',

@@ -26,11 +26,17 @@ public class UsuarioServiceImpl implements UsuarioService {
         this.roleRepository = roleRepository;
     }
 
-    @Override
     public Usuario save(Usuario usuario) {
-        if (!usuario.getPassword().startsWith("$2a$")) {
-            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        // Primero, obtén el rol desde la base de datos usando el id enviado en el JSON
+        if (usuario.getRol() != null && usuario.getRol().getId() != null) {
+            Role rol = roleRepository.findById(usuario.getRol().getId())
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
+
+            // Asigna el rol al usuario
+            usuario.setRol(rol);
         }
+
+        // Luego guarda el usuario
         return usuarioRepository.save(usuario);
     }
 

@@ -39,7 +39,8 @@ export class AlojamientoInfoComponent implements OnInit {
       rol: {
         id: 0,
         name: ''
-      }
+      },
+      reservas: []
     },
     alojamiento: {
       nombre: '',

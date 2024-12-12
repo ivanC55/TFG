@@ -1,6 +1,7 @@
 package com.turismo.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,14 +24,19 @@ public class Reserva {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
+    @JsonBackReference("usuario-reservas") // Identificador único
     private Usuario usuario;
 
+    // Relación con Alojamiento
     @ManyToOne
-    @JoinColumn(name = "id_alojamiento" , nullable = true)
+    @JoinColumn(name = "id_alojamiento", nullable = true)
+    @JsonBackReference("alojamiento-reservas") // Identificador único
     private Alojamiento alojamiento;
 
+    // Relación con Restaurante
     @ManyToOne
-    @JoinColumn(name = "id_restaurante" , nullable = true)
+    @JoinColumn(name = "id_restaurante", nullable = true)
+    @JsonBackReference("restaurante-reservas") // Identificador único
     private Restaurante restaurante;
 
     private LocalDate fechaReserva;

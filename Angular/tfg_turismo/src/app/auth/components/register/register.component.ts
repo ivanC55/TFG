@@ -22,6 +22,7 @@ export class RegisterComponent {
       id: 0,
       name: ''
     },
+    reservas: []
   };
 
   confirmPassword: string = '';
