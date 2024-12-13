@@ -27,7 +27,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let reserva of reservas" class="hover:bg-gray-100">
-                        <td class="py-2 px-4">{{ reserva.usuario?.nombre }}</td>
+                        <td class="py-2 px-4">{{ reserva.usuario?.nombre || 'N/A' }}</td>
                         <td class="py-2 px-4">{{ reserva.alojamiento?.nombre || 'N/A' }}</td>
                         <td class="py-2 px-4">{{ reserva.restaurante?.nombre || 'N/A' }}</td>
                         <td class="py-2 px-4">{{ reserva.fechaReserva }}</td>
@@ -77,7 +77,8 @@
                         <label for="usuario" class="block text-sm font-semibold text-gray-700">Usuario</label>
                         <select [(ngModel)]="usuarioSeleccionadoId" name="usuario" id="usuario"
                             class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
-                            <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nombre }}</option>
+                            <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.username }}
+                            </option>
                         </select>
                     </div>
                     <div>
@@ -85,7 +86,7 @@
                         <select [(ngModel)]="alojamientoSeleccionadoId" name="alojamiento" id="alojamiento"
                             class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
                             <option *ngFor="let alojamiento of alojamientos" [value]="alojamiento.idAlojamiento">{{
-                                alojamiento.nombre }}</option>
+                                alojamiento.idAlojamiento }}</option>
                         </select>
                     </div>
                     <div>
@@ -93,7 +94,7 @@
                         <select [(ngModel)]="restauranteSeleccionadoId" name="restaurante" id="restaurante"
                             class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
                             <option *ngFor="let restaurante of restaurantes" [value]="restaurante.idRestaurante">{{
-                                restaurante.nombre }}</option>
+                                restaurante.idRestaurante }}</option>
                         </select>
                     </div>
                     <div>
@@ -116,7 +117,15 @@
                             id="numPersonas" required
                             class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
                     </div>
+
+                    <label for="estado">Estado:</label>
+                    <select id="estado" [(ngModel)]="reservaSeleccionada.estado" name="estado">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Confirmada">Confirmada</option>
+                        <option value="Cancelada">Cancelada</option>
+                    </select>
                     <div>
+                        
                         <button type="submit"
                             class="w-full py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-all duration-200">
                             Guardar

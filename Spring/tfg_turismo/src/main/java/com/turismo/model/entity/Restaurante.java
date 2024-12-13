@@ -1,6 +1,9 @@
 package com.turismo.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,12 +14,14 @@ import java.util.List;
 @Table(name = "restaurantes")
 @Getter
 @Setter
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idRestaurante")
 public class Restaurante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRestaurante;
 
+    @JsonProperty("nombre")
     private String nombre;
     private String tipoComida;
     private String especialidad;
@@ -26,8 +31,8 @@ public class Restaurante {
     private Double puntuacion;
     private String imagen;
 
-    // Relación con reservas: al eliminar un restaurante, eliminar sus reservas
-    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("restaurante-reservas")
+    // Relación con Reservas
+    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Reserva> reservas;
 }

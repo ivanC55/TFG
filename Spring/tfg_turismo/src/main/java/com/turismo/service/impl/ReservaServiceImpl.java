@@ -6,7 +6,6 @@ import com.turismo.service.ReservaService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReservaServiceImpl implements ReservaService {
@@ -19,7 +18,7 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     public Reserva save(Reserva reserva) {
-        return reservaRepository.save(reserva);
+        return reservaRepository.save(reserva);  // Guarda la reserva
     }
 
     @Override
@@ -29,8 +28,20 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     public Reserva getById(Long id) {
-        Optional<Reserva> reserva = reservaRepository.findById(id);
-        return reserva.orElse(null);
+        Reserva reserva = reservaRepository.findById(id).orElse(null);
+        if (reserva != null) {
+            // Accede a las relaciones, pero solo si no son null
+            if (reserva.getUsuario() != null) {
+                reserva.getUsuario().getId(); // Fuerza la carga de usuario
+            }
+            if (reserva.getAlojamiento() != null) {
+                reserva.getAlojamiento().getIdAlojamiento(); // Fuerza la carga de alojamiento
+            }
+            if (reserva.getRestaurante() != null) {
+                reserva.getRestaurante().getIdRestaurante(); // Fuerza la carga de restaurante
+            }
+        }
+        return reserva;
     }
 
     @Override
@@ -48,4 +59,3 @@ public class ReservaServiceImpl implements ReservaService {
         return reservaRepository.findByAlojamiento_IdAlojamiento(idAlojamiento);
     }
 }
-

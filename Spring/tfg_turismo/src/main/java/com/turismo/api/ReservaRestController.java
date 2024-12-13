@@ -1,6 +1,13 @@
 package com.turismo.api;
 
+import com.turismo.model.entity.Alojamiento;
 import com.turismo.model.entity.Reserva;
+import com.turismo.model.entity.Restaurante;
+import com.turismo.model.entity.Usuario;
+import com.turismo.model.repository.AlojamientoRepository;
+import com.turismo.model.repository.ReservaRepository;
+import com.turismo.model.repository.RestauranteRepository;
+import com.turismo.model.repository.UsuarioRepository;
 import com.turismo.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,14 +17,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/reservas")
-@CrossOrigin(origins ="http://localhost:4200")
 public class ReservaRestController {
 
     private final ReservaService reservaService;
+    private final UsuarioRepository usuarioRepository;
+    private final AlojamientoRepository alojamientoRepository;
+    private final RestauranteRepository restauranteRepository;
 
     @Autowired
-    public ReservaRestController(ReservaService reservaService) {
+    public ReservaRestController(ReservaService reservaService,
+                                 UsuarioRepository usuarioRepository,
+                                 AlojamientoRepository alojamientoRepository,
+                                 RestauranteRepository restauranteRepository) {
         this.reservaService = reservaService;
+        this.usuarioRepository = usuarioRepository;
+        this.alojamientoRepository = alojamientoRepository;
+        this.restauranteRepository = restauranteRepository;
     }
 
     // Obtener todas las reservas
@@ -34,11 +49,36 @@ public class ReservaRestController {
         return reserva != null ? ResponseEntity.ok(reserva) : ResponseEntity.notFound().build();
     }
 
-    // Crear una nueva reserva
-    @PostMapping
+    @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<Reserva> createReserva(@RequestBody Reserva reserva) {
-        Reserva newReserva = reservaService.save(reserva);
-        return ResponseEntity.ok(newReserva);
+        // Verifica si la reserva es válida
+        if (reserva == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // Cargar las entidades relacionadas
+        Usuario usuario = usuarioRepository.findById(reserva.getUsuario().getId()).orElse(null);
+        Alojamiento alojamiento = (reserva.getAlojamiento() != null) ? alojamientoRepository.findById(reserva.getAlojamiento().getIdAlojamiento()).orElse(null) : null;
+        Restaurante restaurante = (reserva.getRestaurante() != null) ? restauranteRepository.findById(reserva.getRestaurante().getIdRestaurante()).orElse(null) : null;
+
+        // Si no se encuentra el usuario o el alojamiento, devuelve un error
+        if (usuario == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // Asignar las entidades a la reserva
+        reserva.setUsuario(usuario);
+        if (alojamiento != null) {
+            reserva.setAlojamiento(alojamiento);
+        }
+        if (restaurante != null) {
+            reserva.setRestaurante(restaurante);
+        }
+
+        // Guardar la reserva
+        Reserva savedReserva = reservaService.save(reserva);
+
+        return ResponseEntity.ok(savedReserva);
     }
 
     // Actualizar una reserva existente

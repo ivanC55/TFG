@@ -28,13 +28,13 @@
                     [style.transform]="'translateX(' + (-currentTranslate) + 'px)'"
                     style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
                     <div *ngFor="let alojamiento of alojamientos" class="flex-none w-[calc(33.33%-1rem)] px-2">
-                        <div class="bg-white rounded-lg shadow-lg text-center p-4">
+                        <div class="bg-gray-300 bg-opacity-50 rounded-lg shadow-lg text-center p-4">
                             <img [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen"
                                 [alt]="'Imagen de ' + alojamiento.nombre"
                                 class="rounded-lg h-40 w-full object-cover hover:scale-105" />
                             <div class="p-4">
                                 <h5 class="font-semibold text-lg">{{ alojamiento.nombre }}</h5>
-                                <p class="text-gray-600">
+                                <p >
                                     {{ alojamiento.tipo }} - {{ alojamiento.ubicacion }}
                                 </p>
                                 <p class="text-gray-700 mt-2">
@@ -75,7 +75,7 @@
                     <div *ngFor="let valoracion of getValoracionesPorPagina()"
                         class="flex-none w-[calc(33.33%-1rem)] px-2">
                         <div
-                            class="bg-gray-800 bg-opacity-90 rounded-lg shadow-lg text-center p-4 border border-gray-700 hover:shadow-xl transition-shadow">
+                            class="bg-gray-800 bg-opacity-40 rounded-lg shadow-lg text-center p-4 border border-gray-700 hover:shadow-xl transition-shadow">
                             <div class="mt-4">
                                 <h5 class="font-semibold text-lg text-white">{{ valoracion.usuario.nombre }}</h5>
                                 <p class="text-gray-300 mt-2 font-bold">{{ valoracion.alojamiento.nombre }}</p>
