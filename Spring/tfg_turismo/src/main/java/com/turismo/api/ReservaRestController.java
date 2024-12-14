@@ -39,8 +39,16 @@ public class ReservaRestController {
     @GetMapping
     public ResponseEntity<List<Reserva>> getAllReservas() {
         List<Reserva> reservas = reservaService.listAll();
+
+        for (Reserva reserva : reservas) {
+            reserva.setRestaurante(reserva.getRestaurante());
+            reserva.setAlojamiento(reserva.getAlojamiento());
+            reserva.setUsuario(reserva.getUsuario());
+        }
+
         return ResponseEntity.ok(reservas);
     }
+
 
     // Obtener una reserva por id
     @GetMapping("/{id}")
@@ -51,35 +59,31 @@ public class ReservaRestController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<Reserva> createReserva(@RequestBody Reserva reserva) {
+        System.out.println("Datos recibidos: " + reserva);
         // Verifica si la reserva es válida
         if (reserva == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        // Cargar las entidades relacionadas
         Usuario usuario = usuarioRepository.findById(reserva.getUsuario().getId()).orElse(null);
         Alojamiento alojamiento = (reserva.getAlojamiento() != null) ? alojamientoRepository.findById(reserva.getAlojamiento().getIdAlojamiento()).orElse(null) : null;
         Restaurante restaurante = (reserva.getRestaurante() != null) ? restauranteRepository.findById(reserva.getRestaurante().getIdRestaurante()).orElse(null) : null;
 
-        // Si no se encuentra el usuario o el alojamiento, devuelve un error
-        if (usuario == null) {
+        if (usuario == null || alojamiento == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        // Asignar las entidades a la reserva
         reserva.setUsuario(usuario);
-        if (alojamiento != null) {
-            reserva.setAlojamiento(alojamiento);
-        }
+        reserva.setAlojamiento(alojamiento);
         if (restaurante != null) {
             reserva.setRestaurante(restaurante);
         }
 
-        // Guardar la reserva
         Reserva savedReserva = reservaService.save(reserva);
 
         return ResponseEntity.ok(savedReserva);
     }
+
 
     // Actualizar una reserva existente
     @PutMapping("/{id}")

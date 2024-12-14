@@ -85,12 +85,11 @@ export class ReservasComponent implements OnInit {
         let restaurante = this.restaurantes.find(r => r.idRestaurante === reserva.restaurante?.idRestaurante);
   
         // Agregar logs para depuración
-        console.log('Reserva:', reserva);
+        console.log('Reserva:', reserva.alojamiento);
         console.log('Usuario encontrado:', usuario);
         console.log('Alojamiento encontrado:', alojamiento);
         console.log('Restaurante encontrado:', restaurante);
-  
-        
+
   
         return {
           ...reserva,
@@ -125,18 +124,31 @@ export class ReservasComponent implements OnInit {
   }
 
   guardarReserva(): void {
-    const usuarioSeleccionado = this.usuarios.find(u => u.id === this.usuarioSeleccionadoId);
-    const alojamientoSeleccionado = this.alojamientos.find(a => a.idAlojamiento === this.alojamientoSeleccionadoId);
-    const restauranteSeleccionado = this.restaurantes.find(r => r.idRestaurante === this.restauranteSeleccionadoId);
+    console.log('usuarioSeleccionadoId:', this.usuarioSeleccionadoId);
+    console.log('alojamientoSeleccionadoId:', this.alojamientoSeleccionadoId);
+    console.log('restauranteSeleccionadoId:', this.restauranteSeleccionadoId);
+  
+    // Asegúrate de que los IDs sean números
+    const usuarioSeleccionado = this.usuarios.find(u => u.id === Number(this.usuarioSeleccionadoId));
+    const alojamientoSeleccionado = this.alojamientos.find(a => a.idAlojamiento === Number(this.alojamientoSeleccionadoId));
+    const restauranteSeleccionado = this.restaurantes.find(r => r.idRestaurante === Number(this.restauranteSeleccionadoId));
+  
+    console.log('Usuario seleccionado:', usuarioSeleccionado);
+    console.log('Alojamiento seleccionado:', alojamientoSeleccionado);
+    console.log('Restaurante seleccionado:', restauranteSeleccionado);
   
     if (!usuarioSeleccionado || !alojamientoSeleccionado || !restauranteSeleccionado) {
       console.error('No se encontraron los datos para completar la reserva');
       return;  // No continuar si los datos son incorrectos
     }
   
+    // Asegúrate de que las referencias a los objetos están correctamente asignadas
     this.reservaSeleccionada.usuario = usuarioSeleccionado;
     this.reservaSeleccionada.alojamiento = alojamientoSeleccionado;
     this.reservaSeleccionada.restaurante = restauranteSeleccionado;
+  
+    // Verifica que los objetos estén bien asignados antes de enviar
+    console.log('Reserva antes de enviar:', this.reservaSeleccionada);
   
     // Aquí asignamos un valor por defecto para el estado (si es necesario)
     if (!this.reservaSeleccionada.estado) {

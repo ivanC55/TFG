@@ -82,6 +82,31 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/usuario")
+    public ResponseEntity<?> getUsuarioLogueado() {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            if (authentication == null || authentication.getPrincipal().equals("anonymousUser")) {
+                return ResponseEntity.status(401).body("Usuario no autenticado");
+            }
+
+            String username = authentication.getName();
+
+            Usuario usuario = usuarioService.findByUsername(username);
+            if (usuario == null) {
+                return ResponseEntity.status(404).body("Usuario no encontrado");
+            }
+
+            return ResponseEntity.ok(usuario);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error al obtener el usuario logueado");
+        }
+    }
+
+
 
 
 }

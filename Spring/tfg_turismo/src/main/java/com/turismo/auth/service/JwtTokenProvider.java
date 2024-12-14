@@ -26,9 +26,7 @@ public class JwtTokenProvider {
         String username = authentication.getName();
         String role = authentication.getAuthorities().stream()
                 .map(authority -> authority.getAuthority())
-                .findFirst().orElse(""); // Obtener el rol (primer rol del usuario)
-
-        System.out.println("Generando token para usuario: " + username + " con rol: " + role);
+                .findFirst().orElse("");
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + validityInMilliseconds);
@@ -43,14 +41,17 @@ public class JwtTokenProvider {
     }
 
 
+
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
+            System.out.println("Token inválido: " + e.getMessage());
             return false;
         }
     }
+
 
     public Authentication getAuthentication(String token) {
         Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();

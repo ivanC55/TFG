@@ -23,7 +23,7 @@ export class AlojamientoInfoComponent implements OnInit {
   // Formularios
   mostrarFormularioReserva: boolean = false;
   mostrarFormularioValoracion: boolean = false;
-  reserva: any = { fechaInicio: '', fechaFin: '', usuario: null, alojamiento: null };
+  reserva: any = { fechaReserva: '', horaReserva: '', numPersonas: null, usuario: null, alojamiento: null };
 
   valoracion: Valoracion = {
     puntuacion: 0,
@@ -70,27 +70,17 @@ export class AlojamientoInfoComponent implements OnInit {
         (data) => {
           this.alojamiento = data;
           this.alojamientoSeleccionado = data;
-
-          this.valoracionService.getValoraciones().subscribe(
-            (valoraciones) => {
-              this.valoraciones = valoraciones;
-              this.valoracionesFiltradas = this.valoraciones.filter(
-                (valoracion) => valoracion.alojamiento.idAlojamiento === id
-              );
-            },
-            (error) => {
-              console.error('Error al obtener las valoraciones:', error);
-            }
-          );
+          console.log('Alojamiento cargado:', this.alojamiento);
         },
         (error) => {
           console.error('Error al obtener los detalles del alojamiento:', error);
         }
       );
-
+  
       this.authService.getUsuarioLogueado().subscribe(
         (usuario) => {
-          this.usuarioLogueado = usuario; 
+          this.usuarioLogueado = usuario;
+          console.log('Usuario logueado:', this.usuarioLogueado);
         },
         (error) => {
           console.error('Error al obtener el usuario logueado:', error);
@@ -98,32 +88,60 @@ export class AlojamientoInfoComponent implements OnInit {
       );
     }
   }
+  
 
   realizarReserva(): void {
-    if (!this.reserva.fechaInicio || !this.reserva.fechaFin || !this.alojamientoSeleccionado || !this.usuarioLogueado) {
-      alert("Por favor, complete todos los campos de la reserva.");
+    console.log('Datos de la reserva:', this.reserva);
+    console.log('Usuario logueado:', this.usuarioLogueado);
+  
+    // Validación de los campos
+    if (!this.reserva.fechaReserva) {
+      alert('Por favor, complete la fecha de la reserva.');
       return;
     }
-
+    if (!this.reserva.horaReserva) {
+      alert('Por favor, seleccione la hora de la reserva.');
+      return;
+    }
+    if (!this.reserva.numPersonas) {
+      alert('Por favor, ingrese el número de personas.');
+      return;
+    }
+    if (!this.alojamientoSeleccionado) {
+      alert('No se ha seleccionado un alojamiento.');
+      return;
+    }
+    if (!this.usuarioLogueado) {
+      alert('Debe iniciar sesión para realizar la reserva.');
+      return;
+    }
+  
     const reservaData = {
-      fechaInicio: this.reserva.fechaInicio,
-      fechaFin: this.reserva.fechaFin,
-      usuarioId: this.usuarioLogueado.id,
-      alojamientoId: this.alojamientoSeleccionado?.idAlojamiento
+      fechaReserva: this.reserva.fechaReserva,
+      horaReserva: this.reserva.horaReserva,
+      numPersonas: this.reserva.numPersonas,
+      estado: 'pendiente',  
+      usuarioId: this.usuarioLogueado,  
+      alojamientoId: this.alojamientoSeleccionado  
     };
-
-    this.reservaService.reservarAlojamiento(reservaData).subscribe(
+  
+    console.log('Datos de la reserva que se enviarán al backend:', reservaData);
+  
+    // Enviar la solicitud de reserva
+    this.reservaService.createReserva(reservaData).subscribe(
       (response) => {
         console.log('Reserva realizada con éxito', response);
         this.mostrarFormularioReserva = false;
-        alert("Reserva realizada con éxito.");
+        alert('Reserva realizada con éxito.');
       },
       (error) => {
         console.error('Error al realizar la reserva:', error);
-        alert("Hubo un error al realizar la reserva. Intente nuevamente.");
+        alert('Hubo un error al realizar la reserva. Intente nuevamente.');
       }
     );
   }
+  
+  
 
   dejarValoracion(): void {
     if (!this.valoracion.puntuacion || !this.valoracion.comentario || !this.alojamientoSeleccionado || !this.usuarioLogueado) {
@@ -154,12 +172,14 @@ export class AlojamientoInfoComponent implements OnInit {
   }
 
   abrirFormularioReserva(): void {
-    
+    if (!this.usuarioLogueado || !this.usuarioLogueado.id) {
+      alert('Debe iniciar sesión para realizar una reserva.');
+      return;
+    }
     this.mostrarFormularioReserva = true;
   }
 
   abrirFormularioValoracion(): void {
-    
     this.mostrarFormularioValoracion = true;
   }
 }

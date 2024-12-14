@@ -49,7 +49,6 @@
         </div>
 
         <div class="mt-6 flex justify-between">
-
             <button (click)="abrirFormularioReserva()"
                 class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition">
                 Reservar
@@ -68,13 +67,18 @@
                 <h3 class="text-xl font-bold mb-4">Formulario de Reserva</h3>
                 <form (ngSubmit)="realizarReserva()">
                     <div class="mb-4">
-                        <label for="fechaInicio" class="block text-lg">Fecha de Inicio</label>
-                        <input type="date" id="fechaInicio" [(ngModel)]="reserva.fechaInicio" name="fechaInicio"
+                        <label for="fechaReserva" class="block text-lg">Fecha de Reserva</label>
+                        <input type="date" id="fechaReserva" [(ngModel)]="reserva.fechaReserva" name="fechaReserva"
                             class="w-full px-4 py-2 border rounded-lg" required>
                     </div>
                     <div class="mb-4">
-                        <label for="fechaFin" class="block text-lg">Fecha de Fin</label>
-                        <input type="date" id="fechaFin" [(ngModel)]="reserva.fechaFin" name="fechaFin"
+                        <label for="horaReserva" class="block text-lg">Hora de Reserva</label>
+                        <input type="time" id="horaReserva" [(ngModel)]="reserva.horaReserva" name="horaReserva"
+                            class="w-full px-4 py-2 border rounded-lg" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="numPersonas" class="block text-lg">Número de Personas</label>
+                        <input type="number" id="numPersonas" [(ngModel)]="reserva.numPersonas" name="numPersonas"
                             class="w-full px-4 py-2 border rounded-lg" required>
                     </div>
                     <div class="flex justify-end">

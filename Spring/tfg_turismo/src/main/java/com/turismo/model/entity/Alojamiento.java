@@ -1,9 +1,6 @@
 package com.turismo.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +11,6 @@ import java.util.List;
 @Table(name = "alojamientos")
 @Getter
 @Setter
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idAlojamiento")
 public class Alojamiento {
 
     @Id
@@ -34,13 +30,4 @@ public class Alojamiento {
 
     private Double puntuacion;
     private String imagen;
-
-    // Relación con Reservas
-    @OneToMany(mappedBy = "alojamiento", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JsonIgnore
-    private List<Reserva> reservas;
-
-    // Relación con Valoraciones
-    @OneToMany(mappedBy = "alojamiento", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Valoracion> valoraciones;
 }
