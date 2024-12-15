@@ -39,28 +39,39 @@ export class ValoracionesComponent implements OnInit {
     return {
       idValoracion: null,
       usuario: {
-        id: undefined, username: '', nombre: '', apellidos: '', password: '', email: '', telefono: '', direccion: '', rol: {
+        id: undefined, 
+        username: '', 
+        nombre: '', 
+        apellidos: '', 
+        password: '', 
+        email: '', 
+        telefono: '', 
+        direccion: '', 
+        rol: {
           id: 0,
           name: ''
         },
         reservas: []
       },
       alojamiento: {
-        idAlojamiento: undefined, nombre: '',
-        tipo: '',
-        ubicacion: '',
-        precioNoche: 0,
-        servicios: [],
-        puntuacion: 0,
+        idAlojamiento: undefined, 
+        nombre: '', 
+        tipo: '', 
+        ubicacion: '', 
+        precioNoche: 0, 
+        servicios: [], 
+        puntuacion: 0, 
         imagen: ''
       },
       puntuacion: 0,
       comentario: ''
     };
   }
+  
 
   cargarValoraciones(): void {
     this.valoracionService.getValoraciones().subscribe((data) => {
+      console.log(data); 
       this.valoraciones = data;
     });
   }
@@ -95,11 +106,17 @@ export class ValoracionesComponent implements OnInit {
     const valoracion: any = {
       idValoracion: this.valoracionSeleccionada.idValoracion,
       usuario: { id: this.usuarioSeleccionadoId },
-      alojamiento: { idAlojamiento: this.alojamientoSeleccionadoId },
+      alojamiento: { idAlojamiento: this.alojamientoSeleccionadoId },  // Asegúrate de que esto no sea null o undefined
       puntuacion: this.valoracionSeleccionada.puntuacion,
       comentario: this.valoracionSeleccionada.comentario
     };
-
+  
+    // Comprobación antes de enviar la valoración
+    if (!valoracion.usuario.id || !valoracion.alojamiento.idAlojamiento) {
+      console.error('Faltan datos de usuario o alojamiento');
+      return;
+    }
+  
     if (this.valoracionSeleccionada.idValoracion) {
       this.valoracionService.updateValoracion(valoracion).subscribe(() => {
         this.cargarValoraciones();
@@ -112,6 +129,7 @@ export class ValoracionesComponent implements OnInit {
       });
     }
   }
+  
 
   mostrarModalEliminar(valoracion: Valoracion): void {
     this.valoracionParaEliminar = valoracion;

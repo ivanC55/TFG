@@ -61,11 +61,12 @@ export class AlojamientoInfoComponent implements OnInit {
     private reservaService: ReservaService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
+      // Obtener los detalles del alojamiento
       this.alojamientoService.getAlojamientoById(id).subscribe(
         (data) => {
           this.alojamiento = data;
@@ -77,6 +78,7 @@ export class AlojamientoInfoComponent implements OnInit {
         }
       );
   
+      // Obtener el usuario logueado
       this.authService.getUsuarioLogueado().subscribe(
         (usuario) => {
           this.usuarioLogueado = usuario;
@@ -89,6 +91,7 @@ export class AlojamientoInfoComponent implements OnInit {
     }
   }
   
+
 
   realizarReserva(): void {
     console.log('Datos de la reserva:', this.reserva);
@@ -116,13 +119,22 @@ export class AlojamientoInfoComponent implements OnInit {
       return;
     }
   
+    // Asegurarse de que las fechas estén en el formato adecuado
+    const fechaReservaFormatted = new Date(this.reserva.fechaReserva).toISOString().split('T')[0]; // yyyy-MM-dd
+    const [hour, minute] = this.reserva.horaReserva.split(':');
+    const currentDate = new Date(); // Usar la fecha actual
+    currentDate.setHours(Number(hour), Number(minute), 0, 0); // Establecer la hora
+  
+    const horaReservaFormatted = currentDate.toISOString().split('T')[1].split('.')[0]; // "HH:mm:ss"
+  
+    // Crear el objeto de reserva con los objetos completos
     const reservaData = {
-      fechaReserva: this.reserva.fechaReserva,
-      horaReserva: this.reserva.horaReserva,
+      fechaReserva: fechaReservaFormatted,
+      horaReserva: horaReservaFormatted,
       numPersonas: this.reserva.numPersonas,
-      estado: 'pendiente',  
-      usuarioId: this.usuarioLogueado,  
-      alojamientoId: this.alojamientoSeleccionado  
+      estado: 'pendiente',
+      usuario: { ...this.usuarioLogueado }, // Objeto completo de usuario
+      alojamiento: { ...this.alojamientoSeleccionado } // Objeto completo de alojamiento
     };
   
     console.log('Datos de la reserva que se enviarán al backend:', reservaData);
@@ -141,7 +153,7 @@ export class AlojamientoInfoComponent implements OnInit {
     );
   }
   
-  
+
 
   dejarValoracion(): void {
     if (!this.valoracion.puntuacion || !this.valoracion.comentario || !this.alojamientoSeleccionado || !this.usuarioLogueado) {

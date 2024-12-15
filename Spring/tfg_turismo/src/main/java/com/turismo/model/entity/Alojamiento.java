@@ -30,4 +30,12 @@ public class Alojamiento {
 
     private Double puntuacion;
     private String imagen;
+
+    @OneToMany(mappedBy = "alojamiento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Reserva> reservas;
+
+    @OneToMany(mappedBy = "alojamiento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Valoracion> valoraciones;
 }

@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "restaurantes")
 @Getter
@@ -24,4 +26,8 @@ public class Restaurante {
     private String horario;
     private Double puntuacion;
     private String imagen;
+    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Reserva> reservas;
+
 }

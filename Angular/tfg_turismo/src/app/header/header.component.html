@@ -55,12 +55,9 @@
                     <a href="/alojamientos"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 12V3m0 9v9M5 8h14M5 4h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z">
-                                </path>
-                            </svg>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-2 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7m4 0h12"></path>
+                              </svg>
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Alojamientos Admin</span>
                     </a>
@@ -70,12 +67,9 @@
                     <a href="/alojamientos-public"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 12V3m0 9v9M5 8h14M5 4h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z">
-                                </path>
-                            </svg>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-2 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7m4 0h12"></path>
+                              </svg>
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Alojamientos</span>
                     </a>
@@ -116,8 +110,7 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4-4m0 0l-4-4m4 4H3m10 4l4-4m0 0l-4-4m4 4H3m7 6l4-4m0 0l-4-4m4 4H3m6 2H3m3 3h3m-3 0h3">
-                                </path>
+                                    d="M12 2C8.69 2 6 4.69 6 8c0 2.21 2.69 6 6 6s6-3.79 6-6c0-3.31-2.69-6-6-6zm0 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM12 10c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
                             </svg>
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Puntos de Interés</span>
@@ -131,14 +124,13 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4-4m0 0l-4-4m4 4H3m10 4l4-4m0 0l-4-4m4 4H3m7 6l4-4m0 0l-4-4m4 4H3m6 2H3m3 3h3m-3 0h3">
-                                </path>
+                                    d="M12 2C8.69 2 6 4.69 6 8c0 2.21 2.69 6 6 6s6-3.79 6-6c0-3.31-2.69-6-6-6zm0 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM12 10c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
                             </svg>
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Puntos de Interés Admin</span>
                     </a>
                 </li>
-                
+
                 <li *ngIf="authService.isAuthenticated() && authService.getRole() === 'ROLE_ADMIN'">
                     <a href="/eventos"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
@@ -146,7 +138,7 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 4h16m0 0v16M4 4l16 16"></path>
+                                    d="M16 2h2a2 2 0 012 2v16a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2h2m8 0v18M4 6h16" />
                             </svg>
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Eventos Admin</span>
@@ -160,7 +152,7 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 4h16m0 0v16M4 4l16 16"></path>
+                                    d="M16 2h2a2 2 0 012 2v16a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2h2m8 0v18M4 6h16" />
                             </svg>
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Eventos</span>
@@ -174,7 +166,7 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 10h18m-9 4l-4 4m0 0l4 4m-4-4h6"></path>
+                                    d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2zm2 2v2h12V5H7zm0 4v10h12V9H7z" />
                             </svg>
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Reservas</span>
@@ -186,9 +178,10 @@
                         <span class="inline-flex justify-center items-center ml-4">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7 7 7-7">
-                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 17.27l-5.18 3.09L8.59 13 3 8.27l6.91-.58L12 2l2.09 5.69L21 8.27l-5.59 4.73L12 17.27z" />
                             </svg>
+
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Valoraciones</span>
                     </a>
@@ -197,11 +190,11 @@
                     <a href="/usuarios"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-green-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                         <span class="inline-flex justify-center items-center ml-4">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 12h4l-2-2m0 0l2-2m-2 2H9l2 2m-2-2l-2 2m4 0h4"></path>
-                            </svg>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c4 0 4-6 4-6s0-4-4-4-4 6-4 6 0 4 4 4z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 18h10a2 2 0 012 2v2H5v-2a2 2 0 012-2z"></path>
+                              </svg>
+
                         </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Usuarios</span>
                     </a>

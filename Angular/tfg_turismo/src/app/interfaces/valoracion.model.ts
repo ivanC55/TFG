@@ -3,8 +3,8 @@ import { Usuario } from "./usuario.model";
 
 export interface Valoracion {
     idValoracion: number | null;
-    usuario: Usuario;
-    alojamiento: Alojamiento;
+    usuario: Usuario | null;
+    alojamiento: Alojamiento | null;
     puntuacion: number;
     comentario: string;
 }

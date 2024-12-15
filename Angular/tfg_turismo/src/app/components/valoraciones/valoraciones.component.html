@@ -22,8 +22,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let valoracion of valoraciones" class="hover:bg-gray-100">
-                        <td class="py-2 px-4">{{ valoracion.usuario.nombre }}</td>
-                        <td class="py-2 px-4">{{ valoracion.alojamiento.nombre }}</td>
+                        <td class="py-2 px-4">{{ valoracion.usuario?.nombre }}</td>
+                        <td class="py-2 px-4">{{ valoracion.alojamiento?.nombre }}</td>
                         <td class="py-2 px-4">{{ valoracion.puntuacion }}</td>
                         <td class="py-2 px-4">{{ valoracion.comentario }}</td>
                         <td class="py-2 px-4">

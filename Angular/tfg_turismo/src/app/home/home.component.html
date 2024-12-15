@@ -3,10 +3,9 @@
     <div class="col-span-1"></div>
 
     <div class="col-span-4 w-full mt-0 pr-10 pl-10">
-        <div class="text-white text-center mt-5 p-10 rounded-lg shadow-lg x-auto px-4 bg-cover bg-center bg-no-repeat bg-opacity-50 h-[500px] w-full"
+        <div class="text-white text-center mt-5 p-10 object-cover rounded-lg shadow-lg x-auto px-4 bg-cover bg-center bg-no-repeat bg-opacity-50 h-[500px] w-full"
         style="
             background-image: url('../../assets/info-pueblo/portada2.jpg');
-            background-size: cover;
             background-position: center;
             image-rendering: auto;">
             <h1 class="text-4xl font-bold mt-60">Bienvenidos a nuestra plataforma</h1>
@@ -28,7 +27,7 @@
                     [style.transform]="'translateX(' + (-currentTranslate) + 'px)'"
                     style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
                     <div *ngFor="let alojamiento of alojamientos" class="flex-none w-[calc(33.33%-1rem)] px-2">
-                        <div class="bg-gray-300 bg-opacity-50 rounded-lg shadow-lg text-center p-4">
+                        <div class="bg-gray-300 bg-opacity-80 rounded-lg shadow-lg text-center p-4">
                             <img [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen"
                                 [alt]="'Imagen de ' + alojamiento.nombre"
                                 class="rounded-lg h-40 w-full object-cover hover:scale-105" />
@@ -78,7 +77,7 @@
                     [style.transform]="'translateX(' + (-currentRestaurantTranslate) + 'px)'"
                     style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
                     <div *ngFor="let restaurante of restaurantes" class="flex-none w-[calc(33.33%-1rem)] px-2">
-                        <div class="bg-white rounded-lg shadow-lg text-center p-4">
+                        <div class="bg-white rounded-lg bg-opacity-60 shadow-lg text-center p-4">
                             <img [src]="'http://localhost:8081/api/restaurantes/uploads/restaurantes/' + restaurante.imagen"
                                 [alt]="'Imagen de ' + restaurante.nombre"
                                 class="rounded-lg h-40 w-full object-cover hover:scale-105"/>
@@ -120,8 +119,9 @@
                     <div class="flex-none w-full bg-white shadow-lg rounded-lg overflow-hidden">
                         <div class="flex flex-col lg:flex-row">
                             <!-- Imagen del monumento -->
-                            <div class="lg:w-1/2 mt-4 ml-4 mb-4 border-rounded">
+                            <div class="lg:w-1/2 h-120 object-cover border-rounded">
                                 <img
+                                class="w-full h-full object-cover"
                                     [src]="'http://localhost:8081/uploads/monumentos/' + monumentos[indiceMonumento].imagen" />
                             </div>
                             <!-- Descripción y mapa -->

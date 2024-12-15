@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "usuarios")
 @Getter
@@ -30,4 +32,13 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role rol;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Reserva> reservas;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Valoracion> valoraciones;
+
 }

@@ -61,7 +61,7 @@ public class ReservaRestController {
     public ResponseEntity<Reserva> createReserva(@RequestBody Reserva reserva) {
         System.out.println("Datos recibidos: " + reserva);
         // Verifica si la reserva es válida
-        if (reserva == null) {
+        if (reserva == null || reserva.getUsuario() == null) {
             return ResponseEntity.badRequest().build();
         }
 

@@ -26,11 +26,9 @@ public class Valoracion {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    @JsonBackReference("usuario-valoraciones")
     private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "id_alojamiento", nullable = false)
-    @JsonBackReference("alojamiento-valoraciones")
     private Alojamiento alojamiento;
 }

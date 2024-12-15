@@ -19,20 +19,23 @@
             </div>
         </div>
 
-        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div *ngFor="let alojamiento of alojamientos" class="flex flex-col sm:flex-row bg-white rounded-lg shadow-lg">
+                <!-- Imagen a la izquierda -->
+                <div class="sm:w-1/3 flex-shrink-0">
+                    <img *ngIf="alojamiento.imagen"
+                        [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen"
+                        [alt]="'Imagen de ' + alojamiento.nombre"
+                        class="rounded-l-lg h-60 w-full object-cover"/>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div *ngFor="let alojamiento of alojamientos" class="flex flex-col bg-white rounded-lg shadow-lg">
-                <img *ngIf="alojamiento.imagen"
-                    [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen"
-                    [alt]="'Imagen de ' + alojamiento.nombre"
-                    class="rounded-lg h-40 w-full object-cover hover:scale-105" />
+                    <!-- Si no hay imagen, mostrar una imagen predeterminada -->
+                    <img *ngIf="!alojamiento.imagen"
+                        src="http://localhost:8081/api/alojamientos/uploads/alojamientos/default.jpg"
+                        alt="Imagen predeterminada" class="rounded-l-lg h-40 w-full object-cover hover:scale-105" />
+                </div>
 
-                <!-- Si no hay imagen, mostrar una imagen predeterminada -->
-                <img *ngIf="!alojamiento.imagen"
-                    src="http://localhost:8081/api/alojamientos/uploads/alojamientos/default.jpg"
-                    alt="Imagen predeterminada" class="rounded-lg h-40 w-full object-cover hover:scale-105" />
-                <div class="p-4 flex flex-col flex-grow">
+                <!-- Texto a la derecha -->
+                <div class="p-4 flex flex-col justify-between sm:w-2/3">
                     <h5 class="font-semibold text-lg">{{ alojamiento.nombre }}</h5>
                     <p class="text-gray-600">{{ alojamiento.tipo }} - {{ alojamiento.ubicacion }}</p>
                     <p class="text-gray-700 mt-2">Puntuación: {{ alojamiento.puntuacion }} ⭐</p>
@@ -44,6 +47,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
