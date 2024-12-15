@@ -82,9 +82,7 @@ export class MonumentosComponent implements OnInit {
 
   guardarMonumento(): void {
     if (!this.monumentoSeleccionado.nombre || !this.monumentoSeleccionado.historia ||
-      !this.monumentoSeleccionado.tipo || !this.monumentoSeleccionado.ubicacion ||
-      !this.monumentoSeleccionado.precio_entrada) {
-      alert('Todos los campos son obligatorios');
+      !this.monumentoSeleccionado.tipo || !this.monumentoSeleccionado.ubicacion ) {
       return;
     }
 

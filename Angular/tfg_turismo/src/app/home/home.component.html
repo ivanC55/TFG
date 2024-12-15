@@ -4,7 +4,7 @@
 
     <div class="col-span-4 w-full mt-0 pr-10 pl-10">
         <div class="text-white text-center mt-5 p-10 object-cover rounded-lg shadow-lg x-auto px-4 bg-cover bg-center bg-no-repeat bg-opacity-50 h-[500px] w-full"
-        style="
+            style="
             background-image: url('../../assets/info-pueblo/portada2.jpg');
             background-position: center;
             image-rendering: auto;">
@@ -27,20 +27,20 @@
                     [style.transform]="'translateX(' + (-currentTranslate) + 'px)'"
                     style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
                     <div *ngFor="let alojamiento of alojamientos" class="flex-none w-[calc(33.33%-1rem)] px-2">
-                        <div class="bg-gray-300 bg-opacity-80 rounded-lg shadow-lg text-center p-4">
+                        <div class="bg-gray-800 bg-opacity-40 rounded-lg shadow-lg text-center p-4">
                             <img [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen"
                                 [alt]="'Imagen de ' + alojamiento.nombre"
                                 class="rounded-lg h-40 w-full object-cover hover:scale-105" />
                             <div class="p-4">
-                                <h5 class="font-semibold text-lg">{{ alojamiento.nombre }}</h5>
-                                <p >
+                                <h5 class="text-white font-semibold text-lg">{{ alojamiento.nombre }}</h5>
+                                <p class="text-white">
                                     {{ alojamiento.tipo }} - {{ alojamiento.ubicacion }}
                                 </p>
-                                <p class="text-gray-700 mt-2">
+                                <p class="text-white mt-2">
                                     Precio por noche: ${{ alojamiento.precioNoche }}
                                 </p>
                                 <a [routerLink]="['/alojamiento', alojamiento.idAlojamiento]"
-                                    class="mt-4 inline-block bg-emerald-300 text-gray-700 px-4 py-2 rounded hover:bg-emerald-600 hover:scale-105">
+                                    class="mt-4 inline-block bg-gradient-to-r from-emerald-400 via-green-500 to-green-500 text-white px-2 py-2 rounded-lg shadow-md hover:from-emerald-500 hover:via-green-600 hover:to-teal-600 hover:scale-105 transform transition duration-300 ease-in-out">
                                     <b>Ver más</b>
                                 </a>
                             </div>
@@ -58,7 +58,45 @@
 
 
 
-        
+        <div class="relative my-10">
+            <h2 class="text-2xl text-white font-bold text-center mb-6">Valoraciones de Nuestros Alojamientos</h2>
+            <div class="overflow-hidden relative w-full">
+                <!-- Botón izquierdo -->
+                <button (click)="prevValoracion()"
+                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-600">
+                    &#8592;
+                </button>
+
+                <!-- Carrusel -->
+                <div id="valoracionesCarousel" class="flex transition-transform duration-500 px-10"
+                    [style.transform]="'translateX(' + (-currentValoracionTranslate) + 'px)'"
+                    style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
+                    <div *ngFor="let valoracion of getValoracionesPorPagina()"
+                        class="flex-none w-[calc(33.33%-1rem)] px-2">
+                        <div
+                            class="bg-gray-800 bg-opacity-40 rounded-lg shadow-lg text-center p-4 border border-gray-700 hover:shadow-xl transition-shadow">
+                            <div class="mt-4">
+                                <h5 class="font-semibold text-lg text-white">{{ valoracion.usuario?.nombre }}</h5>
+                                <p class="text-gray-300 mt-2 font-bold">{{ valoracion.alojamiento?.nombre }}</p>
+                                <p class="text-gray-400">
+                                    <span class="text-yellow-500 font-bold flex items-center justify-center gap-1">
+                                        {{ valoracion.puntuacion }}/5
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <p class="text-gray-400 italic mt-4">"{{ valoracion.comentario }}"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón derecho -->
+                <button (click)="nextValoracion()"
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-600">
+                    &#8594;
+                </button>
+            </div>
+        </div>
 
 
 
@@ -77,19 +115,19 @@
                     [style.transform]="'translateX(' + (-currentRestaurantTranslate) + 'px)'"
                     style="gap: 1rem; width: 100%; max-width: 1200px; margin: 0 auto;">
                     <div *ngFor="let restaurante of restaurantes" class="flex-none w-[calc(33.33%-1rem)] px-2">
-                        <div class="bg-white rounded-lg bg-opacity-60 shadow-lg text-center p-4">
+                        <div class="bg-gray-800 bg-opacity-40 rounded-lg shadow-lg text-center p-4">
                             <img [src]="'http://localhost:8081/api/restaurantes/uploads/restaurantes/' + restaurante.imagen"
                                 [alt]="'Imagen de ' + restaurante.nombre"
-                                class="rounded-lg h-40 w-full object-cover hover:scale-105"/>
+                                class="rounded-lg h-40 w-full object-cover hover:scale-105" />
                             <div class="p-4">
-                                <h5 class="font-semibold text-lg">{{ restaurante.nombre }}</h5>
-                                <p class="text-gray-600">{{ restaurante.especialidad }}</p>
-                                <p class="text-gray-700 mt-2">
+                                <h5 class="text-white font-semibold text-lg">{{ restaurante.nombre }}</h5>
+                                <p class="text-white">{{ restaurante.especialidad }}</p>
+                                <p class="text-white mt-2">
 
                                 </p>
                                 <a [routerLink]="['/restaurante', restaurante.idRestaurante]"
-                                    class="mt-4 inline-block bg-indigo-400 text-black px-4 py-2 rounded hover:bg-indigo-600 hover:scale-105">
-                                    <b>Ver más</b>
+                                class="mt-4 inline-block bg-gradient-to-r from-sky-400 via-blue-400 to-blue-500 text-white px-2 py-2 rounded-lg shadow-md hover:from-emerald-500 hover:via-green-600 hover:to-teal-600 hover:scale-105 transform transition duration-300 ease-in-out">
+                                <b>Ver más</b>
                                 </a>
                             </div>
                         </div>
@@ -120,8 +158,7 @@
                         <div class="flex flex-col lg:flex-row">
                             <!-- Imagen del monumento -->
                             <div class="lg:w-1/2 h-120 object-cover border-rounded">
-                                <img
-                                class="w-full h-full object-cover"
+                                <img class="w-full h-full object-cover"
                                     [src]="'http://localhost:8081/uploads/monumentos/' + monumentos[indiceMonumento].imagen" />
                             </div>
                             <!-- Descripción y mapa -->
@@ -134,9 +171,7 @@
                                 </p>
                                 <p><strong>Ubicación:</strong> {{ monumentos[indiceMonumento].ubicacion }}</p>
                                 <hr class="my-4">
-                                <!-- Aquí irá el mapa -->
-                                <p class="text-center font-semibold">Mapa</p>
-                                <p class="border border-gray-400 p-4 text-center w-30 h-20">mapa</p>
+
                                 <a [routerLink]="['/monumento', monumentos[indiceMonumento].idMonumento]"
                                     class="mt-4 inline-block bg-orange-400 text-black px-4 py-2 rounded hover:bg-orange-600 hover:scale-105">
                                     <b>Ver más</b>

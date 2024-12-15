@@ -4,14 +4,16 @@
     <div class="col-span-4 pr-20 mb-10 ml-10">
         <h2 class="text-2xl font-bold text-center mb-6">Puntos de Interés</h2>
 
-        <div class="grid grid-cols-2 gap-4 mb-10">
-            <div class="bg-blue-300 shadow-md rounded-lg p-6 flex flex-col items-center">
-                <h2 class="text-black font-medium text-sm">Total Puntos de Interés</h2>
-                <p class="text-3xl font-bold">{{ puntosDeInteres.length }}</p>
-                <span class="text-black text-sm mt-1">Número total de puntos de interés registrados.</span>
-            </div>
+        <div class="grid grid-cols-1 gap-6 mb-10">
 
+            <div class="bg-gradient-to-br from-blue-300 via-blue-400 to-blue-500 shadow-lg rounded-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105">
+                <h2 class="text-gray-800 font-medium text-sm uppercase tracking-wide">Total Puntos de Interés</h2>
+                <p class="text-4xl font-extrabold text-white mt-2">{{ puntosDeInteres.length }}</p>
+                <span class="text-gray-100 text-sm mt-1">Número total de puntos de interés registrados.</span>
+            </div>
+        
         </div>
+        
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div *ngFor="let punto of puntosDeInteres" class="flex flex-col bg-white rounded-lg shadow-lg">

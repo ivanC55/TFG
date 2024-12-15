@@ -1,7 +1,7 @@
 <div class="grid grid-cols-5 gap-4">
     <div class="col-span-1"></div>
     <div class="container mb-10 mt-4 col-span-4 px-6">
-        <h2 class="text-center mb-8 text-3xl font-semibold text-indigo-700">
+        <h2 class="text-center mb-8 text-3xl font-semibold text-white">
             Gestión de Monumentos Históricos
         </h2>
 
@@ -11,7 +11,6 @@
             {{ modoFormulario ? 'Cerrar Formulario' : 'Nuevo Monumento' }}
         </button>
 
-        <!-- Tabla -->
         <div class="overflow-x-auto mt-8 rounded-lg">
             <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
                 <thead class="bg-indigo-600 text-white">
@@ -33,7 +32,11 @@
                         <td class="py-3 px-6">{{ monumento.tipo }}</td>
                         <td class="py-3 px-6">{{ monumento.ubicacion }}</td>
                         <td class="py-3 px-6">{{ monumento.horario }}</td>
-                        <td class="py-3 px-6">{{ monumento.precio_entrada | currency }}</td>
+                        <td class="py-3 px-6">
+                            <span *ngIf="monumento.precio_entrada === 0">Gratis</span>
+                            <span *ngIf="monumento.precio_entrada !== 0">{{ monumento.precio_entrada | currency
+                                }}</span>
+                        </td>
                         <td class="py-3 px-6">
                             <img *ngIf="monumento.imagen"
                                 [src]="'http://localhost:8081/uploads/monumentos/' + monumento.imagen"
@@ -59,7 +62,6 @@
             </table>
         </div>
 
-        <!-- Modal de formulario -->
         <div *ngIf="modoFormulario"
             class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
             <div class="bg-white rounded-lg shadow-lg w-96 p-8 relative z-10">
@@ -67,7 +69,6 @@
                     {{ monumentoSeleccionado.idMonumento ? 'Editar Monumento' : 'Crear Nuevo Monumento' }}
                 </h3>
 
-                <!-- Formulario de Monumento -->
                 <form (ngSubmit)="guardarMonumento()">
                     <div class="mb-4">
                         <label for="nombre" class="block text-sm font-semibold text-gray-700">Nombre</label>
@@ -103,8 +104,8 @@
                         <label for="precio_entrada" class="block text-sm font-semibold text-gray-700">Precio
                             Entrada</label>
                         <input id="precio_entrada" type="number" [(ngModel)]="monumentoSeleccionado.precio_entrada"
-                            name="precio_entrada" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm"
-                            required />
+                            name="precio_entrada"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm" />
                     </div>
 
                     <div class="mb-4">
@@ -130,7 +131,7 @@
                 <h3 class="text-center text-2xl font-semibold mb-6 text-red-600">
                     ¿Estás seguro de eliminar este monumento?
                 </h3>
-                
+
                 <div class="mb-4">
                     <p class="text-center text-gray-700">
                         {{ monumentoParaEliminar.nombre }}

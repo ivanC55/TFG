@@ -1,6 +1,6 @@
 <div class="grid grid-cols-5 gap-4">
     <div class="col-span-1"></div>
-    <div class=" col-span-4 bg-gray-100 flex flex-col items-center py-10">
+    <div class="col-span-4 bg-gray-100 flex flex-col items-center py-10">
         <div class="bg-white shadow-md rounded-lg w-full max-w-4xl">
             <div class="bg-indigo-800 rounded-t-lg py-6 text-white text-center">
                 <h1 class="text-3xl font-semibold">Mi Perfil</h1>
@@ -8,14 +8,15 @@
             </div>
 
             <div class="p-6 space-y-4">
+                <!-- Mostrar los datos del usuario logueado -->
                 <div class="flex items-center space-x-4">
                     <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                         alt="Perfil"
-                        class="w-20 h-20 m-4 rounded-full object-cover cursor-pointer border-2 border-gray-300"
-                        />
+                        class="w-20 h-20 m-4 rounded-full object-cover cursor-pointer border-2 border-gray-300" />
                     <div>
-                        <h2 class="text-xl font-semibold text-gray-800">Nombre del Usuario</h2>
-                        <p class="text-sm text-gray-500">usuario.example.com</p>
+                        <h2 class="text-xl font-semibold text-gray-800">{{ usuarioLogueado?.nombre }} {{
+                            usuarioLogueado?.apellidos }}</h2>
+                        <p class="text-sm text-gray-500">{{ usuarioLogueado?.email }}</p>
                     </div>
                 </div>
 
@@ -27,16 +28,25 @@
                         <thead>
                             <tr class="bg-gray-200 text-gray-700 text-left">
                                 <th class="py-2 px-4 border-b">Alojamiento</th>
-                                <th class="py-2 px-4 border-b">Restaurante</th>
-                                <th class="py-2 px-4 border-b">Fecha</th>
+                                <th class="py-2 px-4 border-b">Fecha Inicio</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="hover:bg-gray-100">
-                                <td class="py-2 px-4 border-b"></td>
-                                <td class="py-2 px-4 border-b"></td>
-                                <td class="py-2 px-4 border-b"></td>
+                            <tr
+                                *ngIf="usuarioLogueado && usuarioLogueado.reservas && usuarioLogueado.reservas.length > 0; else noReservas">
+                                <td class="py-2 px-4 border-b">
+                                    {{ usuarioLogueado.reservas[0].alojamiento?.nombre || 'No disponible' }}
+                                </td>
+                                <td class="py-2 px-4 border-b">
+                                    {{ usuarioLogueado.reservas[0].fechaInicio || 'No disponible' }}
+                                </td>
                             </tr>
+                            <ng-template #noReservas>
+                                <tr>
+                                    <td colspan="3" class="text-center py-2 px-4 border-b text-gray-500">No tienes
+                                        reservas</td>
+                                </tr>
+                            </ng-template>
 
                         </tbody>
                     </table>

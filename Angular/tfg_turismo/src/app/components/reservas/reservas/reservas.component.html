@@ -1,16 +1,14 @@
 <div class="grid grid-cols-5 gap-4">
     <div class="col-span-1"></div>
     <div class="container mb-10 col-span-4 mt-4 px-4">
-        <h2 class="text-center mb-4 text-2xl font-semibold text-indigo-700">Gestión de Reservas</h2>
+        <h2 class="text-center mb-4 text-2xl font-semibold text-white">Gestión de Reservas</h2>
 
-        <!-- Botón para crear una nueva reserva -->
         <button
             class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 mb-3 transition-all ease-in-out duration-300 transform hover:scale-105"
             (click)="mostrarFormulario()">
             Nueva Reserva
         </button>
 
-        <!-- Tabla de reservas -->
         <div class="overflow-x-auto mt-8 rounded-lg">
             <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                 <thead class="bg-indigo-600 text-white">
@@ -18,8 +16,9 @@
                         <th class="py-2 px-4 text-left font-semibold">Usuario</th>
                         <th class="py-2 px-4 text-left font-semibold">Alojamiento</th>
                         <th class="py-2 px-4 text-left font-semibold">Restaurante</th>
-                        <th class="py-2 px-4 text-left font-semibold">Fecha Reserva</th>
-                        <th class="py-2 px-4 text-left font-semibold">Hora Reserva</th>
+                        <th class="py-2 px-4 text-left font-semibold">Fecha Inicio</th>
+                        <th class="py-2 px-4 text-left font-semibold">Fecha Fin</th>
+                        <th class="py-2 px-4 text-left font-semibold">Hora Entrada</th>
                         <th class="py-2 px-4 text-left font-semibold">Número de Personas</th>
                         <th class="py-2 px-4 text-left font-semibold">Estado</th>
                         <th class="py-2 px-4 text-left font-semibold">Acciones</th>
@@ -30,8 +29,9 @@
                         <td class="py-2 px-4">{{ reserva.usuario?.nombre || 'N/A' }}</td>
                         <td class="py-2 px-4">{{ reserva.alojamiento?.nombre || 'N/A' }}</td>
                         <td class="py-2 px-4">{{ reserva.restaurante?.nombre || 'N/A' }}</td>
-                        <td class="py-2 px-4">{{ reserva.fechaReserva }}</td>
-                        <td class="py-2 px-4">{{ reserva.horaReserva }}</td>
+                        <td class="py-2 px-4">{{ reserva.fechaInicio }}</td>
+                        <td class="py-2 px-4">{{ reserva.fechaFin }}</td>
+                        <td class="py-2 px-4">{{ reserva.horaEntrada }}</td>
                         <td class="py-2 px-4 text-center">{{ reserva.numPersonas }}</td>
                         <td class="py-2 px-4">{{ reserva.estado }}</td>
                         <td class="py-2 px-4">
@@ -59,7 +59,6 @@
             </table>
         </div>
 
-        <!-- Modal de formulario de nueva reserva -->
         <div *ngIf="modoFormulario"
             class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
             <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10" style="height: 60vh; max-height: 60vh;">
@@ -71,7 +70,6 @@
                 </button>
                 <h3 class="text-lg font-semibold text-center mb-4 text-indigo-600">Formulario de Reserva</h3>
 
-                <!-- Formulario de creación/edición de reserva -->
                 <form (ngSubmit)="guardarReserva()" class="space-y-4">
                     <select [(ngModel)]="usuarioSeleccionadoId" name="usuario" id="usuario">
                         <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.username }}</option>
@@ -88,15 +86,24 @@
                     </select>
 
                     <div>
-                        <label for="fechaReserva" class="block text-sm font-semibold text-gray-700">Fecha
-                            Reserva</label>
-                        <input type="date" [(ngModel)]="reservaSeleccionada.fechaReserva" name="fechaReserva"
-                            id="fechaReserva" required
+                        <label for="fechaInicio" class="block text-sm font-semibold text-gray-700">Fecha
+                            Inicio</label>
+                        <input type="date" [(ngModel)]="reservaSeleccionada.fechaInicio" name="fechaInicio"
+                            id="fechaInicio" required
                             class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
                     </div>
+
                     <div>
-                        <label for="horaReserva" class="block text-sm font-semibold text-gray-700">Hora Reserva</label>
-                        <input type="time" [(ngModel)]="reservaSeleccionada.horaReserva" name="horaReserva"
+                        <label for="fechaFin" class="block text-sm font-semibold text-gray-700">Fecha
+                            Fin</label>
+                        <input type="date" [(ngModel)]="reservaSeleccionada.fechaFin" name="fechaFin"
+                            id="fechaFin" required
+                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
+                    </div>
+
+                    <div>
+                        <label for="horaEntrada" class="block text-sm font-semibold text-gray-700">Hora Reserva</label>
+                        <input type="time" [(ngModel)]="reservaSeleccionada.horaEntrada" name="horaReserva"
                             id="horaReserva" required
                             class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
                     </div>

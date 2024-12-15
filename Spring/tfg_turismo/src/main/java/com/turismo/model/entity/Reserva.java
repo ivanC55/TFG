@@ -30,8 +30,9 @@ public class Reserva {
     @JoinColumn(name = "id_restaurante", nullable = true)
     private Restaurante restaurante;
 
-    private LocalDate fechaReserva;
-    private LocalTime horaReserva;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
+    private LocalTime horaEntrada;
     private Integer numPersonas;
     private String estado;
 }

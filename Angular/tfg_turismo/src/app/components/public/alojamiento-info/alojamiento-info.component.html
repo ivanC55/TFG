@@ -5,10 +5,9 @@
         <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col lg:flex-row">
             <!-- Imagen del Alojamiento -->
             <div class="lg:w-1/2 w-full">
-                <img *ngIf="alojamiento.imagen" 
-                     [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen" 
-                     alt="Imagen del alojamiento" 
-                     class="w-full h-full object-cover">
+                <img *ngIf="alojamiento.imagen"
+                    [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen"
+                    alt="Imagen del alojamiento" class="w-full h-full object-cover">
             </div>
 
             <!-- Información de Alojamiento -->
@@ -67,15 +66,23 @@
                 <h3 class="text-xl font-bold mb-4">Formulario de Reserva</h3>
                 <form (ngSubmit)="realizarReserva()">
                     <div class="mb-4">
-                        <label for="fechaReserva" class="block text-lg">Fecha de Reserva</label>
-                        <input type="date" id="fechaReserva" [(ngModel)]="reserva.fechaReserva" name="fechaReserva"
+                        <label for="fechaInicio" class="block text-lg">Fecha de Inicio</label>
+                        <input type="date" id="fechaInicio" [(ngModel)]="reserva.fechaInicio" name="fechaInicio"
                             class="w-full px-4 py-2 border rounded-lg" required>
                     </div>
+
                     <div class="mb-4">
-                        <label for="horaReserva" class="block text-lg">Hora de Reserva</label>
-                        <input type="time" id="horaReserva" [(ngModel)]="reserva.horaReserva" name="horaReserva"
+                        <label for="fechaFin" class="block text-lg">Fecha de Fin</label>
+                        <input type="date" id="fechaFin" [(ngModel)]="reserva.fechaFin" name="fechaFin"
                             class="w-full px-4 py-2 border rounded-lg" required>
                     </div>
+
+                    <div class="mb-4">
+                        <label for="horaEntrada" class="block text-lg">Hora de Entrada</label>
+                        <input type="time" id="horaEntrada" [(ngModel)]="reserva.horaEntrada" name="horaEntrada"
+                            class="w-full px-4 py-2 border rounded-lg" required>
+                    </div>
+
                     <div class="mb-4">
                         <label for="numPersonas" class="block text-lg">Número de Personas</label>
                         <input type="number" id="numPersonas" [(ngModel)]="reserva.numPersonas" name="numPersonas"
@@ -130,6 +137,21 @@
             [routerLink]="['/alojamientos-public']">
             Volver a la lista de alojamientos
         </button>
+
+        <!-- Modal de éxito para Valoración -->
+        <div *ngIf="mostrarModalValoracion"
+            class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                <h3 class="text-xl font-bold mb-4">¡Valoración enviada con éxito!</h3>
+                <p class="text-lg mb-4">Gracias por dejar tu valoración.</p>
+                <div class="flex justify-end">
+                    <button (click)="cerrarModalValoracion()"
+                        class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-400 transition">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

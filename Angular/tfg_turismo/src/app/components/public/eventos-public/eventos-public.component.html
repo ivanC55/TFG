@@ -1,27 +1,26 @@
 <div class="grid grid-cols-5 gap-4 mt-20">
-    <!-- Espacio vacío para centrar contenido -->
     <div class="col-span-1"></div>
 
     <!-- Contenido principal -->
     <div class="col-span-4 pr-20 ml-10 mb-10">
         <h2 class="text-2xl font-bold text-center mb-6">Nuestros Eventos</h2>
 
-        <!-- Cards de estadísticas -->
-        <div class="grid grid-cols-2 gap-4  mb-10">
-            <!-- Total Eventos -->
-            <div class="bg-orange-300 shadow-md rounded-lg p-6 flex flex-col items-center">
-                <h2 class="text-black font-medium text-sm">Total Eventos</h2>
-                <p class="text-3xl font-bold">{{ eventos.length }}</p>
-                <span class="text-black text-sm mt-1">Número total de eventos registrados.</span>
+        <div class="grid grid-cols-1 gap-6 mb-10">
+
+            <div
+                class="bg-gradient-to-br from-orange-300 via-orange-400 to-orange-500 shadow-lg rounded-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 w-full">
+                <h2 class="text-gray-800 font-medium text-sm uppercase tracking-wide">Total Eventos</h2>
+                <p class="text-4xl font-extrabold text-white mt-2">{{ eventos.length }}</p>
+                <span class="text-gray-100 text-sm mt-1">Número total de eventos registrados.</span>
             </div>
 
         </div>
 
+
         <!-- Lista de eventos -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div *ngFor="let evento of eventos" class="flex flex-col bg-white rounded-lg shadow-lg">
-                <img *ngIf="evento.imagen"
-                    [src]="'http://localhost:8081/api/eventos/uploads/eventos/' + evento.imagen"
+                <img *ngIf="evento.imagen" [src]="'http://localhost:8081/api/eventos/uploads/eventos/' + evento.imagen"
                     alt="Imagen de {{ evento.nombre }}"
                     class="rounded-t-lg h-40 w-full object-cover transition-transform transform duration-300 ease-in-out hover:brightness-90">
                 <div class="p-4 flex flex-col flex-grow">

@@ -42,15 +42,17 @@ export class ReservasComponent implements OnInit {
 
   inicializarReserva(): Reserva {
     return {
-      idReserva: null,
-      usuario: null,
-      alojamiento: null,
-      restaurante: null,
-      fechaReserva: '',
-      horaReserva: '',
-      numPersonas: 1,
-      estado: ''
-    };
+  idReserva: null,
+  usuario: null,
+  alojamiento: null,
+  restaurante: null,
+  numPersonas: 1,
+  estado: '',
+  fechaInicio: '',
+  fechaFin: '',
+  horaEntrada: '',
+  
+};
   }
 
   // Método para cargar todos los datos iniciales (usuarios, alojamientos, restaurantes)
@@ -181,11 +183,7 @@ export class ReservasComponent implements OnInit {
     }
   }
   
-  
-  
-
-  // Métodos para el modal de eliminación
-  mostrarModalEliminar(reserva: Reserva): void {
+    mostrarModalEliminar(reserva: Reserva): void {
     this.reservaParaEliminar = reserva;
   }
 
@@ -199,7 +197,7 @@ export class ReservasComponent implements OnInit {
         () => {
           console.log('Reserva eliminada');
           this.cargarReservas();
-          this.cancelarEliminar(); // Cerrar el modal
+          this.cancelarEliminar(); 
         },
         (error) => {
           console.error('Error al eliminar la reserva:', error);

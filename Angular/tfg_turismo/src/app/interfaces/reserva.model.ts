@@ -7,8 +7,9 @@ export interface Reserva {
     usuario?: Usuario | null;
     alojamiento?: Alojamiento | null;
     restaurante?: Restaurante | null;
-    fechaReserva: string;
-    horaReserva: string;
+    fechaInicio: string;
+    fechaFin: string;
+    horaEntrada: string;
     numPersonas: number;
     estado: string;
 }

@@ -97,8 +97,9 @@ public class ReservaRestController {
         reserva.setUsuario(reservaDetails.getUsuario());
         reserva.setAlojamiento(reservaDetails.getAlojamiento());
         reserva.setRestaurante(reservaDetails.getRestaurante());
-        reserva.setFechaReserva(reservaDetails.getFechaReserva());
-        reserva.setHoraReserva(reservaDetails.getHoraReserva());
+        reserva.setFechaInicio(reservaDetails.getFechaInicio());
+        reserva.setFechaFin(reservaDetails.getFechaFin());
+        reserva.setHoraEntrada(reservaDetails.getHoraEntrada());
         reserva.setNumPersonas(reservaDetails.getNumPersonas());
         reserva.setEstado(reservaDetails.getEstado());
 
