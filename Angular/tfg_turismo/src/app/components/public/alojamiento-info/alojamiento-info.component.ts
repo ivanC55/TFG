@@ -206,7 +206,7 @@ export class AlojamientoInfoComponent implements OnInit {
 
   abrirFormularioReserva(): void {
     if (!this.usuarioLogueado || !this.usuarioLogueado.id) {
-      alert('Debe iniciar sesión para realizar una reserva.');
+      this.router.navigate(['/login']);  
       return;
     }
     this.mostrarFormularioReserva = true;

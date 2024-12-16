@@ -68,39 +68,35 @@ export class EventosComponent implements OnInit {
 
   guardarEvento(): void {
     // Validación de campos obligatorios
-    if (!this.eventoSeleccionado.nombre || !this.eventoSeleccionado.descripcion || !this.eventoSeleccionado.ubicacion || !this.eventoSeleccionado.precio_entrada) {
+    if (!this.eventoSeleccionado.nombre || !this.eventoSeleccionado.descripcion || !this.eventoSeleccionado.ubicacion) {
       alert('Todos los campos son obligatorios');
       return;
     }
-  
+
     // Validación de fechas
     if (this.eventoSeleccionado.fecha_inicio > this.eventoSeleccionado.fecha_fin) {
       alert('La fecha de inicio no puede ser posterior a la fecha de fin');
       return;
     }
-  
+
     // Si el evento tiene un id (está siendo editado), lo actualizamos
-    if (this.eventoSeleccionado.idEvento !== undefined) {
+    if (this.eventoSeleccionado.idEvento && this.eventoSeleccionado.idEvento !== 0) {
+      // Está siendo editado, usamos PUT
       this.eventoService.updateEvento(this.eventoSeleccionado.idEvento, this.eventoSeleccionado).subscribe(() => {
-        // Si se ha seleccionado una imagen, la subimos
-        if (this.selectedFile) {
-          this.subirImagen(this.eventoSeleccionado.idEvento!); // idEvento ahora es seguro
-        } else {
-          this.finalizarGuardado(); // Finaliza el proceso de guardado sin imagen
-        }
+        this.finalizarGuardado();
       });
     } else {
-      // Si no tiene id (es un nuevo evento), lo creamos
+      // Es un nuevo evento, usamos POST
       this.eventoService.createEvento(this.eventoSeleccionado).subscribe((nuevoEvento) => {
-        // Si se ha seleccionado una imagen, la subimos
         if (this.selectedFile) {
-          this.subirImagen(nuevoEvento.idEvento!); // idEvento no es undefined en este caso
+          this.subirImagen(nuevoEvento.idEvento!);
         } else {
-          this.finalizarGuardado(); // Finaliza el proceso de guardado sin imagen
+          this.finalizarGuardado();
         }
       });
     }
-  }
+}
+
 
 
   mostrarModalEliminar(evento: Evento): void {

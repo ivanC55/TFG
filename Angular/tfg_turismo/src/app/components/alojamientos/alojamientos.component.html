@@ -1,4 +1,4 @@
-<div class="grid grid-cols-5 gap-4">
+<div class="grid grid-cols-1 md:grid-cols-5 gap-4">
 
     <div class="col-span-1"></div>
     <div class="container mt-4 mb-10 col-span-4 px-6">
@@ -11,54 +11,45 @@
         </button>
 
         <div *ngIf="mostrarModalFormulario"
-            class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-            <div class="bg-white rounded-lg shadow-lg w-96 p-8 relative z-10">
-                <h3 class="text-center text-2xl font-semibold mb-6 text-indigo-600">{{ isEditing ? 'Editar Alojamiento'
-                    :
-                    'Añadir Nuevo Alojamiento' }}</h3>
+            class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50 my-4 mx-4">
+            <div class="bg-white rounded-lg shadow-lg w-full max-w-lg p-8 relative z-10">
+                
 
                 <form (ngSubmit)="guardarAlojamiento()">
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Nombre</label>
-                        <input id="nombre" type="text" [(ngModel)]="alojamiento.nombre" name="nombre" required
-                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
-                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Nombre</label>
+                            <input id="nombre" type="text" [(ngModel)]="alojamiento.nombre" name="nombre" required
+                                class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
+                        </div>
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Tipo</label>
-                        <select id="tipo" [(ngModel)]="alojamiento.tipo" name="tipo" required
-                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500">
-                            <option value="hotel">Hotel</option>
-                            <option value="hostal">Hostal</option>
-                            <option value="posada">Posada</option>
-                            <option value="AT">AT</option>
-                        </select>
-                    </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Tipo</label>
+                            <select id="tipo" [(ngModel)]="alojamiento.tipo" name="tipo" required
+                                class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500">
+                                <option value="hotel">Hotel</option>
+                                <option value="hostal">Hostal</option>
+                                <option value="posada">Posada</option>
+                                <option value="AT">AT</option>
+                            </select>
+                        </div>
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Ubicación</label>
-                        <input id="ubicacion" type="text" [(ngModel)]="alojamiento.ubicacion" name="ubicacion" required
-                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
-                    </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Ubicación</label>
+                            <input id="ubicacion" type="text" [(ngModel)]="alojamiento.ubicacion" name="ubicacion"
+                                required
+                                class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
+                        </div>
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Precio/Noche</label>
-                        <input id="precioNoche" type="number" [(ngModel)]="alojamiento.precioNoche" name="precioNoche"
-                            required
-                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
-                    </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Precio/Noche</label>
+                            <input id="precioNoche" type="number" [(ngModel)]="alojamiento.precioNoche"
+                                name="precioNoche" required
+                                class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
+                        </div>
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Servicios</label>
-                        <div class="space-y-2">
-                            <div class="flex flex-wrap gap-2 mb-2">
-                                <span *ngFor="let servicio of alojamiento.servicios"
-                                    class="bg-indigo-600 text-white px-4 py-1 rounded-full text-sm">
-                                    {{ servicio }}
-
-                                </span>
-                            </div>
-
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Servicios</label>
                             <select id="servicios" [(ngModel)]="alojamiento.servicios" name="servicios" multiple
                                 class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500">
                                 <option value="WiFi">WiFi</option>
@@ -68,29 +59,32 @@
                                 <option value="Gimnasio">Gimnasio</option>
                             </select>
                         </div>
-                    </div>
+                        
 
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Puntuación</label>
-                        <input id="puntuacion" type="number" [(ngModel)]="alojamiento.puntuacion" name="puntuacion"
-                            min="0" max="5" required [class.border-red-500]="puntuacionInvalida"
-                            (input)="validarPuntuacion()"
-                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
-                        <div *ngIf="puntuacionInvalida" class="text-red-500 text-sm mt-1">La puntuación debe ser entre 0
-                            y 5.</div> 
-                    </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Puntuación</label>
+                            <input id="puntuacion" type="number" [(ngModel)]="alojamiento.puntuacion" name="puntuacion"
+                                min="0" max="5" required [class.border-red-500]="puntuacionInvalida"
+                                (input)="validarPuntuacion()"
+                                class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
+                            <div *ngIf="puntuacionInvalida" class="text-red-500 text-sm mt-1">La puntuación debe ser
+                                entre 0 y 5.</div>
+                        </div>
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Imagen</label>
-                        <input type="file" (change)="onFileSelected($event)"
-                            class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
-                        <div class="mt-2" *ngIf="previewUrl">
-                            <img *ngIf="alojamiento.imagen" [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen" alt="Imagen del alojamiento" class="w-16 h-16 object-cover rounded-lg border" />
+                        <div class="mb-4 col-span-2">
+                            <label class="block text-gray-700">Imagen</label>
+                            <input type="file" (change)="onFileSelected($event)"
+                                class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500" />
+                            <div class="mt-2" *ngIf="previewUrl">
+                                <img *ngIf="alojamiento.imagen"
+                                    [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen"
+                                    alt="Imagen del alojamiento" class="w-16 h-16 object-cover rounded-lg border" />
+                            </div>
                         </div>
                     </div>
 
-                    <div class="flex justify-between">
+                    <div class="flex justify-between mt-6">
                         <button type="submit"
                             class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-200">
                             {{ isEditing ? 'Actualizar Alojamiento' : 'Añadir Alojamiento' }}
@@ -106,7 +100,7 @@
 
         <!-- Tabla de alojamientos -->
         <div class="overflow-x-auto mt-8 rounded-lg">
-            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+            <table class="min-w-full text-sm bg-white border border-gray-200 rounded-lg shadow-md">
                 <thead class="bg-indigo-600 text-white">
                     <tr>
                         <th class="py-3 px-6 text-left font-semibold"></th>
@@ -114,7 +108,6 @@
                         <th class="py-3 px-6 text-left font-semibold">Tipo</th>
                         <th class="py-3 px-6 text-left font-semibold">Ubicación</th>
                         <th class="py-3 px-6 text-left font-semibold">Precio/Noche</th>
-                        <th class="py-3 px-6 text-left font-semibold">Servicios</th>
                         <th class="py-3 px-6 text-left font-semibold">Puntuación</th>
                         <th class="py-3 px-6 text-left font-semibold">Imagen</th>
                         <th class="py-3 px-6 text-left font-semibold">Acciones</th>
@@ -122,15 +115,16 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let alojamiento of alojamientos; let i = index" class="hover:bg-gray-100">
-                        <td class="py-3 px-6">{{ i + 1 }}</td>
-                        <td class="py-3 px-6">{{ alojamiento.nombre }}</td>
-                        <td class="py-3 px-6">{{ alojamiento.tipo }}</td>
-                        <td class="py-3 px-6">{{ alojamiento.ubicacion }}</td>
-                        <td class="py-3 px-6">{{ alojamiento.precioNoche }} €</td>
-                        <td class="py-3 px-6">{{ alojamiento.servicios.join(',') }}</td>
-                        <td class="py-3 px-6">{{ alojamiento.puntuacion }}</td>
-                        <td class="py-3 px-6">
-                            <img *ngIf="alojamiento.imagen" [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen" alt="Imagen del alojamiento" class="w-16 h-16 object-cover rounded-lg border" />
+                        <td class="py-3 px-6 text-sm">{{ i + 1 }}</td>
+                        <td class="py-3 px-6 text-sm">{{ alojamiento.nombre }}</td>
+                        <td class="py-3 px-6 text-sm">{{ alojamiento.tipo }}</td>
+                        <td class="py-3 px-6 text-sm">{{ alojamiento.ubicacion }}</td>
+                        <td class="py-3 px-6 text-sm">{{ alojamiento.precioNoche }} €</td>
+                        <td class="py-3 px-6 text-sm">{{ alojamiento.puntuacion }}</td>
+                        <td class="py-3 px-6 text-sm">
+                            <img *ngIf="alojamiento.imagen"
+                                [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen"
+                                alt="Imagen del alojamiento" class="w-16 h-16 object-cover rounded-lg border" />
                         </td>
                         <td class="py-3 px-6">
                             <div class="flex space-x-2"> <!-- Contenedor flex para alinear los botones en una fila -->
@@ -142,7 +136,6 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15 12h6m-3-3v6M4.75 12A7.25 7.25 0 0012 4.75a7.25 7.25 0 107.25 7.25A7.25 7.25 0 004.75 12h.5z" />
                                     </svg>
-
                                 </button>
 
                                 <button class="bg-red-500 text-white py-2 px-2 rounded-lg hover:bg-red-600 text-sm"
@@ -152,7 +145,6 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M6 18L18 6M6 6l12 12" />
                                     </svg>
-
                                 </button>
                             </div>
                         </td>
@@ -179,3 +171,4 @@
             </div>
         </div>
     </div>
+</div>

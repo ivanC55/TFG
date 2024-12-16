@@ -5,7 +5,7 @@
     <div class="col-span-4 w-full mt-0 pr-10 pl-10">
         <div class="text-white text-center mt-5 p-10 object-cover rounded-lg shadow-lg x-auto px-4 bg-cover bg-center bg-no-repeat bg-opacity-50 h-[500px] w-full"
             style="
-            background-image: url('../../assets/info-pueblo/portada2.jpg');
+            background-image: url('../../assets/info-pueblo/alcazaba.jpg');
             background-position: center;
             image-rendering: auto;">
             <h1 class="text-4xl font-bold mt-60">Bienvenidos a nuestra plataforma</h1>
@@ -121,7 +121,7 @@
                                 class="rounded-lg h-40 w-full object-cover hover:scale-105" />
                             <div class="p-4">
                                 <h5 class="text-white font-semibold text-lg">{{ restaurante.nombre }}</h5>
-                                <p class="text-white">{{ restaurante.especialidad }}</p>
+                                <p class="text-white"><b>Plato estrella: </b> {{ restaurante.especialidad }}</p>
                                 <p class="text-white mt-2">
 
                                 </p>
@@ -167,7 +167,8 @@
                                 <p><strong>Tipo:</strong> {{ monumentos[indiceMonumento].tipo }}</p>
                                 <p><strong>Historia:</strong> {{ monumentos[indiceMonumento].historia }}</p>
                                 <p><strong>Horario:</strong> {{ monumentos[indiceMonumento].horario }}</p>
-                                <p><strong>Precio entrada:</strong> ${{ monumentos[indiceMonumento].precio_entrada }}
+                                <p><strong>Precio entrada:</strong> 
+                                    {{ monumentos[indiceMonumento].precio_entrada === 0 ? 'Gratis' : monumentos[indiceMonumento].precio_entrada }}
                                 </p>
                                 <p><strong>Ubicación:</strong> {{ monumentos[indiceMonumento].ubicacion }}</p>
                                 <hr class="my-4">

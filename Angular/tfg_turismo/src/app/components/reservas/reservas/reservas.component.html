@@ -9,6 +9,7 @@
             Nueva Reserva
         </button>
 
+        <!-- Tabla de Reservas -->
         <div class="overflow-x-auto mt-8 rounded-lg">
             <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                 <thead class="bg-indigo-600 text-white">
@@ -35,7 +36,7 @@
                         <td class="py-2 px-4 text-center">{{ reserva.numPersonas }}</td>
                         <td class="py-2 px-4">{{ reserva.estado }}</td>
                         <td class="py-2 px-4">
-                            <div class="flex space-x-2">
+                            <div class="flex space-x-2 mr-2">
                                 <button class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 text-sm"
                                     (click)="editarReserva(reserva)">
                                     <svg class="w-4 h-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg"
@@ -59,9 +60,10 @@
             </table>
         </div>
 
+        <!-- Formulario Modal -->
         <div *ngIf="modoFormulario"
             class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-            <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10" style="height: 60vh; max-height: 60vh;">
+            <div class="bg-white rounded-lg shadow-lg w-full md:w-11/12 lg:w-8/12 xl:w-6/12 p-6 relative z-10">
                 <button (click)="cancelarFormulario()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -70,61 +72,68 @@
                 </button>
                 <h3 class="text-lg font-semibold text-center mb-4 text-indigo-600">Formulario de Reserva</h3>
 
-                <form (ngSubmit)="guardarReserva()" class="space-y-4">
-                    <select [(ngModel)]="usuarioSeleccionadoId" name="usuario" id="usuario">
-                        <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.username }}</option>
-                    </select>
-
-                    <select [(ngModel)]="alojamientoSeleccionadoId" name="alojamiento" id="alojamiento">
-                        <option *ngFor="let alojamiento of alojamientos" [value]="alojamiento.idAlojamiento">{{
-                            alojamiento.nombre }}</option>
-                    </select>
-
-                    <select [(ngModel)]="restauranteSeleccionadoId" name="restaurante" id="restaurante">
-                        <option *ngFor="let restaurante of restaurantes" [value]="restaurante.idRestaurante">{{
-                            restaurante.nombre }}</option>
-                    </select>
-
-                    <div>
-                        <label for="fechaInicio" class="block text-sm font-semibold text-gray-700">Fecha
-                            Inicio</label>
-                        <input type="date" [(ngModel)]="reservaSeleccionada.fechaInicio" name="fechaInicio"
-                            id="fechaInicio" required
-                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
+                <form (ngSubmit)="guardarReserva()" class="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Usuario -->
+                    <div class="col-span-1">
+                        <label for="usuario" class="block text-sm font-semibold text-gray-700">Usuario</label>
+                        <select [(ngModel)]="usuarioSeleccionadoId" name="usuario" id="usuario" class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
+                            <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.username }}</option>
+                        </select>
                     </div>
 
-                    <div>
-                        <label for="fechaFin" class="block text-sm font-semibold text-gray-700">Fecha
-                            Fin</label>
-                        <input type="date" [(ngModel)]="reservaSeleccionada.fechaFin" name="fechaFin"
-                            id="fechaFin" required
-                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
+                    <!-- Alojamiento -->
+                    <div class="col-span-1">
+                        <label for="alojamiento" class="block text-sm font-semibold text-gray-700">Alojamiento</label>
+                        <select [(ngModel)]="alojamientoSeleccionadoId" name="alojamiento" id="alojamiento" class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
+                            <option *ngFor="let alojamiento of alojamientos" [value]="alojamiento.idAlojamiento">{{ alojamiento.nombre }}</option>
+                        </select>
                     </div>
 
-                    <div>
+                    <!-- Restaurante -->
+                    <div class="col-span-1">
+                        <label for="restaurante" class="block text-sm font-semibold text-gray-700">Restaurante</label>
+                        <select [(ngModel)]="restauranteSeleccionadoId" name="restaurante" id="restaurante" class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
+                            <option *ngFor="let restaurante of restaurantes" [value]="restaurante.idRestaurante">{{ restaurante.nombre }}</option>
+                        </select>
+                    </div>
+
+                    <!-- Fecha de Inicio -->
+                    <div class="col-span-1">
+                        <label for="fechaInicio" class="block text-sm font-semibold text-gray-700">Fecha Inicio</label>
+                        <input type="date" [(ngModel)]="reservaSeleccionada.fechaInicio" name="fechaInicio" id="fechaInicio" required class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
+                    </div>
+
+                    <!-- Fecha de Fin -->
+                    <div class="col-span-1">
+                        <label for="fechaFin" class="block text-sm font-semibold text-gray-700">Fecha Fin</label>
+                        <input type="date" [(ngModel)]="reservaSeleccionada.fechaFin" name="fechaFin" id="fechaFin" required class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
+                    </div>
+
+                    <!-- Hora de Entrada -->
+                    <div class="col-span-1">
                         <label for="horaEntrada" class="block text-sm font-semibold text-gray-700">Hora Reserva</label>
-                        <input type="time" [(ngModel)]="reservaSeleccionada.horaEntrada" name="horaReserva"
-                            id="horaReserva" required
-                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
-                    </div>
-                    <div>
-                        <label for="numPersonas" class="block text-sm font-semibold text-gray-700">Número de
-                            Personas</label>
-                        <input type="number" [(ngModel)]="reservaSeleccionada.numPersonas" name="numPersonas"
-                            id="numPersonas" required
-                            class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
+                        <input type="time" [(ngModel)]="reservaSeleccionada.horaEntrada" name="horaReserva" id="horaReserva" required class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
                     </div>
 
-                    <label for="estado">Estado:</label>
-                    <select id="estado" [(ngModel)]="reservaSeleccionada.estado" name="estado">
-                        <option value="Pendiente">Pendiente</option>
-                        <option value="Confirmada">Confirmada</option>
-                        <option value="Cancelada">Cancelada</option>
-                    </select>
-                    <div>
+                    <!-- Número de Personas -->
+                    <div class="col-span-1">
+                        <label for="numPersonas" class="block text-sm font-semibold text-gray-700">Número de Personas</label>
+                        <input type="number" [(ngModel)]="reservaSeleccionada.numPersonas" name="numPersonas" id="numPersonas" required class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500" />
+                    </div>
 
-                        <button type="submit"
-                            class="w-full py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-all duration-200">
+                    <!-- Estado -->
+                    <div class="col-span-1">
+                        <label for="estado" class="block text-sm font-semibold text-gray-700">Estado</label>
+                        <select id="estado" [(ngModel)]="reservaSeleccionada.estado" name="estado" class="w-full p-2 border rounded focus:ring-2 focus:ring-indigo-500">
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Confirmada">Confirmada</option>
+                            <option value="Cancelada">Cancelada</option>
+                        </select>
+                    </div>
+
+                    <!-- Botón Guardar -->
+                    <div class="col-span-1">
+                        <button type="submit" class="w-full py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-all duration-200">
                             Guardar
                         </button>
                     </div>

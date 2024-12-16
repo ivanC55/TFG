@@ -69,7 +69,7 @@
                     <img *ngIf="alojamiento.imagen"
                         [src]="'http://localhost:8081/api/alojamientos/uploads/alojamientos/' + alojamiento.imagen"
                         [alt]="'Imagen de ' + alojamiento.nombre"
-                        class="rounded-l-lg h-60 w-full object-cover"/>
+                        class="rounded-l-lg h-full w-full object-cover"/>
 
                     <!-- Si no hay imagen, mostrar una imagen predeterminada -->
                     <img *ngIf="!alojamiento.imagen"

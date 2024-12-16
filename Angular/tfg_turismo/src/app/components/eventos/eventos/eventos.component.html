@@ -60,8 +60,8 @@
 
         <!-- Modal de Edición -->
         <div *ngIf="modoEdicion" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-            <div class="bg-white rounded-lg shadow-lg w-96 p-8 relative z-10">
-                <h3 class="text-center text-lg font-semibold mb-4">{{ eventoSeleccionado.idEvento ? 'Editar Restaurante' : 'Nuevo Restaurante' }}</h3>
+            <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative z-10">
+                <h3 class="text-center text-lg font-semibold mb-4">{{ eventoSeleccionado.idEvento ? 'Editar Evento' : 'Nuevo Evento' }}</h3>
 
                 <form (ngSubmit)="guardarEvento()">
                     <div class="mb-4">
@@ -108,7 +108,7 @@
                             <img [src]="previewUrl" alt="Vista previa de la imagen" class="w-full h-48 object-cover border rounded" />
                         </div>
                         <div *ngIf="eventoSeleccionado.imagen" class="mt-2">
-                            <img [src]="eventoSeleccionado.imagen" alt="Imagen actual del restaurante"
+                            <img [src]="eventoSeleccionado.imagen" alt="Imagen actual del evento"
                                 class="w-full h-48 object-cover border rounded" />
                         </div>
                     </div>
